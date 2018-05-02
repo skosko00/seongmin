@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring accessors="true" comment="Delete 2 elements from project &apos;day04work&apos;&#x0D;&#x0A;- Original project: &apos;day04work&apos;&#x0D;&#x0A;- Original elements:&#x0D;&#x0A;     day04work/src/kh.java.operator.run&#x0D;&#x0A;     day04work/src/kh.java.test.function" description="Delete elements" element1="/src&lt;kh.java.test.function" element2="/src&lt;kh.java.test" element3="/src&lt;kh.java.operator.run" element4="/src&lt;kh.java.operator" element5="/src&lt;kh.java" element6="/src&lt;kh" elements="6" flags="589830" id="org.eclipse.jdt.ui.delete" resources="0" stamp="1517820299646" subPackages="false" version="1.0"/>
+</session>

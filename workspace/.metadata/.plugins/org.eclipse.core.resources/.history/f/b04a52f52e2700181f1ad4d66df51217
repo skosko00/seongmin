@@ -1,0 +1,10 @@
+package project.kh.java;
+
+public class CaT {
+
+	public static void main(String[] args) {
+		PcMain t = new PcMain();
+
+	}
+
+}

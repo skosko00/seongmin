@@ -1,0 +1,43 @@
+package project.kh.java;
+
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+public class ProductView extends JFrame{
+	public ProductView()
+	{
+		setVisible(true);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(1368,768);
+		setTitle("메인화면");
+		pcPanel();
+	}
+	
+	public void pcPanel()
+	{
+		PcView pcv = new PcView();
+		getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
+
+		JPanel panel = new JPanel();
+		getContentPane().add(panel);
+		panel.setLayout(new BorderLayout(0, 0));
+
+		JPanel panel1 = new JPanel();		
+		panel.add(panel1, BorderLayout.NORTH);
+		panel1.setLayout(new BorderLayout(0, 0));
+
+		JPanel panel2 = new JPanel();
+		FlowLayout flowLayout = (FlowLayout) panel2.getLayout();
+		flowLayout.setHgap(100);
+		flowLayout.setVgap(100);
+		panel.add(panel2, BorderLayout.WEST);
+
+		JPanel panel3 = new JPanel();
+		panel.add(panel3, BorderLayout.CENTER);
+		panel3.setLayout(new GridLayout(5, 6, 5, 5));
+}

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.ui.texteditor.GotoLineAction$GotoLineDialog_dialogBounds">
+		<item value="729" key="DIALOG_X_ORIGIN"/>
+		<item value="404" key="DIALOG_Y_ORIGIN"/>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
+		<item value="true" key="isRegEx"/>
+		<item value="this" key="selection"/>
+		<item value="false" key="casesensitive"/>
+		<item value="false" key="incremental"/>
+		<item value="true" key="wrap"/>
+		<item value="false" key="wholeword"/>
+		<list key="findhistory">
+			<item value="this"/>
+			<item value="jgm"/>
+			<item value="CreateGameMgr"/>
+			<item value="Thread."/>
+			<item value="ServerGameView"/>
+			<item value="ClientGameView"/>
+			<item value="asedfasdf"/>
+			<item value="Scanner"/>
+			<item value="cgv"/>
+			<item value="joinGame"/>
+			<item value="sgv"/>
+			<item value="create"/>
+			<item value="mgr"/>
+			<item value="cGM"/>
+			<item value="jbtn"/>
+		</list>
+		<list key="replacehistory">
+			<item value="chatingPanel"/>
+			<item value="pcId"/>
+			<item value=""/>
+			<item value="return add"/>
+			<item value="args[0]"/>
+			<item value="str"/>
+			<item value="26"/>
+			<item value="Random"/>
+			<item value="userRan"/>
+			<item value="quiz14"/>
+			<item value="quiz12"/>
+			<item value="quiz11"/>
+		</list>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
+		<item value="288" key="DIALOG_WIDTH"/>
+		<item value="1|맑은 고딕|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕" key="DIALOG_FONT_NAME"/>
+		<item value="411" key="DIALOG_HEIGHT"/>
+		<item value="841" key="DIALOG_X_ORIGIN"/>
+		<item value="552" key="DIALOG_Y_ORIGIN"/>
+	</section>
+</section>
