@@ -1,0 +1,8 @@
+1523840844916	Rename package 'kh.java.board.view'
+1523841303353	Rename type 'boardManager'
+1523853097178	Rename type 'BoardController'
+1523853119481	Rename type 'BoardDAO'
+1523853129403	Rename type 'BoardService'
+1523853553697	Move compilation unit
+1523853557160	Delete element
+1523868268124	Rename package 'kh.java.medel.dao'

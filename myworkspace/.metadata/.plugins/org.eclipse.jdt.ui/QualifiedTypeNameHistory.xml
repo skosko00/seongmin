@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="kh.java.controller.MemberController"/>
+<fullyQualifiedTypeName name="java.sql.Date"/>
+<fullyQualifiedTypeName name="book.kh.com.model.vo.Book"/>
+<fullyQualifiedTypeName name="book.kh.com.controller.CustomerController"/>
+<fullyQualifiedTypeName name="java.lang.Class"/>
+<fullyQualifiedTypeName name="book.kh.com.controller.LibraryController"/>
+<fullyQualifiedTypeName name="book.kh.com.model.service.CustomerService"/>
+<fullyQualifiedTypeName name="book.kh.com.model.vo.Customer"/>
+<fullyQualifiedTypeName name="book.kh.com.model.service.LibraryService"/>
+<fullyQualifiedTypeName name="book.kh.com.model.dao.LibraryDAO"/>
+<fullyQualifiedTypeName name="book.kh.com.model.vo.Library"/>
+<fullyQualifiedTypeName name="kh.java.model.service.MemberService"/>
+<fullyQualifiedTypeName name="kh.java.model.dao.MemberDAO"/>
+<fullyQualifiedTypeName name="kh.java.model.template.MemberTemplate"/>
+<fullyQualifiedTypeName name="java.util.Scanner"/>
+<fullyQualifiedTypeName name="kh.java.view.MemberManager"/>
+<fullyQualifiedTypeName name="java.sql.DriverManager"/>
+<fullyQualifiedTypeName name="javax.naming.spi.DirStateFactory.Result"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="java.sql.Statement"/>
+<fullyQualifiedTypeName name="kh.java.model.vo.Member"/>
+<fullyQualifiedTypeName name="java.sql.ResultSet"/>
+<fullyQualifiedTypeName name="kh.java.medel.dao.BoardDAO"/>
+<fullyQualifiedTypeName name="java.lang.System"/>
+<fullyQualifiedTypeName name="kh.java.controller.BoardController"/>
+<fullyQualifiedTypeName name="kh.java.model.service.BoardService"/>
+<fullyQualifiedTypeName name="java.sql.Connection"/>
+<fullyQualifiedTypeName name="kh.java.model.template.BoardTemplate"/>
+<fullyQualifiedTypeName name="java.sql.PreparedStatement"/>
+</qualifiedTypeNameHistroy>
