@@ -1,0 +1,50 @@
+
+@ 예외의 처리
+-> 예외 처리의 방법은 2가지가 있음
+1. try ~ catch
+	-> 해당 코드를 사용하는 곳에서 직접 처리할 때 사용
+2. throws
+	-> 해당 코드 부분에서 처리하지 않고 다음 사용자에게 예외를 던짐
+	※ throws는 던지다 라는 의미를 가지고 있음
+
+ex) throw
+	public void start()
+	{
+		try {
+			fileSearch();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public void fileSearch() throws FileNotFoundException
+	{
+		FileReader file1 = new FileReader("Test1.test");
+		FileReader file2 = new FileReader("Test2.test");
+		FileReader file3 = new FileReader("Test3.test");
+	}
+
+ex ) throw 한것을 또 다시 throw 할 수 있음
+
+	public void start() throws FileNotFoundException
+	{
+		fileSearch();
+	}
+	public void fileSearch() throws FileNotFoundException
+	{
+		FileReader file1 = new FileReader("Test1.test");
+		FileReader file2 = new FileReader("Test2.test");
+		FileReader file3 = new FileReader("Test3.test");
+	}
+
+@ 사용자 정의 예외
+-> 표준 예외 클래스로도 많은 예외 상황을 표현 할 수 있으나 그렇지 않은 경우도 있음
+	(예를 들어 숫자 1을 입력하면 예외를 발생시키고 싶으나 그러한 표준 예외는
+	없음)
+-> 사용자만의 예외를 만들 수 있음
+-> 단, 예외를 만들기 전에는 checked Exception으로 만들것인지 아니면
+unchecked Exception으로 만들 것인지를 선택해야 함
+
+※ 사용자 예외를 만들기 위해서는 예외 클래스를 선택하여 상속 받아야 함
+ Exception을 상속 받게 되면 checked Exception이 되고,
+RuntimeException을 상속 받게 되면 unchecked Exception이 됨

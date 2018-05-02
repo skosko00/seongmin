@@ -1,0 +1,56 @@
+
+@ 예외의 종류
+Throwable : 예외의 가장 큰 조심, 예외 부분에서는 Object와 비슷한 최고 조상이라고 볼 수 있음
+	-> 실제로 우리가 구현하지는 않음
+Error : 개발자가 소스코드로 해결 할 수 없는 에러 (시스템 에러)
+Exception : 개발자가 소스코드로 해결 할 수 있는 에러 (코드 에러)
+Runtime Exception : 어플리케이션이 작동하면서 발생하는 에러
+
+
+@ Checked Exception 과 Unchecked Exception
+-> Checked Exception은 예외처리를 강제화 해야 하는 것이고,
+	Unchecked Excaption은 예외처리를 강제화 하지 않음
+
+-> 소스코드 상에서 반드시 개발자가 처리해야 하는 Exception을
+	Checked Exception 이라고 부름
+-> 소스코드 상에서 개발자가 굳이 당장 처리해야 할 필요가 없는 경우에는
+	Unchecked Exception 이라고 부름
+
+@ RunTimeException 클래스
+-> RunTimeException은 Exception의 자식이며, Unchecked Exception 임
+-> 주로 프로그래머의 부주의로 인한 bug가 많기 때문에 Exception 처리 보다는
+코드를 수정해야 하는 경우가 많음 (예외 처리를 강제화 하지 않음)
+
+## ArithmeticException ##
+-> 0으로 나누는 연산을 할 경우에 발생
+
+## NullPointException ##
+-> Null인 래퍼런스, 변수로 객체 멤버 참조 시도시 발생
+
+## NegativeArraySizeException ##
+-> 배열 크기를 음수 또는 0으로 지정한 경우 발생
+
+## ArrayindexOutOfBoundException ##
+-> 배열의 index 범위를 넘어서 참조하는 경우 발생
+
+## ClasscastException ##
+-> cast 연산자 사용시 타입 오류 일 때 발생
+
+ex)
+		int data1 = 10;
+		int data2 = 0;
+		int result;
+		ExceptionTest t = null;	//래퍼런스 생성 (객체는 없음)
+//		System.out.println(data1/data2);
+//		t.start();
+//		int [] arr = new int[-10];
+//		int [] arr2 = new int[5];
+//		arr2[5] = 100;
+
+
+@ Exception 확인하기
+-> Exception 처리를 할 때 에는 가장 큰 Exception으로 처리해도 되지만
+명확한 Exception 별로 처리 하는것을 권장 함
+-> 이때 어떠한 Exception 처리를 해야 할지 알기 위해서는 API Document 사이트에서
+해당 클래스에 대한 생성자나 메소드를 검색하면, 그 메소드가 어떠한
+Exception을 발생시킬 가능성이 있는지를 확인 할 수 있음

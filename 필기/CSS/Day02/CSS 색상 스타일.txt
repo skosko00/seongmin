@@ -1,0 +1,201 @@
+
+
+@ background-color
+-> 배경색을 지정하는 속성
+
+기본 형식
+
+선택자 { background-color : 색상표현; }
+
+
+@ background-clip
+-> 배경 범위 조절
+
+border-box	: 박스 모델의 가장 외곽인 테두리 까지 적용
+padding-box	: 테두리를 제외한 패딩 범위까지 적용
+content-box	: 내용 부분만 적용
+
+기본 형식
+
+선택자 { background-clip : 속성값; }
+
+
+
+@ background-image
+-> 요소에 배경지정 속성
+
+기본 형식
+
+선택자 { background-image : url(경로); }
+
+
+@ background-repeat
+-> 배경이미지 반복 출력 설정
+
+repeat		: 브라우저에 가득 찰 때 까지 가로/세로 반복
+repeat-x	: 너비만큼 반복(가로)
+repeat-y	: 높이 만큼 반복 (세로)
+no-repeat	: 이미지를 한번만 출력
+
+기본 형식
+선택자{ background-repeat: 속성값; }
+
+
+@ background-position
+-> 배경 이미지 위치를 조정하는 속성
+
+left / center / right	수평위치
+top / center / bottom	수직위치
+크기값(px) / 백분율	수치화된 값으로 표현 (가로 세로) -> 왼쪽 위 모서리 좌표
+
+기본형식
+
+선택자 { background-position : 속성값; }
+
+
+background-position: 50% 50%;
+background-position: 50px 50px;
+background-position: center bottom;
+
+px -> left top 이 중점
+%  -> 가운데가 중점
+
+
+@ background-origin
+-> 배경이미지를 배치할 때 기준을 지정하는 속성
+
+border-box	테두리가 기준
+padding-box	테두리를 뺀 페딩이 기준
+conttent-box	내용 부분이 기준
+
+기본 형식
+선택자 { background-origin : 속성값; }
+
+
+@ background-attachment
+-> 웹 페이지가 위 아래로 움직여도 배경이미지는 움직이지 않게 고정하는 속성
+
+scroll		: default, 배경이미지가 움직이게 설정
+fixed		: 배경이미지가 움직이지 않게 설정
+
+기본 형식
+
+선택자 { background-attachment : 속성값; }
+
+
+@ background
+-> 배경이미지 설정을 한번에 하는 속성
+
+기본형식
+<style>
+선택자 { background : image값 repeat값 attachment값 position값 clip값 origin값 size값; }
+</style>
+
+
+
+@ 선형 그라데이션
+-> 색상이 수직, 수평, 대각선 방향으로 일정하게 변하는 것
+	- 웹 표준으로 지정되었지만 이전 버전과 호환을 위해 브라우저별
+	접두사를 이용, 그라데이션 표현방법이 약간씩 다름
+	※ 브라우저별로 다를 수 있으므로 별도로 공부 해야 함
+
+기본 형식 (표준)
+
+선택자 { background : -접두사-linear-gradient (아래와 동일) }
+
+or
+
+선택자 { background : linear-gradient(각도 or 방향, 시작색상, 색상 위치, 끝색상); }
+
+
+## 방향 ##
+to top		: 아래에서 위로 그려지는 그라데이션
+to left		: 오른쪽에서 왼쪽으로 그려지는 그라데이션
+to right	: 왼쪽에서 오른쪽으로 그려지는 그라데이션
+to bottom	: 위에서 아래로 그려지는 그라데이션
+
+## 각도 ##
+숫자deg		: 위쪽을 기준(0도)으로 시계방향으로 각도 증가
+
+## 브라우저별 접두사 ##
+-webkit-	크롬, 사파리
+-o-		오페라
+-moz-		파이어 폭스
+-ms-		익스플로러
+
+## 시작색상 / 끝색상 ##
+색상표시	: 색단어 또는 rgb 또는 16진수 표기법
+
+## 중지점 색상 / 위치 ##
+색상	: 색단어 또는 rgb 또는 16진수 표기법
+위치	: 백분율(%)로 표시
+
+
+ex)
+background: linear-gradient(to top right, blue, white);
+background: linear-gradient(45deg, blue, white);
+
+
+
+@ 원형 그라데이션
+-> 색상이 원이나 타원의 중심부터 동심원을 그리며 바깥방향으로 색상 변경
+
+기본 형식
+
+선택자 { background:접두사 radial-gradient(위치 모양, 크기, 시작색상, 끝색상);}
+	또는
+선택자 { background: radial-gradient(모양 크기 at 위치, 시작색상, 끝색상); }
+
+※ 인자값은 최소 2개 이상 (시작색상과 끝 색상)
+-> 위치 및 모양에 대한 인자값이 없으면 모양은 ellipse 이고, 크기는 closet-side 임
+
+## 모양 ##
+circle		원형
+ellipse		타원, default 값
+
+## 크기 ##
+closest-side	원형의 중심에서 가장 가까운 변과 중심의 거리가 원형의 크기(반지름)가 됨
+closest-corner	원형의 중심에서 가장 가까운 모서리와 원형의 중심 거리가 원형의 크기 (반지름)가 됨
+farthest-side	원형의 중심에서 가장 먼 변과 원형중심의 거리가 원형의 크기(반지름)가 됨
+farthest-corner	원형의 중심에서 가장 먼 모서리와 우너형의 중심거리가 원형의 크기(반지름)가 됨
+
+## 위치(x(가로좌표), y(세로좌표)) ##
+수평위치	left / center / right
+수직위치	top / center / bottom
+백분율		페이지 기준 백분율 표현(가로, 세로)
+
+ex)
+    #div1{background: radial-gradient(circle closest-side at 20% 20%, white, blue, red);}
+    #div2{background: radial-gradient(circle closest-side, white, blue, red);}
+    #div3{background: radial-gradient(circle closest-corner at 20% 30%, white, blue, red);}
+    #div4{background: radial-gradient(circle farthest-side, white, blue, red);}
+    #div5{background: radial-gradient(circle farthest-corner, white, blue, red);}
+
+
+@ 그라데이션 반복 (선형)
+-> 그라데이션 패턴 요소를 다 채울 때 까지 반복하는 것
+
+기본 형식
+
+선택자 { background : 접두사 repeating-linear-gradient(모양, 시작색상, 끝색상, 중단위치);}
+또는
+선택자 { background : repeating-linear-gradient(모양, 시작색상, 끝색상, 중단위치);}
+
+ex)
+#div1{background: repeating-linear-gradient(to right, white, blue, red 25%);}
+
+
+
+@ 그라데이션 반복 (원형)
+-> 선형과 같이 패턴 요소를 다 채울때까지 반복하는 것 (원형으로)
+
+기본 형식
+
+선택자 { background : 접두사 repeating-radial-gradient(모양,시작색상,끝색상,중단위치); }
+또는
+선택자 { background : repeating-radial-gradient(모양,시작색상,끝색상,중단위치); }
+
+ex)
+#div1{background: repeating-radial-gradient(white, skyblue, darkorchid 25%);}
+
+

@@ -1,0 +1,217 @@
+
+@ Object Class
+-> 자바에서 상속은 필수적임, 모든 클래스는 상속을 하지 않아도 암묵적인 상속을 하고 있음
+-> Object Class는 모든 Class의 조상 Class임
+
+
+ex)
+
+public class Test
+{
+
+}
+
+-> 위에 코드를 작성하고 인스턴스를 만들어 보았을 때 (new Test())
+래퍼런스를 이용하여 객체에 접근하게 되면 만든적이 없는 메소드들이 존재 함
+-> 해당 메소드들은 Object 클래스의 메소드이고 자동으로 상속 받는 구조를 가지고 있음
+
+
+-> Object로 부터 다양한 메소드들을 상속 받아 사용 할 수 있지만
+실제 많이 사용하는 toString, clone, hashcode, equals 메소드를 보겠음
+
+@ toString
+-> Object클래스에 속해 있는 메소드
+-> 래퍼런스의 값을 출력하게 되면 자동으로 toString 메소드를 호출함
+
+ex)
+	private String name;
+	private int age;
+	private String addr;
+	
+	public Student() {}
+	
+	public Student(String name, int age, String addr) {
+		super();
+		this.name = name;
+		this.age = age;
+		this.addr = addr;
+	}
+	
+	@Override
+	public String toString()
+	{
+		return this.name + " \t\t" + this.age + " \t\t" + this.addr;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public int getAge() {
+		return age;
+	}
+	public void setAge(int age) {
+		this.age = age;
+	}
+	public String getAddr() {
+		return addr;
+	}
+	public void setAddr(String addr) {
+		this.addr = addr;
+	}
+
+	public static void main(String[] args) {
+		Student [] t = new Student[10];
+
+		int index=0;
+		
+		t[index++] = new Student("홍길동" , 20, "서울시");
+		t[index++] = new Student("김말똥" , 30, "경기도");
+		t[index++] = new Student("유비" , 99, "중국무덤");
+		t[index++] = new Student("관우" , 99, "중국어딘가");
+		t[index++] = new Student("장비" , 99, "있겠지");
+		
+		System.out.println("========== 출력 ==========");
+		System.out.printf("%s \t\t %s \t\t %s\n","이름","나이","주소");
+		for(int i=0; i<index; i++)
+		{
+			System.out.println(t[i]);
+		}
+	}
+
+@ hashcode
+-> 객체를 구별하기 위해 사용되는 고유한 정수값을 출력하는 메소드
+-> 같은 객체임을 구별하기 위해서는 hashcode 메소드를 오버라이딩(재정의) 하여야 함
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((addr == null) ? 0 : addr.hashCode());
+		result = prime * result + age;
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
+	}
+
+		Student [] s = new Student[10];
+		int index = 0;
+		s[index++] = new Student("홍길동",20,"경기도");
+		s[index++] = new Student("홍길동",30,"서울시");
+		s[index++] = new Student("김말똥",20,"강원도");
+		s[index++] = new Student("김말똥",30,"서울시");
+		s[index++] = new Student("고길똥",20,"경기도");
+		s[index++] = new Student("고길똥",30,"서울시");
+		boolean result = false;
+		Student search = new Student("김말똥",20,"강원도");
+		for(int i=0;i<index;i++) {
+			if(s[i].hashCode()==search.hashCode())
+			{
+				result = true;
+			}
+		}
+		if(result==true)
+		{
+			System.out.println("찾았습니다.");
+		}
+		else
+		{
+			System.out.println("없습니다.");
+		}
+
+	}
+
+@ equals
+-> equals는 객체와 객체가 같은 것인지를 비교하는 메소드
+
+ex)
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Student other = (Student) obj;
+		if (addr == null) {
+			if (other.addr != null)
+				return false;
+		} else if (!addr.equals(other.addr))
+			return false;
+		if (age != other.age)
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		return true;
+	}
+
+
+		Student [] s = new Student[10];
+		int index = 0;
+		s[index++] = new Student("홍길동",20,"경기도");
+		s[index++] = new Student("홍길동",30,"서울시");
+		s[index++] = new Student("김말똥",20,"강원도");
+		s[index++] = new Student("김말똥",30,"서울시");
+		s[index++] = new Student("고길똥",20,"경기도");
+		s[index++] = new Student("고길똥",30,"서울시");
+		boolean result = false;
+		Student search = new Student("김말똥",20,"강원도");
+		for(int i=0;i<index;i++) {
+			if(s[i].equals(search))
+			{
+				result = true;
+			}
+		}
+		if(result==true)
+		{
+			System.out.println("찾았습니다.");
+		}
+		else
+		{
+			System.out.println("없습니다.");
+		}
+
+
+
+@ clone
+-> clone은 복제라는 뜻을 가지고 있음
+-> Onject Class안에는 clone이라는 메소드를 가지고 있기 때문에
+객체 자체를 복제하여 다른 객체에서도 사용하기 위해서는 clone메소드를 사용해주어야함
+	- 깊은복사
+-> 그러나 Object 클래스의 메소드 중 clone 메소드를 확인하면 메소드가
+public 형태가 아닌 protected로 되어 있음 (즉, 다른 패키지는 사용 불가함)
+-> 즉, 오버라이딩 해서 새롭게 정의하여 쓰라고 하는 의미임
+-> 또한, clone 메소드를 만들때에는 Cloneable interface를 사용 받아야만
+	복제가 가능한 클래스 라는것을 알려주게 됨
+	※ Cloneable은 복제 가능한 Class라는 것을 JVM에게 알려주기 위한 구분자
+
+ex) clone
+
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		// TODO Auto-generated method stub
+		return super.clone();
+	}
+
+	public static void main(String[] args) {
+
+		Student s1 = new Student("홍길동",20,"경기도");
+		Student s2 = null;
+		try {
+			s2 = (Student) s1.clone();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		s1.setAge(999);
+		
+		System.out.println(s2);
+		
+		
+	}

@@ -1,0 +1,98 @@
+
+lusrmgr.msc
+
+
+@ SQL Plus
+-> Oracle DBMS를 Cmd 창에서 관리 할 수 있는 프로그램
+
+
+
+## 테스트 계정(HR) 활성화 하기 ##
+
+1. system 계정으로 접속
+	- user-name : system
+	- password : [비밀번호 입력]
+
+2. 계정 확인 SQL
+	selecet username from dba_users;
+
+3. 테스트 계정(HR) 활성화
+	alter user [계정] account unlock;		// 락 해제
+	alter user [계정] identified by [비밀번호];	// 비밀번호 설정
+
+	ex)
+	alter user HR account unlock;			// 락 해제
+	alter user HR identified by [비밀번호];		// 비밀번호 설정
+
+4. 접속하기
+	conn [계정];
+	ex)
+	conn HR;
+	-> 접속시 설정했던 비밀번호 입력 후 접속
+
+5. 현재 접속된 자신의 계정 확인
+	show user;
+
+
+
+
+## 새로운 계정 생성후 접속 ##
+1. system 계정으로 접속
+	- user-name : system
+	- password : [비밀번호 입력]
+
+2. 새로운 계정 생성
+	create user [계정] identified by [비밀번호];	// 계정 생성
+	ex) create user mslove identified by mslove;	// 계정 생성
+
+3. 접속 권한 부여
+	-> 접속 권한이 없으면 계정이 생성되어도 접속이 불가능함
+	grant connect to [계정];			// 권한 부여
+	ex) grant connect to mslove;			// 권한 부여
+
+4. 접속 시도
+	conn mslove
+	password : [비밀번호 입력]
+
+5. 접속 계정 확인	show user;
+
+
+
+
+
+## 테이블 생성 및 데이터 삽입, 수정, 삭제, 권한 부여하기 ##
+
+1. 접속 후 현재 테이블 확인
+	conn scott/scott;
+	select table_name from tabs;
+
+2. 테이블 생성하기 위한 권한 부여 (권한은 system 계정으로 부여해주세요!!)
+	conn system/1q2w3e4r%T
+	grant resource to scott;
+
+3. scott 계정으로 재접속하여 테이블 생성 및 데이터 삽입
+	※ 아직 SQL을 배운상태가 아니므로 scott_en.sql 파일을 이용하세요
+	※ scott_en.sql 파일을 사용할때에는 해당 파일의 경로에서
+	SQLPLUS를 작동 시켜야 합니다.
+
+
+※ grant resource, connect to scott; 접속 권한부여와 테이블 생성 및 데이터 삽입, 수정, 삭제 권한 부여
+
+
+@ SQLPLUS 추가 기능
+
+1. 버퍼에 있는 SQL문 확인 : L
+
+2. 버퍼에 있는 SQL문 실행 : /,R
+
+3. 사용한 SQL문 저장 : save 파일명
+	버퍼에 있는 구문 저장(.sql)
+
+4. 문서편집 SQL 파일 수정 : edit
+
+5. SQL파일 버퍼에 저장하기 : get
+
+6. OS명령어 실행 : host / exit (빠져나오기)
+
+7. SQL 파일 실행 : @파일명
+

@@ -1,0 +1,231 @@
+
+
+@ 자바스크립트 (JavaScriot)
+-> 기존 HTML은 똑똑하지 못한 언어 (기능 구현이 안됨)
+-> 계산도 못하고, 누군가가 from(폼)을 정확하게 채웠는지도 알 수 없고, 클라이언트의
+행동에 따른 결정을 내릴 수도 없음
+	- 기본적인 HTML만으로는 사람들이 텍스트를 읽거나 사진을 볼 수 있도록
+	제공하고 다른 웹 페이지로 이동하는 단순한 작업만 함
+	(HTML5는제외... 하고 이야기 하도록 하죠..!)
+-> 자바스크립트는 웹 페이지가 지능적으로 반응할 수 있도록 하는 언어
+-> 자바스크립트를 사용해서 방문객들이 입력을 꼭 해야 하는 폼에 입력이 되어 있지 않으면
+자동으로 알려주는 기능등 다양한 기능을 제공하는 똑똑한 웹 폼을 만들수도 있음
+
+
+@ 클라이언트 주요 언어 (브라우저에서 작동하는 언어)
+-> HTML
+	- 하이퍼텍스트를 구현하기 위해 웹의 뼈대가 되는 핵심적인 기술인 마크업 언어
+-> CSS
+	- HTML이 뼈대라면 CSS는 뼈대를 꾸미기 위한 속성들
+-> 자바스크립트
+	- HTML만으로는 정적인 웹만을 표현하기 때문에 동적인 웹을 표현하기 위해 사용하는 언어
+-> jQuery
+	- 자바스크립트의 코드가 길어지면서 사용하기 복잡해지는 단점을 파격적으
+	개선한 언어
+
+
+@ 자바스크립트 선언
+-> <script></script>를 선언하여 사용함
+	- <script> ~ </script> 사이가 자바스크립트 영역
+-> 시작시 type 값을 통해 브라우저에 자바스크립트 라는 것을 알려줌
+	- <script type="text/javascript">
+	- default로 자바스크립트 형태로 되어 있긴 때문에 type은 미작성하여도
+	자바스크립트 임을 알림
+
+-> 자바스크립트는 html 태그 영역 밖에 작성이 가능하나
+	웹 표준과 웹 접근성을 고려하여 <head>나 <body>에 작성 함
+
+
+
+@ 자바스크립트 작성 방식
+1. inline 방식
+	- 자바스크립트 양이 한 줄 혹은 두줄 정도로 소량일때에 사용
+2. internal 방식
+	- 가장 일반적인 방식, html 파일 내 자바스크립트 소스를 작성(<head>나 <body>에 작성)
+3. external 방식
+	- 자바스크립트의 양이 많은 경우 자바스크립트 코드 부분을 외부 파일로
+	저장하여 작성하는 방식
+	- <script src="경로"></script> 태그를 이용하여 내용을 삽입 후 사용
+
+
+
+## inline 방식 ##
+-> 자바스크립트 양이 소량일 때 사용하는 방식
+
+ex)
+<button onclick=javascript:alert("Hello");> 클릭해보세요 </button>
+
+혹은
+
+ex) html 코드 안에서 자바스크립트 함수를 호출하는 방식
+
+<script>
+	function myfunc()
+	{
+		alert("짜란");
+	}
+</script>
+<button onclick="myfunc();">클릭</button>
+
+
+
+## internal 방식 ##
+-> 자바스크립트 코드를 작성, 함수 단위로 소스코드를 작성하고
+html에서는 자바스크립트 코드가 없는 방식
+
+<script>
+	window.onload = function(){
+		document.getElementById("btn").onclick = function(){
+			alert("Hello");
+		}	
+	}
+</script>
+
+<button id="btn">클릭해보세요</button>
+
+※ window는 브라우저 창을 이야기 하고, onload는 브라우저가 로딩이 완료 되었을 때를 말함
+
+
+## external 방식 ##
+-> 외부에 별도의 자바스크립트 소스 파일(*.js)을 작성하고 html 에서
+<script src="경로.js"></script> 태그를 이용하여 해당 파일을 로딩하여 처리하는 방식
+	- 여러개 html에서 공통적으로 사용하는 기능이거나
+	자바스크립트 코드가 너무 많을 경우에 사용
+
+※ 외부 파일인 *.js 파일에는 <script> 구문을 뺀 (<script>는 html태그) 순수 script 코드만 있어야함
+
+
+
+@ 자바스크립트를 이용한 데이터 출력 방법
+
+## document.write(내용); ##
+	- 브라우저 화면상의 값을 출력함 (브라우저에 있는 코드는 사라지고 덮어씌워짐)
+
+<script type="text/javascript">
+    function myfunc(){
+        document.write("<h1>클릭하셨습니다.</h1>");
+    }
+    </script>
+<button onclick="myfunc()";>클릭</button>
+
+
+
+## window.alert("내용"); ##
+-> 내용을 알림 메시지창을 이용하여 출력함
+-> window 객체는 브라우저 자체를 말하는 것으로써 생략 가능함
+	- alert("내용");
+
+<script>
+	function myfunc(){
+		window.alert("클릭하셨습니다.");
+	}
+</script>
+
+또는
+
+<script>
+	function myfunc(){
+		alert("클릭하셨습니다.");
+	}
+</script>
+
+<button onclick="myfunc();">클릭</button>
+
+
+## innerHTML = "내용"; ##
+-> 태그 엘리먼트의 내용(태그와 태그 사이의 값)을 변경하여 출력 함
+
+ex)
+
+<script>
+	function myfunc(){
+		var p1 = document.getElementById("p1");
+		p1.innerHTML = "잘했어요";
+	}
+</script>
+
+<p id="p1" onclick="myfunc();">클릭해보세요</p>
+
+
+
+## value ##
+-> 태그에 있는 value 속성을 변경
+
+ex)
+
+<script>
+	function myfunc()
+	{
+		var name = document.getElementById("name");
+		name.value = "변경되었습니다.";
+	}
+</script>
+
+<input type="text" id="name" value="홍길동">
+
+<button onclick="myfunc();">클릭</button>
+
+
+<p> Hello </p> (innerHTML)
+<input type="text" value="Hello"/> (value)
+<span> Hello </span> (innerHTML)
+
+
+## console.log("내용") ##
+-> 개발자도구 화면의 콘솔에서 출력함
+
+
+ex)
+
+<script>
+	function myfunc(){
+		var p1 = document.getElementById("p1");
+		console.log(p1.innerHTML);
+	}
+</script>
+
+<p id="p1">출력되나용?</p>
+<button onclick="myfunc();"> 클릭 </button>
+
+
+
+@ 자바스크립트를 이용한 데이터 입력 방법
+-> 자바스크립트 내장객체인 window 객체가 제공하는 confirm(), prompt() 메소드를 사용하여 입력 받는 방법
+
+## window.confirm() ##
+-> 어떤 질문에 대해 "예/아니오"의 결과를 얻을 때 사용
+-> 대화창에 메시지와 확인, 취소 버튼을 표시함
+-? 리턴 값 : 확인(true), 취소(false)
+
+var 변수 = [window.]confirm("질문내용");
+
+※ 변수의 역할은 true와 false를 저장하는 역할
+
+ex)
+<script>
+function myfunc(){
+	var result = window.confirm("당신은 갑부입니까?");
+	console.log(result);
+}
+</script>
+
+<button onclick="myfunc();">클릭</button>
+
+
+## window.prompt() ##
+-> 텍스트 필드와 확인/취소 버튼이 있는 대화창 출력
+-> 리턴값 : 입력한 메시지 내용
+
+var 변수 = [window.]prompt("메시지");
+ex)
+
+<script>
+	function myfunc(){
+		var result = window.prompt("당신이 가장 좋아하는 음식은?");
+		console.log("당신은 "+result+"를 가장 좋아하는 군요");
+    }
+</script>
+
+<button onclick="myfunc();">클릭</button>
+
+

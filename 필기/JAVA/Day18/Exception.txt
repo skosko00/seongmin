@@ -1,0 +1,132 @@
+
+@ Exception 이란?
+-> 예외 라는 뜻을 가지고 있고, 예외는 예기치 못한 상황이라고 볼 수 있음
+-> 프로그래밍을 하다보면 수 많은 오류 상황을 직면 하게 됨
+-> 자바에서는 예외 (Exception)란 프로그램을 만든 프로그래머가 예상한
+정상적인 처리에서 벗어나는 경우에 이를 처리하기 위한 방법이라고 볼 수 있음
+-> 예층 가능한 에러를 처리하는 것을 예외 처리 라고 함
+
+@ 예외 처리의 목적
+-> 프로그램의 비정상적인 종료를 막고, 정상적인 실행상태를 유지하기 위해
+	※ 어떻게? : 예외 상황이 발생된 경우에 처리하는 로직을 만듦
+
+
+@ try ~ catch
+-> 예외를 처리 하기 위한 문법
+-> 자바에서는 try ~ catch 라는 문법을 통해 예측할 수 있는 부분과
+에러가 발생하면 실행하는 코드로 나눌 수 가 있음
+-> try는 예측을 할 수 있는 부분이고, try에서 에러가 발생한다면 즉시 중단하고
+catch 부분의 코드를 실행하게 됨
+-> try 작성한 후 Ctrl + 스페이스를 눌러서 try ~ catch 구분을 사용해 보자
+
+	try {
+
+	}catch (Exception e)
+	{
+	
+	}
+
+-> 이때 Exception e 코드는 무엇일까?
+-> e는 객체이고, Exception은 하나의 Class 타입 임
+-> e라는 객체는 예외 상황에 대한 에러 내용을 담고 있는 객체라고 보면 됨
+
+@ finally
+-> 항상 try와 catch 이후에만 올 수 있음
+-> finally는 예외 여부와 관계 없이 실행되는 로직
+
+public void start()
+{
+	int choice = 0;
+	try{
+		choice = sc.nextint();
+	}catch(Exception e)
+	{
+		System.out.print("숫자를 입력해주세요!");
+		return;
+	}finally{
+		System.out.print("수고하셨습니다.");
+	}
+}
+
+
+-> finally는 try부분의 코드를 진행 하던, catch 부분의 코드를 진행하던
+상관 없이 무조건 진행 되는 코드라고 볼 수 있음
+
+@ 그렇다면 finally는 어떤 경우에 사용 할까?
+-> 흔히 Application 과 DB를 연결해서 프로그래밍을 하게 되는데
+DB 서버에 연결할때에는 가상의 스트림이라고 하는 연결 통로가 생기게 됨
+-> 이때 DB 사용이 끝났다면 DB와 연결되어 있는 가상의 스트림을 끊어 주어야 함
+	(지속적인 연결은 리소스를 계속 잡고 있기 때문에 연결 제한 및
+	DB.Application에 영향이 발생 함)
+-> 실제 사용시에 정상적인 연결 후에 사용이 완료 되었을 때 연결 해제 코드를 작성해야 함
+-> 문제는 비정상적인 상황(예외)가 발생 했을때에는 연결이 해제 되지 않는 문제가 발생하게 됨
+-> 이때 정상적인 해제를 하려면 try 구문에도 연결 해제코드를 작성해야 하고,
+catch 부분에도 연결 해제 코드를 작성해야 함
+-> 이때 2곳에 작성하여 코드 중복을 발생하기 보다 finally를 이용하면
+try를 진행하거나 혹은 catch를 진행하여도무조건 finally부분의 코드를
+진행하여 가상의 스트림을 끊어주게 되는 코드를 넣어 두면 됨
+
+
+@ try-with-resource 구문
+-> 자바 7에서 추가된 기능으로, finally에서 작성되었던 close() 처리를 생각하고
+자동으로 close 처리가 되게 하는 문자
+
+ex)	finally 방식
+
+try
+{
+	// 반드시 예외 처리를 해야 하는 구문 작성
+} catch()
+{
+	// 예외가 발생하면 실행되는 구문 작성
+} finally
+{
+	// 실행 도중 해당 Exception이 발생하거나 발생하지 않아도
+	// 반드시 실행해야 하는 구문을 작성함 (ex.리소스 반납)
+}
+
+ex) try-with-resource 방식
+
+try(자원생성코드)
+{
+	// 반드시 예외 처리를 해야 하는 구문 작성
+} catch()
+{
+	// 예외가 발생하면 실행되는 구문 작성
+}
+
+-> try-with-resource 방식을 사용하게 되면 자원생성 코드에 대하여
+try가 알고 있기 때문에 try를 정상적으로 진행 하게 되어도 자동 close 처리를 하고,
+catch(예외)를 진행하게 되어도 자동으로 close 처리를 하게 됨
+
+ex) finally
+
+		FileReader file = null;
+		try
+		{
+			file = new FileReader("test.txt");
+		}catch(FileNotFoundException e)
+		{
+			e.printStackTrace();
+			return;
+		}finally {
+			try {
+				file.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+ex) try-with-resource
+
+		try(FileReader file = new FileReader("test.txt"))
+		{
+		}catch(FileNotFoundException e)
+		{
+			e.printStackTrace();
+			return;
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+

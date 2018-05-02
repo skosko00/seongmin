@@ -1,0 +1,304 @@
+
+
+@ form 태그
+-> 사용자가 입력한 data를 보내는 방식과 처리할 프로그램을 정하는 태그
+
+속성
+
+action	: 데이터를 처리할 페이지
+method	: 데이터를 전송할 방식을 지정(get과 post가 있음)
+		※ get
+		- URL 창을 통하여 데이터를 보내는 방식
+		- data 크기에 제한이 있음
+		- 전송하는 데이터가 눈으로 시각화 되서 보임
+	
+		※ post
+		- htpp header 안에 포함하여 보내는 방식
+		- data 크기에 제한이 없음	
+		- data가 시각화 돼서 보이지 않음 (분석을 통하여 볼 수 있음)
+	
+name		: <form> 태그의 고유 이름 지정, 여러개의 form태그를 구분하기 위해 사용
+target		: action 동작시 페이지를 어떻게 열것인지를 결정 (_self,_blank)
+autocomplete	: 이전 입력내용을 출력하는 기능, 생략 하면 자동 출력 (default : on)
+		※ 자동 저장 기능 같은 것
+		※ form 태그에 지정하면 form에 속하는 모든 input tag에 지정됨
+
+
+
+## <fieldset> , <legend> 태그 ##
+-> 폼 요소를 그룹으로 묶는 태그, 묶은 폼 요소에 명칭을 붙이는 태그
+
+
+## <input> 태그 ##
+-> 사용자로부터 data를 입력받기 위한 태그
+
+속성
+type		: 입력창의 타입을 결정하는 속성 (text,checkbox, radio, select 등)
+	- text		: 한줄 짜리 텍스트 입력 창이 생김 (입력하는 내용이 그대로 보임)
+	- password	: 비밀번호 입력 창 (입력시 ●●●● 으로 표시 됨)
+	- hidden	: 사용자에게 보이지 않지만 값을 넣을 수 있는 창,
+			관리자에게 보낼때 필요
+	- button	: 버튼을 생성, 자체적으로는 별도 기능은 없고
+			스크립트에서 함수를 연결하여 활용 함
+	- checkbox	: 체크박스 생성
+	- file		: 파일 입력 양식 출력
+	- image		: 이미지 형태를 생성
+	- radio		: 라디오 버튼 생성
+	- submit	: 입력한 데이터를 다른 페이지로 넘기는 버튼 생성
+	- reset		: 입력한 내용을 지우는 기능을 하는 버튼 생성
+
+
+	※ type 속성의 값은 아래에서 다루도록 하겠음
+
+
+
+## 그 외 속성들 ##
+
+value		: input 요소의 기본값 표시
+name		: input 마다 구별할 수 있는 명칭
+min/max/step	: 허용 하는 범위 최소값/최대값/증감값
+autocomplete	: 자동완성 기능
+height/width	: 입력창의 높이와 너비
+readonly	: 읽기 전용 필드
+placeholder	: 사용자 입력전 표시글
+maxlength	: 사용자가 입력할 수 있는 최대 글자수 제한
+minlength	: 사용자가 입력할 수 있는 최소 글자수 제한 (지원 안하는 브라우저가 많음)
+size		: 화면에서 표시하는 글자수
+
+등등.. 더 많아요.. 알아서.. 찾아.. 보.. 세.. 요.. 너무.. 많아요..
+
+
+
+@ type 별 속성 값
+
+## hidden 속성 ##
+-> 사용자에게 보이지는 않지만 값을 가지고 있는 속성
+
+추가 속성
+name : hidden 속성 데이터 구분자 또는 명칭
+value : hidden에 들어갈 값 설정
+
+<input type=hidden name="명칭" value="값">
+
+
+## text 속성 ##
+-> 사용자에게 값을 입력받기 위한 속성
+
+추가 속성
+name : text 속성 데이터 구분자 또는 명칭
+size : 사용자 화면에 보여줄 문자 입력하는 창의 길이
+value : text에 들어갈 값, 설정하지 않으면 빈값이 됨
+maxlength : 총 입력 받을 개수
+
+<input type="text" name="명칭" value="값" size="숫자" maxlength="숫자">
+
+※ 추가적인 속성으로 readonly 사용하면 읽기 전용이 되므로 사용자는 입력 or 수정할 수 없음
+※ 추가적인 속성으로 placeholder="값" 을 사용하면 입력 전 표시글로 사용할 수 있음
+
+ex1)
+ID : <input type="text" name="ID" size="20" maxlength="20"> <br>
+
+ex2)
+ID : <input type="text" name="ID" placeholder="아이디를 입력하세요"> <br>
+
+ex3)
+ID : <input type="text" name="ID" value="admin" readonly> <br>
+
+
+## password 속성 ##
+-> text 타입 처럼 사용자가 입력할 수 있는 필드
+-> 입력시 데이터를 알 수 없게 ● 로 표시함
+
+<input type="password" name="명칭">
+
+
+## button 속성 ##
+-> 버튼을 생성하는 타입
+-> 별도의 기능이 따로 부여되어 있지는 않음
+
+추가 속성 값
+id	: 구분자 (css 나 JavaScript에서 구분하기 위한 구분자)
+value	: button에 표시될 값 (ex. 입력, 전송 등등)
+event	: 자바 스크립트를 불러올 행동 (ex.onclick)
+
+<input type="button" id="명칭" value="값" onclick="스크립트 함수">
+
+※ 자바 스크립트를 배우지 않았으므로 지금 구현은 힘듦!
+
+
+## checkbox / radio ##
+-> 사용자가 체크할 수 있는 체크 박스와 라디오 버튼을 생성
+
+name : 구분자 또는 명칭
+value : 전송시 전달할 값
+checked : 처음에 선택 될 값 지정 (default : 지정 안함)
+
+작성법
+<input type="checkbox" name="명칭" value="값">
+<input type="radio" name="명칭" value="값">
+
+
+## file ##
+-> 파일을 전송 할 때 사용하는 type
+-> 선택한 파일의 이름을 가져옴
+
+※ 실제 파일의 내용을 전송하려면 별도의 코드를 구현 해야 함
+
+<input type="file" name="명칭">
+
+
+
+## html5에 추가된 type ##
+
+추가된 type 속성
+
+color		: 색상 선택 양식
+date		: 년, 월, 일 선택 양식을 생성
+datetime-local	: 년, 월, 일 시간 선택 양식을 생성
+time		: 시간을 선택하는 양식을 생성
+month		: 년, 월을 선택하는 양식을 생성
+week		: 주를 선택 하는 양식을 생성
+number		: 숫자를 입력하는 창 생성
+range		: 슬라이드 막대로 숫자 입력 생성
+search		: 검색어를 입력하는 창 생성 (입력구에 X 버튼이 생김)
+tel		: 전화번호를 입력하는 창 생성
+email		: @를 포함하여 작성해야하는 창 생성 (이메일 형식)
+url		: 주소값을 입력하는 창 생성 (http:// 가 있는지를 확인 함)
+
+
+
+## color ##
+
+name : 이름 구분자
+
+사용법
+<input type="color" name="명칭">
+
+
+## date, datetime-local, month, week
+(기존 datetime이 있었으나 사용을 권장하지 않고 중단 됨, datetime은 사용자가 직접 날짜 입력)
+
+min	: 최소표시 날짜 지정 (ex. 1988-01-01)
+max	: 최대표시 날짜 지정 (ex. 2020-12-01)
+value	: 초기 표현 값
+
+<input type="타입명" name="명칭" min="0000-00-00" max="0000-00-00" step="숫자" value="날짜">
+
+※ date : yyyy-mm-dd
+※ datetime-local : yyyy-mm-ddT00:00(24)
+※ month : yyyy-mm
+
+ex) date 예시
+<input type=date min="1980-01-01" max="2020-12-31" name="date">
+
+ex) datetime-loca l예시
+<input type="datetime-local" min="1980-01-01T00:00" max="2020-12-31T23:59" name = "datetime">
+
+ex) month 예시
+<input type="month" min="1960-01" max="2030-12" name="month" value="2017-04">
+
+ex) week 예시
+<input type="week" value="week">
+
+## time ##
+-> 시간을 지정할 수 있는 타입
+
+value : 초기 시간 지정
+
+<input type="time" name="명칭" value="00:00:>
+
+
+## number / range ##
+
+속성
+min : 최소 표시 숫자 지정
+max : 최대 표시 숫자 지정
+step : 숫자 간격 지정
+value : 초기 표현 값
+
+<input type="number/range" name="명칭" min="숫자" max="숫자" step="숫자" value="숫자">
+
+※ range는 크롬에서는 제대로 표시 되지 않음 (숫자값이 안나와요...)
+
+
+## search / url / email / tel ##
+
+작성법
+
+<input type="search/url/email/tel" name="명칭" value="초기값">
+
+※ search는 지원하는 웹 브라우저가 많지 않음
+(글을 지우는 X 버튼이 지원되는 text 필드 인데 모바일을 위한 것이기 때문!)
+
+※ tel 또한 safari 8 이상 브라우저에서 지원 (다른곳은 지원하지 않음)
+
+
+
+## 여러값 표현 태그 ##
+
+
+
+# select 태그 ##
+-> select list를 만드는 태그
+-> option 을 이용하여 select안에 목록을 표시함
+
+속성
+size		: 화면에 표시될 항목 개수 지정
+multiple	: 여러 항목을 선택 지정 (ctrl 누른 상태에서 선택)
+
+
+## option 태그 ##
+-> select 안에 표시될 목록을 만드는 태그
+
+작성법
+<select size="숫자" name="명칭">
+	<option value="값1"> 표시내용1 </option>
+	<option value="값2"> 표시내용2 </option>
+	<option value="값3" selected> 표시내용3 </option>
+</select>
+
+※ option에 selected 값을 주게 되면 선택 된 상태로 나오게 됨
+
+
+## optgroup 태그 ##
+-> 옵션을 그룹으로 묶어서 출력하는 태그
+
+작성법
+<select>
+	<optgroup label="목록이름1">
+		<option value="값1"> 표시내용1 </option>
+		<option value="값2"> 표시내용2 </option>
+	</optgroup>
+	<optgroup label="목록이름2">
+		<option value="값3"> 표시내용3 </option>
+		<option value="값4"> 표시내용4 </option>
+	</optgroup>
+</select>
+
+
+## datalist 태그 ##
+-> select 와 비슷하게 option을 이용하여 항목을 넘겨주는 태그
+
+작성법
+
+<input type="text" id="" list="datalistid값">
+	<datalist id="">
+		<option value="값" label="명칭"></option>
+		<option value="값" label="명칭"></option>
+	</datalist>
+
+
+
+## textarea 태그 ##
+-> 긴 문장의 글을 작성할 때 사용하는 텍스트 영역
+
+작성법
+
+<textarea rows="10" cols="78" name="contents"></textarea>
+
+
+
+3가지 값
+name : 다른 페이지로 값을 넘길 때 사용하는 구분자
+id : 태그들 끼리 구분하기 위한 구분자
+class : 그룹으로 묶어서 구분하기 위한 구분자

@@ -1,0 +1,102 @@
+
+
+@ JDBC란?
+-> Java DateBase Connectivity 의 약자
+-> 자바 언어에서 DataBase에 접근할 수 있께 해주는 Programing API
+-> Java에서 DBMS 연동에 필요한 라이브러리를 제공
+-> 각 DBMS별 라이브러리를 사용하여 DBMS에 접속 가능하게 함
+-> Java.sql 패키지에서 관리
+
+
+
+
+@ 필요한 별도의 라이브러리
+-> OJDBC
+	※ OJDBC는 오라클에서 제공하는 오라클 DB와 자바가 연결하기 위한
+	라이브러리
+
+버전별 파일 이름
+- oracle 7 : classes111.zip
+- oracle 8 : classes12.zip
+- oracle 9i : ojdbc14.jar
+- oracle 10g : ojdbc14.jar
+- oracle 11g : ojdbc6.jar
+
+
+
+@ 필요한 셋팅 작업
+-> 기본 문자셋 인코딩
+	- 한글을 표현하는 문자 인코딩 방식은 다양하게 존재함 (MS949, UTF-8, UTF-16 등등)
+	- 이때, 한글 표현 방식을 동일하게 맞추어 주어야
+	각 다른 애플리케이션끼리의 문자를 인식할 수 있음
+	- 일반적으로 DB의 문자 인코딩 방식으로 맞추어 줌(Oracle은 UTF-8방식)
+
+General -> Worksapce
+General -> Test Editors -> Spelling
+JSON
+HTML
+CSS
+JSP
+
+다 UTF-8로!
+
+APP	->	DBMS(Oracle)
+JDBC
+1. Driver
+2. DBMS(Connection)
+3. Statement
+4. SQL
+5. Result Set
+
+
+@ JDBC Coding 절차
+
+1. Driver 등록
+	- 이클립스에서 DBMS와 연동하기 위해서는 첫번째로 Driver 등록을 해야 함
+	(DriverManager)
+2. DBMS 연결 (Connection)
+
+3. Statement 생성 - 작성한 쿼리문을 전송할 객체 (저장 및 전송 역할 객체)
+	-> 2가지 방식이 있음
+		-> statement 방식
+		-> prepareStatement 방식
+
+4. SQL 전송
+
+5. 결과 받기 (Reuslt Set)
+
+6. 닫기 (Close - 세션 해제)
+
+
+## DriverManager ##
+-> 데이터 원본에 JDBC 드라이버를 통하여 커넥션을 만드는 역할을 함
+-> Class.forName() 메소드를 통해 생성되며, 반드시 예외처리를 해야 함
+-> 직접 객체 생성이 불가능하고, getConnection() 메소드를 사용하여 객체를 생성할 수 있음
+경로 -> Java\jdk1.8.0_144\jre\lib\ext 에다가 jar 파일 복사
+
+## Connection ##
+-> Connection 객체는 특정 데이터 원본과 연결된 커넥션을 나타냄
+-> Statement 객체를 생성할 때도 Connection 객체를 사용하여 createStatement()
+메소드를 호출하여 생성 함
+-> SQL 문장을 실행시키기 전에 우선 Connection 객체가 있어야 DBMS와 연결이 가능 함
+
+## Statement ##
+-> Connection 객체를 이용하여 만들어지는 객체
+-> Connection 클래스의 createStatement() 메소드를 호출하여 얻어지며,
+생성된 Statement 객체로 질의문장을 인자로 담아(String 형태)
+excuteQuery() 메소드를 호출하여 SQL 질의를 수행함
+
+## PrepareStatement ##
+-> Connection 객체의 prepareStatement()메소드를 사용하여 객체를 생성함
+-> SQL 문장이 미리 컴파일 되고, 실행 시간동안 인수 값을 위한 공간을 확보 할 수
+있다는 점에서 Statement 방식과는 다름
+-> 각 각의 인수에 대해 위치홀더('?"라는 홀더값)를 사용하여
+SQL 문장을 정의할 수 있게 해줌
+
+## ResultSet ##
+-> SELECT문을 사용한 질의 성공시 ResultSet을 반환 함
+-> ResultSet은 SQL 질의에 의해 생성된 테이블을 담고 있으며,
+'커서(cursor)'라는 것을 가지고 특정 행에 대한 참조를 조작함
+
+
+

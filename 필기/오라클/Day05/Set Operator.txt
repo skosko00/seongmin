@@ -1,0 +1,113 @@
+
+
+@ 집합 연산자 (Set Operator)
+-> 두 개 이상의 테이블에서 조인을 사용하지 않고 연관된 데이터를 조회하는 방법
+-> 여러 개의 질의의 결과를 연결하여 하나로 결합하는 방식
+-> 각 테이블의 조회 결과를 하나의 테이블에 합쳐서 반환 함
+-> 조건
+	- SELECT 절의 "컬럼 수가 동일" 해야 함
+	- SELECT 절의 동일 위치에 존재하는 컬럼의 "데이터 타입이 상호 호환 가능" 해야함
+
+-> UNION, UNION ALL, INTERSECT, MINUS가 있음
+
+
+@ UNION
+-> UNION과 UNION ALL은 여러 개의 쿼리 결과를 하나로 합치는 연산자
+-> UNION은 중복된 영역을 제외하고 하나로 합치는 연산자
+
+A = {1,5,3,4,2};
+B = {7,6,3,8,5,9,10};
+A UNION B = {1,2,3,4,5,6,7,8,9,10};
+	-> 중복된 데이터를 제외하고 출력됨 (첫번째 컬럼을 기준으로 오름차순으로 보여줌)
+
+ex)
+-- 부서코드가 D5인 사람의 EMP_ID,EMP_NAME,DEPT_CODE,SALARY 를 출력
+SELECT EMP_ID,EMP_NAME,DEPT_CODE,SALARY
+FROM EMPLOYEE
+WHERE DEPT_CODE='D5';
+-- 결과가 6명이 출력 됨
+
+-- 급여가 300만원보다 큰 사람의 EMP_ID, EMP_NAME, DEPT_CODE, SALARY를 출력
+SELECT EMP_ID, EMP_NAME, DEPT_CODE, SALARY
+FROM EMPLOYEE
+WHERE SALARY>3000000;
+-- 결과는 8명이 출력 됨
+
+-- UNION을 이용하여 한번에 출력 --
+SELECT EMP_ID,EMP_NAME,DEPT_CODE,SALARY
+FROM EMPLOYEE
+WHERE DEPT_CODE='D5'
+UNION
+SELECT EMP_ID, EMP_NAME, DEPT_CODE, SALARY
+FROM EMPLOYEE
+WHERE SALARY>3000000;
+
+
+
+@ UNION ALL
+-> UNION ALL 은 UNION과 같이 여러 쿼리 결과물에 대한 합집합을 의미하며,
+UNION과의 차이점은 중복된 영역도 포함 시키는 연산자
+
+A = {1,5,3,4,2};
+B = {7,6,3,8,5,8,10};
+A UNION ALL B = {1,2,3,3,4,5,5,6,7,8,9,10};
+
+ex)
+SELECT EMP_ID,EMP_NAME,DEPT_CODE,SALARY
+FROM EMPLOYEE
+WHERE DEPT_CODE='D5'
+UNION ALL
+SELECT EMP_ID, EMP_NAME, DEPT_CODE, SALARY
+FROM EMPLOYEE
+WHERE SALARY>3000000;
+
+-> 중복된 데이터 제거 작업 없이 모두 보여줌
+-> 정렬 없이 데이터 그대로 합해서 보여줌
+
+
+
+@ INTERSECT
+-> 여러 개의 SELECT 결과에서 공통된 부분만 결과로 추출함
+-> 즉, 수행 결과에 대한 교집합 이라고 볼 수 있음
+
+A = {1,5,3,4,2};
+B = {7,6,3,8,5,8,10};
+A INTERSECT B = {3,5};
+	-> 공통된 요소만 보여줌 (교집합)
+
+ex)
+SELECT EMP_ID,EMP_NAME,DEPT_CODE,SALARY
+FROM EMPLOYEE
+WHERE DEPT_CODE='D5'
+INTERSECT
+SELECT EMP_ID, EMP_NAME, DEPT_CODE, SALARY
+FROM EMPLOYEE
+WHERE SALARY>3000000
+ORDER BY 1;
+
+
+
+@ MINUS
+-> 선행 SELECT 결과에 다음 SELECT 결과아 겹치는 부분을 제외한 나머지 부분만
+추출함
+-> 즉, 두 쿼리 결과물의 차집합 이라고 볼 수 있음
+
+A = {1,5,3,4,2};
+B = {7,6,3,8,5,8,10};
+A MINUS B = {1,2,4};
+	-> A를 중점으로 B와 공통된 요소를 뺀 A를 말함
+
+B MINUS A = {6,7,8,9,10};
+	-> B를 중점으로 A와 공통된 요소를 뺀 B를 말함
+
+
+ex)
+SELECT EMP_ID,EMP_NAME,DEPT_CODE,SALARY
+FROM EMPLOYEE
+WHERE DEPT_CODE='D5'
+MINUS
+SELECT EMP_ID, EMP_NAME, DEPT_CODE, SALARY
+FROM EMPLOYEE
+WHERE SALARY>3000000
+ORDER BY 1;
+

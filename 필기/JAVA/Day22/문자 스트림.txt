@@ -1,0 +1,118 @@
+
+@ 문자 스트림
+-> 문자 단위로 데이터 전송
+-> 바이트 스트림과 사용방법은 거의 같음
+-> 영어 이외의 문자에 대한 처리와 인코딩을 내부에서 처리함
+-> 문자 스트림의 최상위 클래스는 Reader와 Writer 임
+
+ex) FileWriter(주스트림)
+
+package kh.java.com;
+
+import java.io.DataOutputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
+
+public class StreamTest {
+	Scanner sc = new Scanner(System.in);
+	
+	public StreamTest()
+	{
+		//파일 출력 Output
+		FileWriter fw = null;
+		System.out.print("저장할 파일 명 : ");
+		String fileName = sc.next();
+		String str;
+		sc.nextLine();	// 입력 버퍼 비우기
+		
+		try {
+			fw = new FileWriter("d:\\"+fileName);
+			System.out.println(" " + fileName+" "+"파일에 저장될 내용 입력");
+			int lineNumber = 1;
+			while(true)
+			{
+				System.out.print((lineNumber++)+": ");		
+				str = sc.nextLine();
+				if(str.equals("exit"))
+				{
+					break;
+				}
+				fw.write(str+"\r\n");	// 수정
+
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				fw.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+}
+
+ex) FileWriter, BufferedWriter(보조스트림)
+
+package kh.java.com;
+
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
+
+public class StreamTest {
+	Scanner sc = new Scanner(System.in);
+	
+	public StreamTest()
+	{
+		//파일 출력 Output
+		FileWriter fw = null;
+		BufferedWriter bfw = null;		// 보조 스트림
+		System.out.print("저장할 파일 명 : ");
+		String fileName = sc.next();
+		String str;
+		sc.nextLine();	// 입력 버퍼 비우기
+		
+		try {
+			bfw =new BufferedWriter(new FileWriter("d:\\"+fileName));	// 감싸주기
+			System.out.println(" " + fileName+" "+"파일에 저장될 내용 입력");
+			int lineNumber = 1;
+			while(true)
+			{
+				System.out.print((lineNumber++)+": ");		
+				str = sc.nextLine();
+				if(str.equals("exit"))
+				{
+					break;
+				}
+				bfw.write(str);
+				bfw.newLine();		// 자동 줄 계행
+
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				bfw.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+}
+

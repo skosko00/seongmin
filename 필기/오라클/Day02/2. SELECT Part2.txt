@@ -1,0 +1,258 @@
+select job_name from job;
+
+select * from DEPARTMENT;
+
+select emp_name,email,phone,hire_date from employee;
+
+select emp_name, hire_date, salary from employee;
+
+select emp_name,sal_level from employee where salary>=2500000;
+
+select emp_name,phone from employee where salary>=3500000 and job_code='J3';
+
+-- @ SELECT에서 컬럼 값 산술 연산 하기
+-- -> 컬럼 값에 대해 산술 연산한 결과를 조회할 수 있음
+-- 연봉 (월급x12)
+SELECT EMP_NAME, SALARY*12 FROM EMPLOYEE;
+
+-- 보너스 금액
+SELECT EMP_NAME, SALARY*BONUS FROM EMPLOYEE;
+
+-- 연봉 확인 (단, 매달 받는 보너스를 포함한 연봉)
+SELECT EMP_NAME,((SALARY*BONUS)+SALARY)*12 FROM EMPLOYEE;
+
+
+@ 컬럼 별칭
+-> 출력되는 결과물 컬럼에 별칭을 부여할 수 있음
+-> AS를 사용하여 출력되는 Result Set에 컬럼명을 변경 할 수 있음
+SELECT EMP_NAME AS 이름,((SALARY*BONUS)+SALARY)*12 AS "연봉(원)" FROM EMPLOYEE;
+
+@ 리터럴
+-> 임의로 지정한 문자열을 SELECT 절에 사용하면, 테이블에 존재하는 데이터처럼
+사용 할 수 있음
+
+SELECT EMP_NAME AS 이름, SALARY*12 AS "연봉", '원' AS "단위" FROM EMPLOYEE;
+
+@ 실습 문제 2
+
+1. EMPLOYEE 테이블에서 이름,연봉, 총수령액(보너스포함), 
+실수령액(총 수령액-(월급*세금 3%))가 출력되도록 하시오
+
+SELECT EMP_NAME AS "이름", SALARY*12 AS "연봉", ((salary*bonus)+salary)*12 AS "총수령액",
+(((salary*bonus)+salary)*12)-(SALARY*0.03)*12 AS "실수령액"  FROM EMPLOYEE;
+
+
+2. EMPLOYEE 테이블에서 이름, 근무 일수를 출력해보시오 
+(SYSDATE를 사용하면 현재 시간 출력)
+
+SELECT EMP_NAME,NVL(BONUS,0) FROM EMPLOYEE;
+
+3. EMPLOYEE 테이블에서 20년 이상 근속자의 이름,월급,보너스율를 출력하시오
+
+SELECT EMP_NAME AS "이름", FLOOR(SYSDATE-HIRE_DATE) AS "근무일수", '일' FROM EMPLOYEE;
+
+
+
+※ SELECT EMP_NAME,NVL(BONUS,0) FROM EMPLOYEE; NULL인 보너스 튜플은 0으로 처리
+※ FLOOR 사용시 소수점 빼버림
+
+
+
+@ DISTINCT
+-> 컬럼에 포함된 중복 값을 한번씩만 표시하고자 할 때 사용 됨
+
+ex) SELECT DISTINCT DEPT_CODE FROM EMPLOYEE;
+
+
+@ 비교연산자
+-> 표현식 사이의 관계를 비교하기 위해 사용하고, 비교 결과는 논리 결과 중에 하나
+(TRUE/FALSE/NULL)가 됨
+-> 단, 비교하는 두 컬럼 값/ 표현식은 서로 동일한 데이터 타입이어야 함
+
+
+연산자			설명
+=			같다
+>,<			크다, 작다
+>=,=<			크거나 같다, 작거나 같다
+<>,!=,^=		같지 않다
+BETWEEN AND		특정 범위에 포함되는지 비교
+LIKE/NOT LIKE		문자 패턴 비고
+IS NULL / IS NOT NULL	NULL 여부 비교
+IS / NOT IN		비교 값 목록에 포함 / 미포함 되는지 여부 비교
+
+※ <> 작거나 크다라는 의미 / 즉, 같지 않다라는 뜻
+
+
+@ 연결 연산자
+-> 연결 연산자는 '||'를 사용하여 여러 컬럼을 하나의 컬럼인 것 처럼 연결하거나
+컬럼과 리터럴을 연결 할 수 있음
+
+ex) SELECT EMP_NAME, SALARY||'원' AS "월급" FROM EMPLOYEE;
+
+
+@ 비교 연산자 - BETWEEN AND
+-> 비교하려는 값이 지정한 범위 (상한 값과 하한 값의 경계도 포함)에
+포함되면 TRUE를 리턴하는 연산자
+
+ex) 그냥 사용
+SELECT EMP_NAME,SALARY
+FROM EMPLOYEE
+WHERE 3500000<= SALARY AND SALARY <= 6000000;
+
+ex) BETWEEN AND 사용
+SELECT EMP_NAME,SALARY
+FROM EMPLOYEE
+WHERE SALARY BETWEEN 3500000 AND 6000000;
+
+작은 따옴표 : 문자열을 감싸주는 용도
+큰 따옴표 : 컬럼며을 감싸주는 용도
+
+
+@ 비교 연산자 - LIKE
+-> 비교하려는 값이 지정한 특정 패턴을 만족시키면 TRUE를 리턴하는 연산자로
+'%'와 '_'를 와일드 카드로 사용 할 수 있음
+	※ 와일드 카드 : 대체해서 사용 할 수 있는 것
+	※ _ " 한문자, % : 모든것
+
+ex) SELECT * FROM EMPLOYEE WHERE EMP_NAME LIKE '이__';
+-- 이가 들어간 3글자만 찾음
+
+ex) SELECT * FROM EMPLOYEE WHERE EMP_NAME LIKE '이%';
+-- 이가 들어간 튜플만 찾음
+
+@ 비교 연산자 - NOT LIKE
+-> LIKE와 사용버은 같으나 일치하지 않은 것을 의미함
+-> 비교하려는 값과 일치하지 않는 것을 검색
+
+ex) SELECT * FROM EMPLOYEE WHERE EMP_NAME NOT LIKE '이%';
+-- 이가 들어가지 않은 튜플만 찾음
+
+
+@ 실습 문제 3
+
+1. EMPLOYEE 테이블에서 이름 끝이 연으로 끝나는 사원의 이름을 출력하시오
+
+SELECT * FROM EMPLOYEE WHERE EMP_NAME LIKE '%연';
+
+2. EMPLOYEE 테이블에서 전화번호 처음 3자리가 010이 아닌 사원의 이름, 전화번호를
+출력하시오
+
+SELECT EMP_NAME,PHONE FROM EMPLOYEE WHERE PHONE NOT LIKE '010%';
+
+3. EMPLOYEE 테이블에서 메일주소 '_'의 앞이 4자이면서, DEPT_CODE가 D9 또는 D6이고
+고용일이 90/01/01 ~ 00/12/01이면서, 월급이 270만원이상인 사원의 전체 정보를 출력하시오
+
+SELECT * FROM EMPLOYEE WHERE EMAIL LIKE '____/_%' ESCAPE '/' AND 
+(DEPT_CODE='D9' OR DEPT_CODE='D6')
+AND (HIRE_DATE BETWEEN '90/01/01' AND '00/12/01')
+AND SALARY>=2700000;
+
+SELECT * 
+FROM EMPLOYEE
+WHERE EMAIL LIKE '%s%' ESCAPE '/' AND 
+(DEPT_CODE='D9' OR DEPT_CODE='D6')
+AND (HIRE_DATE BETWEEN '90/01/01' AND '00/12/01')
+AND SALARY>=2700000;
+
+
+
+@ 비교 연산자 - IS NULL / IS NOT NULL
+-> NULL 여부를 비교하는 연산자
+
+ex) SELECT * FROM EMPLOYEE WHERE BONUS IS NULL;
+ex) SELECT * FROM EMPLOYEE WHERE BONUS IS NOT NULL;
+
+@ 비교 연산자 - IN
+-> 비교하려는 값 목록에 일치하는 값이 있으면 TRUE를 반환하는 연산자
+
+ex) SELECT * FROM EMPLOYEE WHERE DEPT_CODE IN ('D6','D9');
+
+
+@ 연산자 우선 순위
+-> 여러 연산자를 사용하는 경우에는 우선순위를 고려해서 사용해야 함
+
+산술 > 연결 > 비교 > IS NULL/IS NOT NULL, LIKE, IN/NOT IN >
+BETWEEN AND/NOT BETWEEN AND > 논리(NOT) > 논리(AND) > 논리(OR)
+
+@ ORDER BY
+-> SELECT한 결과물에 대해 정렬을 할 때 사용하는 구문
+-> SELECT 구문의 가장 마지막에 작성하며, 실행순서도 가장 마지막에 수행 됨
+
+표현식
+SELECT 컬럼1, 컬럼2, 컬럼3...
+FROM 테이블명
+WHERE 조건절
+ORDER BY 컬럼명|별칭|컬럼순서 정렬방식
+
+데이터 정렬 방법
+
+		NUMBER		CHARACTER		DATE		NULL
+ASC		작은수->큰수	사전순			빠른날->늦은날	맨아래 행
+									(NULL이 맨 아래로 감)
+DESC		큰수->작은수	사전역순		늦은날->빠른날	맨 위 행
+									(NULL이 맨 위로 감)
+
+## ASC : 오름차순 (DEFAULT) ##
+-> 지정한 컬럼을 기준으로 오름차순으로 정렬
+-> 기본적으로 ASC 정렬
+ex) SELECT * FROM EMPLOYEE ORDER BY EMP_NO;
+ex) SELECT * FROM EMPLOYEE ORDER BY 2 ASC;
+ex) SELECT BONUS*SALARY FROM EMPLOYEE ORDER BY 1;
+
+## DESC : 내림차순 ##
+-> 지정한 컬럼을 기준으로 내림차순 정렬
+ex) SELECT * FROM EMPLOYEE ORDER BY EMP_NO DESC;
+ex) SELECT * FROM EMPLOYEE ORDER BY 2 DESC;
+ex) SELECT BONUS*SALARY FROM EMPLOYEE ORDER BY 1 DESC;
+
+※ 컬럼위치 숫자로도 가능
+
+
+@ 실습 문제 4
+-- 문제1. 
+-- 입사일이 5년 이상, 10년 이하인 직원의 이름,주민번호,급여,입사일을 검색하여라
+
+SELECT EMP_NAME, EMP_NO, SALARY, HIRE_DATE FROM EMPLOYEE WHERE (SYSDATE-HIRE_DATE)/365 BETWEEN 5 AND 10;
+
+-- 문제2.
+-- 재직중이 아닌 직원의 이름,부서코드를 검색하여라 (퇴사 여부 : ENT_YN)
+
+SELECT EMP_NAME, DEPT_CODE, HIRE_DATE, ENT_DATE-HIRE_DATE, ENT_DATE FROM EMPLOYEE WHERE ENT_YN='Y';
+
+-- 문제3.
+-- 근속년수가 10년 이상인 직원들을 검색하여
+-- 출력 결과는 이름,급여,근속년수(소수점X)를 근속년수가 오름차순으로 정렬하여 출력하여라
+-- 단, 급여는 50% 인상된 급여로 출력되도록 하여라.
+
+SELECT EMP_NAME, SALARY, FLOOR((SYSDATE-HIRE_DATE)/365) AS "근속년수" 
+FROM EMPLOYEE WHERE (SYSDATE-HIRE_DATE)/365>=10 ORDER BY "근속년수" ASC;
+
+-- 문제4.
+-- 입사일이 99/01/01 ~ 10/01/01 인 사람 중에서 급여가 2000000 원 이하인 사람의
+-- 이름,주민번호,이메일,폰번호,급여를 검색 하시오
+
+SELECT EMP_NAME, EMP_NO, EMAIL, PHONE, SALARY FROM EMPLOYEE
+WHERE HIRE_DATE BETWEEN '99/01/01' AND '10/01/01' AND SALARY<=2000000;
+
+-- 문제5.
+-- 급여가 2000000원 ~ 3000000원 인 여직원 중에서 4월 생일자를 검색하여 
+-- 이름,주민번호,급여,부서코드를 주민번호 순으로(내림차순) 출력하여라
+-- 단, 부서코드가 null인 사람은 부서코드가 '없음' 으로 출력 하여라.
+
+SELECT EMP_NAME, EMP_NO, SALARY, NVL(DEPT_CODE,'없음')
+FROM EMPLOYEE WHERE (SALARY BETWEEN '2000000' AND '3000000')
+AND EMP_NO LIKE '%04%-2%'
+ORDER BY 2 DESC;
+
+-- 문제6.
+-- 남자 사원 중 보너스가 없는 사원의 오늘까지 입사일을 측정하여 
+-- 1000일 마다(소수점 제외) 
+-- 급여의 10% 보너스를 계산하여 이름,특별 보너스 (계산 금액) 결과를 출력하여라.
+-- 단, 이름 순으로 오름 차순 정렬하여 출력하여라.
+
+SELECT EMP_NAME,
+FLOOR((SYSDATE-HIRE_DATE)/1000)*SALARY*0.1 AS "특별보너스"
+FROM EMPLOYEE
+WHERE EMP_NO LIKE '%-1%' AND BONUS IS NULL
+ORDER BY EMP_NAME;
+

@@ -1,0 +1,38 @@
+
+@ 메소드 오버라이딩
+-> 부모 클래스의 메소드를 상속받지 않고 자신이 재정의 할 때 사용하는 것
+
+
+ex)
+public class Animal
+{
+	public void howling()
+	{
+		System.out.println("크와앙~");
+	}
+}
+
+public class Tiger extends Animal
+{
+	@Override
+	public void howling()
+	{
+		System.out.println("어흥~~!!");
+	}
+}
+
+public class TestMain
+{
+	public static void main(String [] args)
+	{
+		Tiger t = new Tiger();
+		t.howling();	// 어떠한 결과가 출력 될까?
+	}
+}
+
+
+@ 애너테이션 (어노테이션) - Java Annotation
+-> 애너테이션은 자바 소스코드에 추가하여 사용 할 수 있는 메타데이터의 일종
+-> '@' 기호를 붙여 사용하며 가상 머신에게 해당 문법에 대해 알려줌
+-> 메소드 오버라이딩시에는 @overried를 명시하여 오버라이드 된 메소드임을
+JVM에게 알려줌 (생략 하여도 자동으로 @Override가 명시됨)

@@ -1,0 +1,182 @@
+
+
+@ 조인문(JOIN)
+-> 여러 테이블의 레코드를 조합하여 하나의 열로 표현 한 것
+-> 두 개 이상의 테이블에서 연관성을 가지고 있는 데이터들을 따로 분류하여
+새로운 가상의 테이블을 이용하여 출력 함
+-> 서로 다른 테이블에서 각 각 의 공통 값을 이용함으로써 필드를 조합함
+
+
+※ JOIN 시 컬럼명이 같을 경우와 다를 경우 사용법은 2가지가 있음
+	- Oracle 전용 구문
+	_ ANSI 표준 구문(ANSI 표준은 DBMS에 상관없이 공통적으로 사용하는 표준 SQL)
+
+### 연결에 사용할 두 테이블의 컬럼명이 서로 다른 경우 ###
+- Oracle 전용 구문
+	SELECT EMP_ID, EMP_NAME, DEPT_CODE, DEPT_TITLE
+	FROM EMPLOYEE, DEPARTMENT
+	WHERE DEPT_CODE = DEPT_ID;
+
+	※ Oracle 에서는 where 절을 이용하여 '='를 사용함
+
+- ANSI 표준 구문
+	SELECT EMP_ID, EMP_NAME, DEPT_CODE, DEPT_TITLE
+	FROM EMPLOYEE JOIN DEPARTMENT ON(DEPT_CODE=DEPT_ID);
+
+	※ ANSI 표준에서는 JOIN과 ON을 사용함
+
+### 연결에 사용할 두 테이블의 컬럼명이 서로 같은 경우 ###
+- Oracle 전용 구문
+	SELECT EMP_ID, EMP_NAME,EMPLOYEE.JOB_CODE,JOB_NAME
+	FROM EMPLOYEE, JOB
+	WHERE EMPLOYEE.JOB_CODE = JOB.JOB_CODE;
+
+	※ Oracle에서는 테이블명.컬럼명을 이용해서 작성
+
+	혹은
+
+	SELECT EMP_ID, EMP_NAME,E.JOB_CODE,JOB_NAME
+	FROM EMPLOYEE E, JOB J
+	WHERE E.JOB_CODE = J.JOB_CODE;
+
+	※ 각 테이블의 별칭을 붙여서도 사용 할 수 있음
+
+- ANSI 표준 구문
+	SELECT EMP_ID, EMP_NAME,JOB_CODE,JOB_NAME
+	FROM EMPLOYEE JOIN JOB USING(JOB_CODE);
+
+	※ 연결하려는 테이블의 컬럼명이 같을 경우엔 USING()을 사용 함
+	※ USING 안에 있는 컬럼명은 JOIN 된 테이블의 컬럼명
+
+
+@ JOIN의 종류
+- INNER JOIN(내부 조인) : 교집합 (일반적으로 사용하는 JOIN)
+- OUTER JOIN(외부 조인) : 합집합
+	=> LEFT OUTER JOIN (왼쪽 외부 조인)
+	=> RIGHT OUTER JOIN (오른쪽 외부 조인)
+	=> FULL OUTER JOIN (완전 외부 조인)
+
+
+
+@ INNER JOIN
+-> 테이블 A와 테이블 B 모두 조건 구문에 일치하는 ROW만 반환
+
+SELECT <컬럼> FROM <테이블 A> INNER JOIN <테이블 B> ON <조건 구문>;
+
+테이블 A의 EMP_NAME과 DEPT_CODE
+-> SELECT EMP_NAME, DEPT_CODE FROM EMPLOYEE;
+
+테이블 B의 DEPT_ID 와 DEPT_TITLE
+-> SELECT DEPT_ID, DEPT_TITLE FROM DEPARTMENT;
+
+테이블 A의 EMP_DEPT와 테이블 B의 DEPT_ID가 일치한 데이터의 EMP_NAME과 EMP_DEPT를 출력
+ex) SELECT EMP_NAME, DEPT_TITLE, DEPT_CODE, DEPT_ID
+FROM EMPLOYEE INNER JOIN DEPARTMENT ON (DEPT_CODE = DEPT_ID);
+
+
+
+@ LEFT OUTER JOIN(왼쪽 외부 조인)
+-> 테이블 A 모두 반환
+-> 테이블 B 조건 구문에 일치하는 데이터만 반환
+
+테이블 A의 EMP_NAME과 DEPT_CODE
+-> SELECT EMP_NAME, DEPT_CODE FROM EMPLOYEE;
+
+테이블 B의 DEPT_ID 와 DEPT_TITLE
+-> SELECT DEPT_ID, DEPT_TITLE FROM DEPARTMENT;
+
+왼쪽 조인 결과
+ex) SELECT EMP_NAME, DEPT_TITLE, DEPT_CODE, DEPT_ID
+FROM EMPLOYEE LEFT JOIN DEPARTMENT ON (DEPT_CODE = DEPT_ID);
+
+
+
+
+@ RIGHT OUTER JOIN(오른쪽 외부 조인)
+-> 테이블 B 모두 반환
+-> 테이블 A 조건 구문에 일치하는 데이터만 반환
+
+테이블 A의 EMP_NAME 과 DEPT_CODE
+-> SELECT EMP_NAME, DEPT_CODE FROM EMPLOYEE;
+
+테이블 B의 DEPT_ID 와 DEPT_TITLE
+-> SELECT DEPT_ID, DEPT_TITLE FROM DEPARTMENT;
+
+오른쪽 조인 결과
+
+ex) SELECT EMP_NAME, DEPT_TITLE FROM EMPLOYEE
+RIGHT JOIN DEPARTMENT ON (DEPT_CODE = DEPT_ID);
+
+
+
+@ FULL OUTER JOIN(양쪽 외부 조인)
+-> 테이블 A, 테이블 B 조건 구문에 일치하는 모든 데이터 반환
+
+완전 외부 조인 결과
+ex) SELECT EMP_NAME, DEPT_CODE, DEPT_TITLE
+FROM EMPLOYEE
+FULL JOIN DEPARTMENT ON (DEPT_CODE = DEPT_ID);
+
+
+@ CROSS JOIN(상호 조인)
+-> 카테션곱(Cartensian Product) 이라고도 함
+-> 조인 되는 테이블의 각 행들이 모두 매핑된 데이터가 검색되는 조인
+-> A와 B를 서로 조인 할 때, 조인 조건을 생략하고 A 테이블의 모든 행이 B 테이블의
+모든 행들과 조인 되는 경우
+한쪽 테이블의 모든 행과 다른쪽 테이블의 모든 행을 조인 시킴
+	- 결과는 두 테이블의 컬럼 수를 곱한 개수가 나옴
+	- 조건이 없기 때문에 A 테이블의 한행 당 B 테이블의 모든 행이 되는 것임
+
+ex) SELECT EMP_NAME, DEPT_TITLE
+FROM EMPLOYEE
+CROSS JOIN DEPARTMENT
+ORDER BY 1;
+
+
+
+@ NOT_EQUI JOIN (비등가 조인)
+-> 지정한 컬럼 값이 일치하는 경우가 아닌, 값의 범위에 포함되는 행들을 연결하는 방식
+-> '=' 등가 연산자가 아닌 (Between, >, <, >=, <=, <> 등) 연산자들을 사용함
+
+ex) SELECT EMP_ID, EMP_NAME, SALARY, E.SAL_LEVEL, S.SAL_LEVEL
+FROM EMPLOYEE E
+JOIN SAL_GRADE S ON (SALARY BETWEEN 3000000 AND 4000000)
+WHERE E.SAL_LEVEL = S.SAL_LEVEL
+ORDER BY 1;
+
+
+
+@ SELF_JOIN
+-> 조인은 두 개 이상의 서로 다른 테이블을 연결하기도 하지만, 같은 테이블(하나의 테이블)을
+조인하는 경우가 있음
+-> 이러한 조인을 SELF JOIN 이라고 함
+
+ex) ANSI 구문
+SELECT E.EMP_ID, E.EMP_NAME, E.MANAGER_ID, E2.EMP_ID, E2.EMP_NAME
+FROM EMPLOYEE E
+JOIN EMPLOYEE E2 ON (E.MANAGER_ID = E2.EMP_ID);
+
+ex) Oracle 구문
+SELECT E.EMP_ID, E.EMP_NAME, E.MANAGER_ID, E2.EMP_ID AS "매니저ID", E2.EMP_NAME AS "매니저 이름"
+FROM EMPLOYEE E, EMPLOYEE E2
+WHERE E.MANAGER_ID = E2.EMP_ID;
+
+
+
+@ 다중 JOIN
+-> 여러 개의 조인문을 한번에 사용 할 수 있음
+
+1. EMPLOYEE 테이블과 DEPARTMENT 테이블을 조인해서
+EMP_ID, EMP_NAME, DEPT_CODE, DEPT_TITLE을 보고 싶다면?
+
+SELECT EMP_ID, EMP_NAME, DEPT_CODE, DEPT_TITLE
+FROM EMPLOYEE JOIN DEPARTMENT ON (DEPT_CODE = DEPT_ID);
+
+2. DEPARTMENT 테이블과 LOCATION 테이블을 조인해서
+DEPARTMENT의 LOCATION_ID에 따른 LOCAL_NAME을 보고 싶다면?
+
+SELECT EMP_ID, EMP_NAME, DEPT_CODE, DEPT_TITLE,LOCATION_ID,LOCAL_NAME
+FROM EMPLOYEE
+JOIN DEPARTMENT ON (DEPT_CODE = DEPT_ID)
+JOIN LOCATION ON (LOCATION_ID = LOCAL_CODE);
+

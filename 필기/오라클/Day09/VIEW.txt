@@ -1,0 +1,129 @@
+
+@ VIEW
+-> 하나 이상의 테이블에서 원하는 데이터를 선택하여 새로운 가상 테이블을 만들어 주는 것
+-> 다른 테이블에 있는 데이터를 보여줄 뿐이며, 데이터 자체를 포함하고 있는 것은 아님
+	- 저장장치 내에 물리적으로 존재하지 않고 가상테이블로 만들어짐
+	- 물리적인 실제 테이블과의 링크 개념
+
+-> 뷰를 사용하면 특정 사용자가 원본 테이블에 접근하여 모든 데이터를 보게 하는 것을
+	방지 할 수 있음
+	- 원본 테이블이 아닌 뷰를 통한 특정 데이터만 보여지게 만듦
+
+-> 뷰를 만들기 위해서는 별도의 권한이 필요함
+
+@ VIEW Date Dictionary 확인
+-> SELECT * FROM USER_VIENS;
+
+@ VIEW 사용법
+CREATRE VIEW <뷰이름> AS <SELECT 구문>
+
+@ 뷰 생성을 위한 권한 부여 (system 계정으로 권한을 부여 해야 함)
+GRANT CREATE VIEW TO kh;  -- kh 계정에 뷰 생성 권한 설정
+
+
+## VIEW를 이해 하기 위한 간단 실습 ##
+
+-> 테이블 복사 형태
+
+1. 기존 테이블을 편집한 복사 테이블 생성
+2. 복사된 테이블을 타 계정에게 권한 부여
+3. 타 계정에서 복사된 테이블을 검색
+4. 원본 테이블의 정보 수정
+5. 타 계정에서 복사된 테이블의 정보 검색 (변경되지 않은 것을 확인)
+
+-> 뷰를 사용한 형태
+
+1. 기존 테이블을 편집한 VIEW를 생성
+2. 해당 VIEW를 볼 수 있는 권한을 타 계정에게 권한 부여
+3. 타 계정에서 VIEW를 검색
+4. 원본 테이블의 정보 수정
+5. 타 계정에서 VIEW를 검색(원본 테이블의 정보에 따라 VIEW가 변경되는 것을 볼 수 있음)
+
+
+-- 뷰 생성
+CREATE VIEW EMP_HEALTH_VIEW
+AS SELECT EMP_ID, EMP_NAME 
+FROM EMPLOYEE;
+
+-- 뷰 확인
+SELECT * FROM EMP_HEALTH_VIEW;
+
+-- 뷰 삭제
+DROP VIEW EMP_HEALTH_VIEW;
+
+
+※ 생성된 뷰를 가지고 DML 구문(INSERT, UPDATE, DELETE) 사용이 가능 함
+※ DML 구문을 가지고 뷰 테이블에 내용을 변경할 시 실제 테이블의 내용이 변경되는 것
+
+
+
+@ DML (INSERT,UPDATE,DELETE) 명령어로 조작이 불가능한 경우
+
+1. 뷰 정의에 포함되지 않은 컬럼을 조작하는 경우
+
+2. 뷰에 포함되지 않은 컬럼 중에 베이스가 되는 테이블 컬럼이 NOT NULL
+	제약조건이 지정된 경우
+
+3. 산술 표현식으로 정의된 뷰인 경우
+
+4. JOIN을 이용해 여러 테이블을 연결한 경우
+	(JOIN일 경우 베이스 테이블만 수정 가능)
+
+5. DISTINCT를 포함한 경우
+
+6. 그룹함수나 GROUP BY 절을 포함한 경우
+
+
+
+
+
+특정 업체 (khlove1) 에서
+
+직원 ID, 직원이름, 부서명 정보가 필요하여 본사에 요청하였음
+본사에서는 각 정보를 가지고 있는 별도의 VIEW를 생성하여
+khlove1 에게 SELECT 할 수 있는 권한을 주고자 한다!
+khlove1 계정에서
+SELECT * FROM EMP_INFO_VIEW;
+라는 SQL을 작성하였을 때
+직원ID, 직원이름, 부서명 정보가 보일 수 있도록 VIEW를 만들어 보아라.
+
+
+CREATE VIEW EMP_INFO_VIEW(사원ID, 사원이름, 부서명)
+AS SELECT EMP_ID, EMP_NAME,DEPT_TITLE
+FROM EMPLOYEE LEFT JOIN DEPARTMENT ON (DEPT_CODE=DEPT_ID);
+
+
+@ VIEW 옵션
+
+1. OR REPLACE
+-> 생성한 뷰가 존재하면, 뷰를 갱신 함
+-> 없으면 새롭게 생성
+
+ex) CREATE VIEW [OR_REPLACE] EMP_INFO_VIEW
+AS SELECT EMP_ID, EMP_NAME
+FROM EMPLOYEE
+
+
+2. WITH CHECK OPTION
+-> 설정한 컬럼의 값을 수정하지 못하게 함
+-> 조건(WHERE)을 주어 뷰를 설정할 때 해당 옵션을 주게 되면 조건에
+사용되는 컬럼의 값을 변경할 수 없게 됨
+
+ex)
+CREATE VIEW EMP_VIEW
+AS SELECT EMP_ID, EMP_NAME
+FROM EMPLOYEE
+WHERE EMP_ID = 200 WITH CHECK OPTION;
+
+3. WITH READ ONLY
+-> 뷰에 대해 조회만 가능하고, 삽입, 수정, 삭제 등을 하지 못하게 하는 옵션
+
+ex)
+CREATE VIEW EMP_VIEW
+AS SELECT EMP_ID, EMP_NAME
+FROM EMPLOYEE
+WITH READ ONLY;
+
+	※ CHECK 와 READ ONLY 의 차이점은 대상이 컬럼이냐 아니면 전체 뷰 이냐의 차이
+
+

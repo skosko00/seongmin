@@ -1,0 +1,178 @@
+
+@ GUI
+-> Graphic User Interface (그래픽 유저 인터페이스)의 약자
+-> 그래픽적인 windows 창을 통해서 명령어들을 실행 시키는 구조
+	* TUI(Text User Interface) 처럼 글자로 작성하는 것이 아닌 마우스로
+	클릭하여 명령들을 실행 할 수 있는 구조
+
+-> 자바에서 사용할 수 있는 GUI 객체는 일반적으로 2가지가 있음
+	(AWT, Swing)
+
+-> AWT (Abstract Windws Toolkit)
+-> 운영체제가 제공하는 자원을 이용하여 컴포넌트를 생성함
+-> 예를 들어서 버튼의 경우 AWT가 윈도우 시스템에서 실행되고 있다면 윈도우 시스템이
+제공하는 버튼을 이용하여 AWT 버튼을 만듦
+-> AWT의 장점은 여러 플랫폼에서 쉽게 컴포넌트를 제공 할 수 있다는 점
+-> 하지만 컴포넌트가 종속적이기 때문에 실행되는 플랫폼에 따라서 컴포넌트들의 모습이
+달라질 수 있음 (일관된 화면 제공이 어려움)
+
+@ Swing(스윙)
+-> AWT와는 달리 컴포넌트가 자바로 작성되어 있기 때문에 어떠한 플랫폼에서도
+일관된 모습을 보여 줄 수 있음
+-> AWT는 자바의 초기 버전에 제공되던 것으로 현재는 스윙의 사용이 권장 됨
+-> 또한 AWT에는 없는 다양한 컴포넌트들도 제공됨
+
+※ 스윙은 AWT를 대체하기 위하여 AWT의 컴포넌트 이름 앞에 J를 붙인 동일한 기능을
+하는 컴포넌트들을 대체용으로 제공함
+예를 들어서 AWT의 Button 클래스는 Swing의 JButton 클래스로 사용 됨
+
+
+@ GUI 개발을 위해 꼭 알아야 하는 용어
+
+컴포넌트 : 컨테이너에 포함되어야 화면에 출력 될 수 있는 GUI 객체
+	java.awt.Component 클래스는 모든 GUI 컴포넌트의 최상위 클래스
+컨테이너 : 다른 컴포넌트들을 포함 할 수 있는 GUI 컴포넌트
+	다른 컨테이너에 포함 될 수 있고, 다른 컨테이너에 속하지 않고 독립적으로
+	존재 가능함
+	스스로 화면에 자기 자신을 출력하는 컨테이너로는
+	JFrame, JDialog, JApplet이 있음
+
+
+@ Swing을 이용한 프레임 생성
+-> 프레임이란? 모든 컴포넌트들을 담는 최상위 컨테이너 (Top Level Container)
+-> 프레임이 있어야 GUI 화면 출력이 가능하며, 프레임 내에 부착된 모든 컴포넌트들이 화면에
+출력 됨
+-> 따라서 컴포넌트들은 프레임 없이 독립적으로 화면에 출력 될 수 없으며, 프레임이 닫히면
+프레임 내의 모든 컴포넌트들도 사라지고 프레임과 함께 화면에서 없 어짐
+	※ Swing 에서는 JFrame을 통해 프레임을 만듦
+
+@ GUI 프로그래밍 작업 순서
+1. 컨테이너 객체 생성
+2. 배치 방식을 컨테이너에 셋팅함 (레이아웃 생성)
+3. 컴포넌트 객체 생성
+4. 지정된 배치 방식에 따라 컨테이너에 컴포넌트들을 배치함
+5. 컴포넌트에 마우스나 키보드 반응에 대한 이벤트를 처리함
+
+
+@ 프레임 생성하기
+-> 프레임 생성하는 방법은 3가지로 만들 수 있음
+1. JFrame 객체 생성 후 설정
+2. Class에 JFrame을 상속한 후 해당 클래스 생성후 설정
+3. Class에 JFrame을 상속하고, 생성자를 이용하여 설정
+
+
+
+1. JFrame 객체 생성후 설정
+
+		JFrame f = new JFrame();				// 프레임 생성		
+		f.setSize(500, 500);					// 프레임 사이즈 설정(가로,세로)
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	// Close버튼 클릭시 정상 종료
+		f.setVisible(true);					// 만든 프레임을 보여주어라
+
+
+2. Class에 JFrame을 상속한 후 해당 클래스 생성후 설정
+-> 별도의 클래스를 생성하여 JFrame을 상속 받고 JFrame 처럼 사용하는 방식
+
+package kh.java.gui;
+
+import javax.swing.JFrame;
+
+public class GuiTest extends JFrame{
+	public GuiTest() {}	
+}
+
+package kh.java.gui;
+
+import java.util.Scanner;
+
+import javax.swing.JFrame;
+
+public class TestMain {
+
+	public static void main(String[] args) {
+
+		GuiTest t = new GuiTest;
+		t.setSize(300,200);
+		t.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		t.setVisible(true);
+	}
+
+}
+
+
+3. Class에 JFrame을 상속하고, 생성자를 이용하여 설정
+
+package kh.java.gui;
+
+import javax.swing.JFrame;
+
+public class GuiTest extends JFrame{
+	public GuiTest() {}
+	public GuiTest(int width, int height, int operation, boolean b)
+	{
+		this.setSize(width, height);
+		this.setDefaultCloseOperation(operation);	
+		this.setVisible(b);	
+	}
+}
+
+package kh.java.gui;
+
+import java.util.Scanner;
+
+import javax.swing.JFrame;
+
+public class TestMain {
+
+	public static void main(String[] args) {
+
+		Scanner sc = new Scanner(System.in);
+		System.out.print("사이즈(가로) : ");
+		int width = sc.nextInt();
+		System.out.print("사이즈(세로) : ");
+		int height = sc.nextInt();
+		GuiTest t = new GuiTest(width,height,JFrame.EXIT_ON_CLOSE,true);
+
+	}
+
+}
+
+
+
+@ 윈도우 프레임에 대한 세부 속성을 지정
+
+setLocation(x,y)				// 위치 설정
+setSize(width,height)				// 사이즈 설정
+setBounds(x,y,width,height)			// 위치+사이즈를 한번에 설정
+setTitle(String title)				// 타이틀 이름 설정
+setIconImage(IconImage)				// 아이콘 이미지 설정
+setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)	// 우측 상단 X 버튼 클릭시 종료
+setVisible(true)				// 프레임이 보이도록 함 (가시화)
+setResizable(true)				// 사용자가 사이즈 조정 가능(true)/불가능(false)
+setLocationRelativeTo(null)			// 프레임 위치를 중앙으로 설정
+
+
+@ 윈도우의 컴포넌트 배치 방식을 지정
+	Layout 클래스에 대한 객체 생성후 setLayout(레이아웃래퍼런스);
+
+※ 지금은.. 건들지 마세요...
+
+@ 배치할 컴포넌트 객체를 생성하고, 컴포넌트 객체에 대한 세부 속성 변경
+
+다양한 컴포넌트를 사용하여 만듦
+
+-> JButton
+-> JLabel
+-> JTextField
+-> ImageIcon
+-> jTextArea
+-> JCheckBox
+-> JList
+등등..
+
+@ 컴포넌트들을 해당 윈도우(컨테이너)에 배치
+-_ add(컴포넌트래퍼런스)
+
+@ 각 컴포넌트에 이벤트 적용
+-> java.awt.event 패키지에 있는 클래스와 인터페이스를 사용됨
+

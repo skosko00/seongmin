@@ -1,0 +1,704 @@
+
+
+@ 함수 (Function)
+-> 하나의 큰 프로그램에서 반복적으로 사용되는 부분들을 분리하여 작성해 놓은
+작은 서브 프로그램으로, 호출하여 값을 전달하면 수행 결과를
+리턴하는 방식으로 사용됨
+
+값 전달 및 호출 -> 작업 수행 -> 결과값 리턴
+
+
+함수의 유형
+
+단일 행 함수 : 각 행 마다 반복적으로 적용되어 입력 받은 행의 개수만큼 결과를 반환
+
+그룹 함수 : 특정한 행들의 집합으로 그룹이 형성되어 적용 됨
+		그룹당 1개의 결과를 반환
+
+
+
+@ 문자 처리 함수
+=============================================================================================
+|  구분	|	입력값 타입	|	리턴값 타입	|		설명		    |
+=============================================================================================
+|LENGTH	|			|			|문자열의 길이를 반환함		    |
+--------| 	  		| 			|------------------------------------	
+|LENGTHB|			|			|문자열의 바이트 크기를 반환함	    |
+--------|			| 			|------------------------------------
+|INSTR	|			|			|특정 문자의 위치를 반환함	    |
+--------|			| 			|------------------------------------
+|INSTRB	|			|			|특정 문자의 위치 바이트 크기를 반환|
+--------|			| 			|------------------------------------
+|	|			|			|문자열을 지정된 숫자만큼의 크기로  |
+|LPAD	|			|			|설정하고, 지정한 문자를 왼쪽부터   |
+|	|			|			|채워서 생성된 문자열을 리턴 함	    |
+--------|			| 			|------------------------------------	
+|	|			|			|문자열을 지정된 숫자만큼의 크기로, |
+|RPAD	|			|			|설정하고, 지정한 문자를 오른쪽부터 |
+|	|			|			|채워서 생성된 문자열을 리턴 함	    |
+--------|			| 			|------------------------------------	
+|LTRIM	|			|			|왼쪽부터 지정한 문자를 잘라내고    |
+|	|			|			|남은 문자를 리턴 함		    |
+--------|			| 			|------------------------------------	
+|RTRIM	|	CHARACTER	|	NUMBER		|오른쪽부터 지정한 문자를 잘라내고  |
+|	|			|			|남은 문자를 리턴 함		    |
+--------|			| 			|------------------------------------
+|TRIM	|			|			|왼쪽/오른쪽/양쪽부터 지정한 문자를 |
+|	|			|			|잘라내고 남은 문자를 리턴 함	    |
+--------|			| 			|------------------------------------
+|SUBSTR	|			|			|지정한 위치에서 지정한 길이만큼    |
+|	|			|			|문자를 잘라내어 리턴 함	    |
+--------|			| 			|------------------------------------
+|SUBSTRB|			|			|지정한 위치에서 지정한 바이트만큼  |
+|	|			|			|문자를 잘라내어 리턴 함	    |
+--------|			| 			|------------------------------------
+|LOWER	|			|			|전달받은 문자/문자열을 소문자로    |
+|	|			|			|변환하여 리턴 함		    |
+--------|			| 			|------------------------------------
+|UPPER	|			|			|전달받은 문자/문자열을 대문자로    |
+|	|			|			|변환하여 리턴 함		    |
+--------|			| 			|------------------------------------
+|	|			|			|전달받은 문자/문자열의 첫 글자를   |
+|INTCAP	|			|			|대문자로, 나머지 글자는 소문자로   |
+|	|			|			|변환하여 리턴 함		    |
+--------|			| 			|------------------------------------
+|CONCAT	|			|			|인자로 전달받은 두 개의 문자/문자열|
+|	|			|			|을 합쳐서 리턴 함		    |
+--------|			| 			|------------------------------------
+|	|			|			|전달받은 문자열 중에 지정한 문자를 |
+|REPLACE|			|			|인자로 전달받은 문자로 변환하여    |
+|	|			|			|리턴 함			    |
+---------------------------------------------------------------------------------------------
+
+@ LENGTH
+-> 주어진 컬럼 값/문자열의 길이 (문자 개수)를 반환하는 함수
+
+작성범			리턴값 타입		파라미터 (인자값)
+LENGTH(COL | STRING)	NUMBER			CHARACTER 타입의 컬럼 또는 임의의 문자열
+
+ex) SELECT EMAIL, LENGTH(EMAIL) AS "이메일 길이" FROM EMPLOYEE;
+
+
+@ LENGTHB
+-> 주어진 컬럼 값/문자열의 길이(BYTE)를 반환하는 함수
+
+작성법			리턴값 타입		파라미터
+LENGTHB(COL | STRING)	NUMBER			CHARACTER 타입의 컬럼 또는 임의의 문자열
+
+ex) SELECT EMP_NAME, LENGTH(EMP_NAME), LENGTHB(EMP_NAME) FROM EMPLOYEE;
+
+@ INSTR
+-> 찾는 문자(열)이 지정한 위치부터 지정한 횟수만큼 나타난 시작 위치를 반환
+
+작성법							리턴값 타입
+INSTR(STRING,STR,[POSITION,[OCCURRENCE]]		NUMBER
+
+파라미터		설명
+STRING		문자타입 컬럼 또는 문자열
+STR		찾으려는 문자(열)
+POSITION	찾을 위치 시작 값(기본값 1)
+		POSITION > 0 : STRING의 시작부터 끝 방향으로 찾음
+		POSITION < 0 : STRING의 끝부터 시작 방향으로 찾음
+
+OCCURRENCE	검색된 STR의 순번(기본값 1), 음수 사용 불가
+
+※ 시작위치의 INDEX 값은 0이 아닌 1부터 시작임
+
+ex) SELECT INSTR('Hello World Hi High', 'H',1,1) FROM DUAL;
+Hello World Hi High 문자열 첫번째부터 H를 찾아서 처음으로 나타나는 H의 자리를 찾아냄
+
+
+@ LPAD / RPAD
+-> 주어진 컬럼 문자열에 임의의 문자열을 왼쪽/오른쪽에 덧붙여 길이 N의 문자열을
+반환하는 함수
+
+작성법							리턴값 타입
+LPAD(STRING,N,[STR])/RPAD(STRING,N,[STR])		CHARACTER
+
+파라미터			설명
+STRING		문자 타입 컬럼 또는 문자열
+N		반환할 문자(열)의 길이(바이트)
+		원래 STRING 길이보다 작다면 N만큼 잘라서 표시
+STR		덧붙이려는 문자(열), 생략 시 공백 문자
+
+ex) SELECT INSTR(EMAIL, '@') FROM EMPLOYEE;
+ex) SELECT RPAD('mslove',20,'@') FROM DUAL;
+ex) SELECT RPAD(EMAIL,20) FROM EMPLOYEE;
+ex) SELECT LPAD(EMAIL,20) FROM EMPLOYEE;
+
+
+
+@ LTRIM / RTRIM
+-> 주어진 컬럼이나 문자열의 왼쪽 혹은 오른쪽에서 지정한 STR에 포함된 모든 문자를 
+제거한 나머지를 반환함
+
+작성법					리턴값 타입
+LTRIM(STRING,STR)/RTRIM(STRING,STR)	CHARACTER
+
+파라미터		설명
+STRING		문자 타입 컬럼 또는 문자열
+STR		제거하려는 문자(열), 생략하면 공백문자
+
+ex) SELECT LTRIM('0000000000KHLOVE0','0') FROM DUAL;
+ex) SELECT LENGTH(LTRIM('___MSLOVE','_')) FROM DUAL;
+
+
+@ TRIM
+-> 주어진 컬럼이나 문자열의 앞/뒤/양쪽에 있는 지정한 문자를 제거하여 나머지를 반환
+
+작성법								리턴값 타입
+TRIM(STRING)							CHARACTER
+TRIM(CHAR FROM STRING)						CHARACTER
+TRIM(LEADING | TRAILING | BOTH [CHAR] FROM STRING)		CHARACTER
+
+파라미터				설명
+STRING				문자 타입 컬럼 또는 문자열
+CHAR				제거하려는 문자, 생략하면 공백문자
+				※ TRIM은 문자 1글자만 가능
+LEADING				TRIM할 CHAR의 위치를 지정
+				앞(LEADING), 뒤(TRAILING), 양쪽(BOTH) 지정 가능 (기본값은 양족)
+
+ex) SELECT TRIM ('  KH  ') FROM DUAL;
+    SELECT TRIM('Z'FROM'ZZKHZZ') FROM DUAL;
+    SELECT TRIM(LEADING'Z'FROM'ZZKHZZ') FROM DUAL;
+    SELECT TRIM(TRAILING'Z'FROM'ZZKHZZ') FROM DUAL;
+    SELECT TRIM(BOTH 'Z'FROM'ZZKHZZ') FROM DUAL;
+    CHAR를 작성하지 않으면 기본적으로 공백을 삭제하라는 의미
+    위치 (앞 또는 위)를 지정하지않으면 기본적으로 BOTH (양족) 값을 가지고 있음
+
+-- 실습 문제 1
+-- Hello KH Java 문자열을 Heloo KH 가 출력되게 하여라.
+SELECT RTRIM('Hello KH Java',' Java') FROM DUAL;
+
+-- 실습 문제 2
+-- Hello KH Java 문자열을 KH Java 가 출력되게 하여라.
+SELECT LTRIM('Hello KH Java','Hello ') FROM DUAL;
+
+
+-- 실습 문제 3 (TRIM으로 해보세요)
+-- DEPARTMENT 테이블에서 DEPT_TITME을 출력하여라
+-- 이때, 마지막 부 글자를 빼고 출력되도록 하여라 / ex)회계관리부 -> 회계관리
+SELECT TRIM(TRAILING'부' FROM DEPT_TITLE) FROM DEPARTMENT;
+
+
+-- 실습 문제 4
+-- 다음문자열에서 앞뒤 모든 숫자를 제거하세요.
+-- '982341678934509hello89798739273402'
+SELECT LTRIM(RTRIM('982341678934509hello89798739273402', '0123456789'),'0123456789') FROM DUAL;
+
+
+@ SUBSTR
+-> 컬럼이나 문자열에서 지정한 위치부터 지정한 개수의 문자열을 잘라내어 리턴하는 함수
+
+작서법						리턴값 타입
+SUBSTR(STRING, POSITION,[LENGTH])		CHARACTER
+
+파라미터			설명
+STRING			문자 타입 컬럼 또는 문자열
+POSITION		문자열을 잘라낼 위치
+			양수이면 시작 방향에서 지정한 수 만큼의 위치를 의미
+			음수이면 끝 방향에서 지정한 수 만큼의 위치를 의미
+LENGTH			반환 할 문자의 개수를 의미
+			(생략시 문자열의 끝까지를 의미, 음수이면 NULL을 리턴)
+
+ex) SELECT SUBSTR('SHOWMETHEMONEY',5,2) FROM DUAL;
+ex) SELECT SUBSTR('SHOWMETHEMONEY',5) FROM DUAL;
+ex) SELECT SUBSTR('SHOWMETHEMONEY',1,6) FROM DUAL;
+ex) SELECT SUBSTR('SHOWMETHEMONEY',-8,3) FROM DUAL;
+
+
+@ LOWER / UPPER/ INITCAP
+
+-> 컬럼의 문자 혹은 문자열을 소문자/대문자/단어별 첫글자만 대문자로 변환하여
+리턴하는 함수
+
+작성법									리턴값 타입
+LOWER(STRING)  /  UPPER(STRING)  /  INITCAP(STRING)			CHARACTER
+
+LOWER : 소문자
+UPPER : 대문자
+INITCAP : 각 단어 별 첫 글자만
+
+
+파라미터		설명
+STRING		문자 타입 컬럼 또는 문자열
+
+ex) SELECT LOWER('Welecome To My Oracle World') FROM DUAL;
+ex) SELECT UPPER('Welecome To My Oracle World') FROM DUAL;
+ex) SELECT INITCAP('welecome to my oracle world') FROM DUAL;
+
+
+@ CONCAT
+-> 컬럼의 문자 혹은 문자열을 두 개 전달 받아 하나로 합친 후 리턴하는 함수
+-> || 와 같음
+-> 만약에 3개 이상의 컬럼(문자열 타입, 숫자 타입, 날짜 타입) 을 결합 할 때에는
+||를 권장
+
+
+작성법					리턴값 타입
+CONCAT(STRING,STRING)			CHARACTER
+
+파라미터			설명
+STRING			문자 타입 컬럼 또는 문자열
+
+ex) SELECT CONCAT(CONCAT('가나다','ABC'),'123') FROM DUAL;
+ex) SELECT '가나다'||'ABC'||'123' FROM DUAL;
+
+@ REPLACE
+-> 컬럼의 문자 혹은 문자열을 두 개(변경할,변경될)의 문자열 값을 전달 받아
+변경후 리턴
+
+작성법				리턴값 타입
+REPLACE(STRING,STR1,STR2)	CHARACTER
+
+파라미터			설명
+STRING			문자 타입 컬럽 또는 문자열
+STR1			변경대상이 되는 문자 혹은 문자열
+STR2			변경할 문자 혹은 문자열
+
+ex) SELECT replace('Hello World' ,'Hello','Java') FROM DUAL;
+
+
+@ 숫자 처리 함수
+
+=============================================================================================
+|  구분	|	입력값 타입	|	리턴값 타입	|		설명		    |
+=============================================================================================
+|ABS	|			|			|절대값을 구하여 리턴한다.	    |
+|-------| 	  		| 			|-----------------------------------|	
+|MOD	|			|			|입력받은 수를 나눈 나머지 값을 반환|
+|-------|			| 			|-----------------------------------|
+|ROUND	|	NUMBER		|	NUMBER		|특정 자릿수에서 반올림		    |
+|-------|			| 			|-----------------------------------|
+|FLOOR	|			|			|소수점 아래를 잘라내고 리턴(버림)  |
+|-------|			| 			|-----------------------------------|
+|TRUNC	|			|			|특정 자릿수에서 잘라내고 리턴(버림)|
+|-------|			| 			|-----------------------------------|	
+|CEIL	|			|			|지정한 자릿수에서 올림하여 리턴    |
+---------------------------------------------------------------------------------------------
+
+
+@ ABS
+-> 인자로 전달받은 숫자의 절대값을 구하는 함수
+
+작성법				리턴값 타입
+ABC(NUMBER)			NUMBER
+
+파라미터		설명
+NUMBER		숫자 혹은 숫자 데이터 컬럼
+
+※ 절대값 : 음수, 양수의 형태가 아닌 원점 0에서의 방향을 가진 변위의 크기를 나타냄
+	(즉, 음수와 양수의 부호는 무시하고 단지 부위의 크기만을 다루는 값)
+	|+3| => 3	|-3| => 3
+
+ex) SELECT ABS(+3) FROM DUAL;
+SELECT ABS(-3) FROM DUAL;
+ex) SELECT ABS(+3) FROM DUAL;
+SELECT ABS(-3) FROM DUAL;
+
+
+
+@ MOD
+-> 인자로 전달받은 숫자를 나누어 나머지를 구하는 함수
+
+작성법				리턴값 타입
+MOD(NUMBER,DIVISION)		NUMBER
+
+파라미터		설명
+NUMBER		숫자 혹은 숫자 데이터 컬럽
+DIVISION	나눌 수(값) 혹은 나눌 숫자 데이터 컬럼
+
+ex) SELECT MOD(10,3) FROM DUAL;
+
+@ ROUND
+-> 인자로 전달 받은 숫자 혹은 컬럼에서 지정한 위치 이후 값을 반올림하여 리턴
+
+작성법				리턴값 타입
+ROUND(NUMBER)			NUMBER
+ROUND(NUMBER,POSITION)		NUMBER
+
+파라미터		설명
+NUMBER		숫자 혹은 숫자 데이터 컬럼
+POSITION	반올림 할 위치 자리
+
+ex) SELECT ROUND(123.456,2) FROM DUAL;
+ex) SELECT ROUND(123.456,1) FROM DUAL;
+ex) SELECT ROUND(123.456,0) FROM DUAL;
+ex) SELECT ROUND(123.456,-1) FROM DUAL;
+ex) SELECT ROUND(123.456,-2) FROM DUAL;
+
+@ FLOOR
+-> 인자로 전달받은 숫자 혹은 컬럼의 소수점 자리 수를 버리는 함수
+
+작성법				리턴값 타입
+FLOOR(NUMBER)			NUMBER
+
+파라미터		설명
+NUMBER		숫자 혹은 숫자 데이터 컬럼
+
+
+@ TRUNC
+-> 인자로 전달받은 숫자 혹은 컬럼의 지정한 위치 이후 소수점 자리 수를 버리는 함수
+
+작성법				리턴값 타입
+TRUNC(NUMBER,POSITION)		NUMBER
+
+파라미터		설명
+NUMBER		숫자 혹은 숫자 데이터 컬럼
+POSITION	버림 할 위치 자리
+
+ex) SELECT TRUNC(123.456,2) FROM DUAL;
+ex) SELECT TRUNC(123.456,1) FROM DUAL;
+ex) SELECT TRUNC(123.456,0) FROM DUAL;
+ex) SELECT TRUNC(123.456,-1) FROM DUAL;
+ex) SELECT TRUNC(123.456,-2) FROM DUAL;
+
+
+
+@ CEIL
+-> 인자로 전달받은 숫자 혹은 컬럼을 올림 계산하여 나온 값을 리턴하는 함수
+
+작성법				리턴값 타입
+CEIL(NUMBER)			NUMBER
+
+파라미터		설명
+NUMBER		숫자 혹은 숫자 데이터 컬럼
+
+ex) SELECT CEIL(123.456) FROM DUAL;
+
+
+@ 날짜 처리 함수
+
+
+=============================================================================================
+|  구분		|  입력값 타입	|	리턴값 타입	|		설명		    |
+=============================================================================================
+|SYSDATE	|		|	DATE		|시스템에 저장된 현재 날짜를 반환   |
+|---------------|---------------|-----------------------|-----------------------------------|	
+|MONTHS_BETWEEN	|     DATE	|	NUMBER		|두 날짜를 전달받아 몇 개월 차이인지|
+|		|		|			|계산하여 반환함		    |
+|---------------|---------------|-----------------------|-----------------------------------|
+|ADD_MONTHS	|      		|			|특정 날짜에 개월 수를 더함	    |
+|---------------|		| 			|-----------------------------------|
+|NEXT_DAY	|		|			|특정 날짜에서 최초로 다가오는 인자 |
+|		|		|			|로 받은 요일의 날짜를 반환함	    |
+|---------------|     DATE	| 	DATE		|-----------------------------------|
+|LAST_DAY	|		|			|해당 달의 마지막 날짜를 반환함	    |
+|---------------|		|			|-----------------------------------|
+|EXTRACT	|		|			|년,월,일 정보를 추출하여 반환 함   |	
+|		|		|			|   				    |
+---------------------------------------------------------------------------------------------
+
+
+
+
+@ SYSDATE
+-> 시스템에 저장되어 있는 현재 날짜를 반환하는 함수
+
+SELECT SYSDATE FROM DUAL;			-> 현재 시간을 반환하여 출력함
+
+
+※ 그외 현재 시각 알려주는 명령어
+CURRENT_DATE, LOCALTIMESTAMP, CURRENT_TIMESTAMP
+
+SELECT CURRENT_DATE FROM DUAL;
+SELECT LOCALTIMESTAMP FROM DUAL;
+SELECT CURRENT_TIMESTAMP FROM DUAL;
+
+
+@ MONTHS_BETWEEN
+-> 인자로 날짜 두 개를 전달받아, 개월 수의 차이를 숫자 데이터형으로 리턴하는 변수
+
+작성법					리턴값 타입
+MONTHS_BETWEEN(DATE1,DATE2)		NUMBER
+
+파라미터		설명
+DATE1		기준이 되는 날짜를 입력
+DATE2		개월 수를 구하려는 날짜를 입력
+
+ex) SELECT EMP_NAME, FLOOR(MONTHS_BETWEEN(SYSDATE, HIRE_DATE)) AS "개월",
+    HIRE_DATE,
+    SYSDATE
+    FROM EMPLOYEE;
+
+
+@ ADD_MONTHS
+-> 인자로 전달받은 날짜에 인자로 전달받은 숫자만큼 개월 수를 더하여
+특정 날짜를 리턴하는 함수
+
+
+작성법				리턴값 타입
+ADD_MONTHS(DATE,NUMBER)		DATE
+
+파라미터		설명
+DATE		기준이 되는 날짜를 입력
+NUMBER		더하려는 개월 수를 입력
+
+ex) SELECT EMP_NAME, HIRE_DATE, ADD_MONTHS(HIRE_DATE,6)
+    FROM EMPLOYEE;
+
+
+@ NEXT_DAY
+-> 인자로 전달받은 날짜에 인자로 전달받은 요일 중 가장 가까운 다음 요일을 출력
+
+작성법					리턴값 타입
+NEXT_DAY(DATE,STRING [OR NUMBER])	DATE
+
+파라미터			설명
+DATE			기준이 되는 날짜를 입력
+STRING[OR NUMBER]	구하려는 요일을 입력함 (숫자의 경우 1=일요일,....7=토요일)
+
+ex) SELECT SYSDATE,NEXT_DAY(SYSDATE,'수요일') FROM DUAL;
+ex) SELECT SYSDATE,NEXT_DAY(SYSDATE,'수') FROM DUAL;
+ex) SELECT SYSDATE,NEXT_DAY(SYSDATE,4) FROM DUAL;
+
+
+@ LAST_DAY
+-> 인자로 전달받은 날짜가 속한 달의 마지막 날짜를 구하여 리턴
+
+작성법				리턴값 타입
+LAST_DAY(DATE)			DATE
+
+파라미터		설명
+DATE		기준이 되는 날짜를 입력
+
+ex) SELECT LAST_DAY('20/02/01') FROM DUAL;
+
+
+@ EXTRACT
+-> 년, 월, 일 정보를 추출하여 리턴
+
+작성법					리턴값 타입
+EXTRACT(YEAR FROM DATE)			DATE
+EXTRACT(MONTH FROM DATE)		DATE
+EXTRACT(DAY FROM DATE)			DATE
+
+
+파라미터			설명
+DATE			기준이 되는 날짜를 입력
+
+ex) SELECT EXTRACT (YEAR FROM SYSDATE) FROM DUAL;
+ex) SELECT EXTRACT (MONTH FROM SYSDATE) FROM DUAL;
+ex) SELECT EXTRACT (DAY FROM SYSDATE) FROM DUAL;
+
+
+@ 형 변환 함수
+
+=============================================================================================
+|  구분		|  입력값 타입	|	리턴값 타입	|		설명		    |
+=============================================================================================
+|TO_CHAR	|DATE,NUMBER	|	CHARACTER	|날짜형 혹은 숫자형을 문자형으로변환|
+|---------------|---------------|-----------------------|-----------------------------------|	
+|TO_DATE	|CHARACTER     	|	DATE		|문자형을 날짜형으로 변환	    |
+|---------------|---------------|-----------------------|-----------------------------------|
+|TO_NUMBER	|CHARACTER 	|	NUMBER		|문자형을 숫자형으로 변환	    |
+---------------------------------------------------------------------------------------------
+
+
+	TO_CHAR				TO_DATE
+	--------------> 	   --------------> 
+NUMBER			CHARACTER			DATE
+	<--------------		   <--------------
+	TO_NUMBER			TO_CHAR
+
+
+
+@ TO_CHAR
+-> 날짜형 데이터를 문자형 데이터로 변환하거나, 숫자데이터를 문자형 데이터로 변환하여 리턴
+
+작성법					리턴값 타입
+TO_CHAR(DATE,[FORMAT])			DATE
+TO_CHAR(NUMBER,[FORMAT])		NUMBER
+
+파라미터			설명
+DATE			문자형으로 변환하라는 날짜형 데이터
+NUMBER			문자형으로 변환하라는 숫자형 데이터
+FORMAT			문자형으로 변환시 지정되는 출력 형식
+
+
+날짜 -> 문자로 바꾸는 형식
+
+YYYY		년도표현(4자리)
+YY		년도표현(2자리)
+MONTH		월 표시
+MM		월을 숫자로 표현
+MON		월을 알파벳으로 표현
+DD		날짜 표현
+D		요일을 숫자로 표현(1:일요일...)
+DAY		요일표현
+DY		요일을 약어로 표현
+
+HH,HH12		시간(12시간으로 표현)
+HH24		시간(24시간)
+MI		분
+SS		초
+
+AM, PM		오전, 오후 표기
+FM		월, 일, 시, 분, 초 앞의 0을 제거
+
+
+ex) SELECT TO_CHAR(SYSDATE, 'YYYY-MM-DD') FROM DUAL;
+ex) SELECT TO_CHAR(SYSDATE, 'YYYY/MON/DD/DAY') FROM DUAL;
+ex) SELECT TO_CHAR(SYSDATE, 'YYYY/MONTH/DD/DAY') FROM DUAL;
+ex) SELECT TO_CHAR(SYSDATE, 'YYYY/MM/DD/HH12"시"MI"분"SS"초"') FROM DUAL;
+ex) SELECT TO_CHAR(SYSDATE, 'YYYY/MM/DD/HH24"시"MI"분"SS"초"') FROM DUAL;
+
+
+숫자-> 문자로 바꾸는 형식
+
+FORMAT		예시			설명
+,(comma)	9,999			콤마 형식으로 변환
+.(period)	99.99			소수점 형식으로 변환
+0		09999			왼쪽에 0을 삽입
+$		$9999			$통화로 표시
+L		L9999			Local 통화로 표시(한국의 경우\)
+
+-> 숫자 표시 단위는 충분한 크기를 주어야 함
+-> 변환될 숫자의 길이보다 포멧의 길이가 작으면 정상 표시가 안됨
+-> 0과 9를 이용하여 최대 자리수를 표현 해야 함
+
+
+ex) SELECT TO_CHAR(100000000,'999,999,999') FROM DUAL;
+ex) SELECT TO_CHAR(100000000,'$999,999,999') FROM DUAL;
+ex) SELECT TO_CHAR(100000000,'l999,999,999') FROM DUAL;
+ex) SELECT TO_CHAR(100000000,'999,999,999.999') FROM DUAL;
+
+
+@ TO_DATE
+-> 숫자 혹은 문자형 데이터를 날짜형 데이터로 변환하여 리턴
+
+작성법					리턴값 타입
+TO_DATE(CHARACTER,[FORMAT])		DATE
+TO_DATE(NUMBER,[FORMAT])		NUMBER
+
+파라미터			설명
+CHARACTER		날짜형으로 변환하려는 문자형 데이터
+NUMBER			날짜형으로 변환하려는 숫자형 데이터
+FORMAT			날짜형으로 변환시 입력 포멧 지정
+
+ex) SELECT TO_DATE(20010101,'YYYY/MM/DD') FROM DUAL;
+ex) SELECT TO_CHAR(TO_DATE(20010101,'YYYY/MM/DD'),'YYYY/MM/DD') FROM DUAL;
+ex) SELECT TO_CHAR(TO_DATE(20010101,'YYYY/MM/DD'),'YYYY/MM/DD HH24:MI:SS') FROM DUAL;
+
+※ 포멧형식은 위에 TO_CHAR에 있는 것 사용
+
+
+@ TO_NUMBER
+-> 날짜 혹은 문자형 데이터를 숫자형 데이터로 변환하여 리턴 함
+
+작성법						리턴값 타입
+TO_NUMBER(CHARACTER,[FORMAT])			DATE,NUMBER
+
+파라미터			설명
+CHARACER		날짜형으로 변환하려는 문자형 데이터
+FORMAT			숫자형으로 변환 시 입력 포멧 지정
+
+ex) SELECT TO_NUMBER('1,000,000','9,999,999')
+    - TO_NUMBER('500,000','999,999') FROM DUAL;
+ex) SELECT TO_CHAR(TO_NUMBER('1,000,000','9,999,999')
+    -TO_NUMBER('500,000','999,999'),'999,999') FROM DUAL;
+
+SELECT TO_NUMBER('A1,000,000','999,999,999') FROM DUAL;		에러 : 유효한 숫자 입력(A에러)
+SELECT TO_NUMBER('$1,000,000','999,999,999') FROM DUAL;		에러 : $형식 인식 불가
+SELECT TO_NUMBER('$1,000,000','$999,999,999') FROM DUAL;	정상
+
+
+@ NULL 처리 함수 -NVL
+-> NULL로 되어 있는 컬럼의 값을 지정한 숫자 혹은 문자로 변경하여 리턴
+
+작성법				리턴값 타입
+NVL(P1,P2)			NUMBER,CHARACTER
+
+파라미터			설명
+P1			NULL 데이터를 처리할 컬럼명 혹은 값
+P2			NULL 값을 변경(대체)하고자 하는 값
+
+ex) SELECT NVL(BONUS,0) FROM EMPLOYEE;
+
+
+@ DECODE - 선택 함수
+-> 여러 가지 경우에 선택을 할 수 있는 기능을 제공하는 함수 (일치하는 값)
+
+작성법							리턴값 타입
+DECODE(표현식,조건1,결과1,조건2,결과2,...)		결과
+
+파라미터			설명
+표현식			값에 따라 선택을 다르게 할 컬럼 혹은 값 입력
+조건			해당 값이 참인지 거짓인지 여부를 판단
+결과			해당 조건과 일치하는 경우 결과를 리턴
+DEFAULT			모든 조건이 불일치시 리턴할 값
+
+ex) SELECT EMP_NAME, DECODE(SUBSTR(EMP_NO,8,1),'1','남자','2','여자')
+    FROM EMPLOYEE;
+
+
+@ CASE
+-> 여러 가지 경우에 선택을 할 수 있는 기능을 제공함
+-> 범위 조건도 가능
+
+작성법				리턴값 타입
+CASE
+WHEN 조건1 THEN 결과1		결과
+WHEN 조건2 THEN 결과2
+WHEN 조건3 THEN 결과3
+ELSE 결과N
+END
+
+※ ELSE는 그외
+※ CASE는 끝을 의미하는 END를 붙여 주어야 함
+
+파라미터			설명
+조건			해당 값이 참인지 거짓인지 여부를 판단함
+결과			해당 조건과 일치하는 경우 결과를 리턴함
+ELSE			모든 조건이 불일치시 리턴할 값
+
+ex) SELECT EMP_NAME, CASE WHEN SUBSTR(EMP_NO,8,1) = 1 THEN '남자'
+    WHEN SUBSTR(EMP_NO,8,1) = 2 THEN '여자'
+    END
+    FROM EMPLOYEE;
+
+ex) SELECT EMP_NAME,
+    CASE WHEN SUBSTR(EMP_NO,3,2) BETWEEN 3 AND 5 THEN '봄 태생'
+    WHEN SUBSTR(EMP_NO,3,2) BETWEEN 6 AND 8 THEN '여름 태생'
+    WHEN SUBSTR(EMP_NO,3,2) BETWEEN 9 AND 11 THEN '가을 태생'
+    ELSE '겨울 태생'
+    END
+    FROM EMPLOYEE;
+
+
+@ 그룹 함수
+-> 하나 이상의 행을 그룹으로 묶어 연산하여 총합,평균 등을 하나의 컬럼으로 
+리턴하는 함수
+
+=========================================================================
+|	구분		|		설명				|
+=========================================================================
+|	SUM		|	그룹의 누적 합계를 리턴 함		|
+|-----------------------------------------------------------------------|
+|	AVG		|	그룹의 평균을 리턴 함			|
+|-----------------------------------------------------------------------|
+|	COUNT		|	행의 총 개수를 리턴 함			|
+|-----------------------------------------------------------------------|
+|	MAX		|	그룹의 최대값을 리턴 함			|
+|-----------------------------------------------------------------------|
+|	MIN		|	그룹의 최소값을 리턴 함			|
+-------------------------------------------------------------------------
+
+@ SUM
+-> 해당 컬럼 값들의 총 합을 구하는 함수
+ex) SELECT SUM(SALARY) FROM EMPLOYEE;
+
+※ SELECT EMP_NAME ,SUM(SALARY) FROM EMPLOYEE;
+SALARY가 묶여서 1개의 튜플을 가지게 되서 EMP_NAME가 달라서 안됌
+
+@ AVG
+-> 해당 컬럼 값들의 평균을 구하는 함수
+ex) SELECT AVG(SALARY) FROM EMPLOYEE;;
+
+@ COUNT
+-> 테이블에서 조건을 만족하는 행의 개수를 반환하는 함수
+ex) SELECT SUM(SALARY),COUNT(*) FROM EMPLOYEE;
+
+@ MAX/MIN
+-> 그룹의 최대값과 최소값을 구하는 함수
+ex) SELECT MIN(SALARY), MAX(SALARY) FROM EMPLOYEE;

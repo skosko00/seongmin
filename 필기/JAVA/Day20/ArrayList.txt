@@ -1,0 +1,71 @@
+
+@ ArrayList
+-> ArrayList는 기존 배열과는 사용법이 조금 다름
+	(배열은 크기가 정해져 있으나 ArrayList는 크기가 정해져 있지 않음)
+
+
+		String [] str = new String [3];
+		str[0] = ("Hello");
+		str[1] = ("World");
+		str[2] = ("SmLove");
+		
+//		for(int i=0; i<str.length;i++)
+//		{
+//			System.out.println(str[i]);
+//		}		
+		
+		
+		ArrayList a1 = new ArrayList();
+		a1.add("Hello");
+		a1.add("World");
+		a1.add("SmLove");
+		a1.add("MsHate");
+		a1.add("SmLike");
+		a1.add("Hello");
+		
+//		for(int i=0; i<a1.size();i++)
+//		{
+//			System.out.println(a1.get(i));
+//		}
+		
+		for(Object i : a1)
+		{
+			System.out.println(i);
+		}
+		
+
+-> 이렇듯 사용하는 방법을 보면 데이터를 추가할 때 add 메소드를 통해 데이터를 하나하나 추가 할 수 있음
+-> 데이터의 개수는 size 메소드를 통해 알아 올 수 있음
+-> get 메소드를 통해 데이터를 꺼내올 수 있음
+
+## add 메소드 ##
+-> 데이터 추가 메소드
+-> add(Element)
+
+## size 메소드 ##
+-> 저장된 데이터의 개수를 담고 있는 메소드
+
+## get 메소드 ##
+-> 저장 된 데이터를 꺼내오는 메소드
+-> get(index)
+
+## remove 메소드 ##
+-> 저장된 데이터를 삭제함 (인자값으로 index 번호를 넘겨주면 됨)
+-> remove(index)
+
+## clear 메소드 ##
+-> 저장된 모든 데이터 삭제
+
+## set 메소드 ##
+-> 저장된 데이터를 교체
+-> set(index, Element)
+	※ Element는 객체
+
+
+
+@ 정렬(sort)
+-> 우리가 Collection을 쓰는 이유 중의 하나가 정렬을 쉽게 하기 위한 것도 있음
+-> ArrayList는 자동정렬 메소드인 sort를 지원함
+-> 이때 Collections.sort(객체명) 메소드를 사용 하여 정렬 함
+	Collections.sort 메소드는 static 메소드
+

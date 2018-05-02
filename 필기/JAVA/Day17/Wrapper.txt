@@ -1,0 +1,82 @@
+
+@ Wrapper 클래스
+-> 기본 자료형을 객체화 해주는 클래스
+-> 기본 자료형의 데이터를 포장하여 표현하기 때문에 Wrapper Class라고 부름
+-> 객체지향 언어는 이루어져 있는 전반적인 것들이 객체이기 때문에
+객체로만 처리할 수 있는 코드들이 많음
+-> 하지만 객체가 아닌 것들이 존재함 (기본 자료형)
+	- byte, char, short, int, long, double, boolean
+-> 기본 자료형들은 단순히 데이터의 타입을 명시하는 것이기 때문에 객체가 아닌
+	단순한 자료형으로만 존재함
+-> 이러한 문제로 인하여 객체만 처리 가능한 상황에서는 기본 자료형을 쓸 수가 없음
+	(객체만 처리 가능한 부분은 후에 Generic 파트에서 사용하게 됨)
+-> 그렇기 때문에 기본 자료형을 객체화 시키기 위해서 Wrapper 클래스를 사용 하게 됨
+
+## 기본 자료형 ##
+boolean
+byte
+char
+short
+int
+long
+float
+double
+
+## Wrapper Class ##
+Boolean
+Byte
+Character
+Short
+Int
+Long
+Float
+Double
+
+## 기본형으로 래퍼 클래스 생성 ##
+Boolean bool = new Boolean(true);
+Byte b = bew Byte((byte)1);
+Character c = new Character('a');
+Short s = new Short((short)2);
+Integer i = new Inteter(30);
+Long l = new Long(100L);
+Float f = new Float(0.7f);
+Double d = new Double(0.75);
+
+
+@ 오토박싱(Auto Boxing)과 오토언박싱(Auto Boxing)
+-> 래퍼 클래스 안에 기본 자료형 데이터를 넣거나 혹은 빼낼 때 에는
+박싱과 언박싱 작업을 해주어야 함
+
+박싱 : Integer num = new Integer(10);
+언박싱 : int n = num.intValue();
+
+-> 하지만 실제 사용 할 때에는 자동(오토)으로 박싱과 언박싱 처리를 함
+
+## 오토 박싱 ##
+기본 자료형에서 Wrapper 클래스로 자동 변환되는 것을 오토박싱 이라고 함
+
+ex)	Integer num = new Integer(10);	// 박싱 처리
+	Integer num = 10;		// 오토박싱 처리
+
+## 오토 언박싱##
+Wrapper 클래스에서 기본 자료형으로 자동 변환되는 것을 오토 언박싱 이라고 함
+
+ex)	int n = num.intValue();		// 언박싱 처리
+	int n = num;			// 오토언박싱 처리
+
+@ 래퍼 클래스를 이용한 문자열 처리
+-> 래퍼클래스를 이용하면 문자열 -> 기본 자료형, 기본 자료형 -> 문자열로 변경이 가능 함
+
+## 문자열 -> 기본 자료형 ##
+
+String data = "999";
+int i = Integer.parseint(data);
+
+## 기본 자료형 - >문자열 ##
+int i = 999;
+String data = integer.tostring();
+String data = integer.valueOf(i).tostring();
+
+혹은
+int i = 999;
+String data = String.valueOf(i);

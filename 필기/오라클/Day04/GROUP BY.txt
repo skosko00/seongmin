@@ -1,0 +1,139 @@
+
+@ GROUP BY 절
+-> 그룹함수는 그룹으로 묵어진 단 한개의 결과값만 산출하게 됨
+-> 그룹함수를 이용하여 여러 개의 결과값을 산출하기 위해서는 그룹함수가 적요됨
+그룹의 기준을 GROUP BY 절에 기술하여 사용 해야 함
+
+
+ex) DEPT_CODE 별(부서별) SALARY의 합계를 보고싶다면?
+
+SELECT DEPT_CODE, SUM(SALARY) FROM EMPLOYEE;
+	-> 해당 코드를 실행하게 되면 에러가 발생함
+	-> 이유는? SUM을 하게 되면 합산이 되지만 DEPT_CODE 자체는 합산이 될 수
+	없기 때문임
+
+ex) SELECT DEPT_CODE, SUM(SALARY), FLOOR(AVG(SALARY))
+FROM EMPLOYEE
+GROUP BY DEPT_CODE;
+
+
+
+
+
+@ HAVING 절
+-> 그룹함수로 값을 구해올 그룹에 대해 조건을 설정 할 때는 HAVING 절을 사용 함
+(그룹함수를 사용한 WHERE절은 사용 불가 함)
+
+
+ex) 급여 평균이 3,000,000원 이상인 그룹에 대한 평균 급여 값 검색
+
+ex) SELECT DEPT_CODE, FLOOR(AVG(SALARY))
+FROM EMPLOYEE
+GROUP BY DEPT_CODE
+HAVING FLOOR(AVG(SALARY))>=3000000;
+
+
+@ ROLLUP 과 CUBE
+-> 그룹별 산출한 결과값의 집계를 계산하는 함수
+-> ROLLUP은 가장 먼저 지정한 그룹별 합계와 총 합계를 구함
+-> CUBE는 그룹으로 지정된 모든 그룹에 대한 합계와 총 합계를 구함
+
+
+-- 부서별 인원 정보 출력
+SELECT DEPT_CODE,COUNT(*)
+FROM EMPLOYEE
+GROUP BY DEPT_CODE;
+
+-- 집계를 하고 싶다면???
+SELECT DEPT_CODE,COUNT(*)
+FROM EMPLOYEE
+GROUP BY ROLLUP(DEPT_CODE)
+ORDER BY 1;
+
+SELECT DEPT_CODE,COUNT(*)
+FROM EMPLOYEE
+GROUP BY CUBE(DEPT_CODE)
+ORDER BY 1;
+
+
+-- 부서내 평균연봉과 집계
+SELECT DEPT_CODE, SUM(SALARY)
+FROM EMPLOYEE
+GROUP BY ROLLUP(DEPT_CODE);
+
+-- 직급별 평균연봉과 집계
+SELECT JOB_CODE, SUM(SALARY)
+FROM EMPLOYEE
+GROUP BY ROLLUP(JOB_CODE);
+
+-- 이번에는 부서내 직급별 인원 정보를 출력하고 싶다면?
+SELECT DEPT_CODE, JOB_CODE, COUNT(*)
+FROM EMPLOYEE
+GROUP BY DEPT_CODE, JOB_CODE
+ORDER BY 1;
+
+-- 집계를 하고 싶다면? (ROLLUP을 사용)
+SELECT DEPT_CODE, JOB_CODE, COUNT(*)
+FROM EMPLOYEE
+GROUP BY ROLLUP(DEPT_CODE, JOB_CODE)
+ORDER BY 1;
+
+-- ROLLUP을 사용하게 되면 부서별 집계 및 총 집계를 확인 할 수 있음
+-- ROLLUP은 가장 먼저 지정한 그룹별 집계와 총 집계를 구하는 함수
+
+-- 만약 부서별이 아닌 직급별 집계와 총 집계를 보고 싶다면??
+-- JOB_CODE 위치와 DEPT_CODE 위치를 바꾸어 주면 됨
+
+SELECT JOB_CODE, DEPT_CODE, COUNT(*)
+FROM EMPLOYEE
+GROUP BY ROLLUP(JOB_CODE, DEPT_CODE)
+ORDER BY 1;
+
+-- 내가 보고 싶은건!
+-- 직급별 집계와 직급별 집계 및 총 집계
+
+SELECT DEPT_CODE, JOB_CODE, COUNT(*)
+FROM EMPLOYEE
+GROUP BY CUBE(DEPT_CODE, JOB_CODE)
+ORDER BY 1;
+
+-- CUBE 는 그룹으로 지정된 모든 그룹에 대한 집계와 총 집계를 구함
+-- 즉, 위에 코드를 보면 부서별 집계 이후에 직급별 집계를 진행하고 마지막으로
+-- 총 집계를 구하게 됨
+
+-- 직관적으로 이야기 하면!
+-- ROLLUP과 CUBE는 집계용 함수
+-- ROLLUP은 가장 먼저 지정한 그룹별 집계 및 총 집계
+-- CUBE는 그룹으로 지정된 모든 그룹에 대한 그룹별 집계 및 총 집계
+
+
+
+@ GROUPING
+-> ROLLUP이나 CUBE에 의한 집계 산출물이 인자로 전달받은 컬럼 집합의 산출물이면 0을 반환
+하고, 아니면 1을 반환하는 함수
+
+-- GROUP BY에 의해서 산출된 ROW인 경우에는 0을 반환하고
+-- ROLLUP이나 CUBE에 의해서 산출된 ROW인 경우에는 1을 반환하게 됨
+
+ex) SELECT DEPT_CODE, COUNT(*), GROUPING(DEPT_CODE)
+FROM EMPLOYEE
+GROUP BY ROLLUP(DEPT_CODE);
+
+ex) SELECT DEPT_CODE, COUNT(*), DECODE(GROUPING(DEPT_CODE),1,'총 집계','부서별')
+FROM EMPLOYEE
+GROUP BY ROLLUP(DEPT_CODE);
+
+ex) SELECT DECODE(GROUPING(DEPT_CODE),0,DEPT_CODE,1,'총 집계') AS "부서코드",COUNT(*)
+FROM EMPLOYEE
+GROUP BY ROLLUP(DEPT_CODE);
+
+ex) SELECT DEPT_CODE,JOB_CODE, COUNT(*),
+CASE WHEN GROUPING(DEPT_CODE)=1 AND GROUPING(JOB_CODE) =0 THEN '직급별 집계'
+WHEN GROUPING(DEPT_CODE)=0 AND GROUPING(JOB_CODE) =1 THEN '부서별 집계'
+WHEN GROUPING(DEPT_CODE)=1 AND GROUPING(JOB_CODE) =1 THEN '총 집계'
+ELSE ' '
+END AS "집계 현황"
+FROM EMPLOYEE
+GROUP BY CUBE(DEPT_CODE,JOB_CODE)
+ORDER BY 1;
+

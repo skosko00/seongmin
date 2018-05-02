@@ -1,0 +1,45 @@
+
+
+@ <head> </head>
+-> 머리란 의미로써 html 코드를 시작하기 위해 필요한 내용들을 작성하는 공간
+
+
+
+## <meta> tag ##
+-> 헤더 내부에서 사용하는 태그로써 메타 데이터라는 뜻을 가지고 있음
+-> html 문서가 가지고 있는 유용한 정보를 담아 두는 곳
+-> 문서 정보를 검색 엔진에 전달 함
+-> 다양한 태그를 사용할 수 있음
+
+
+문자셋 설정 : <meta charset="UTF-8">
+웹 페이지에 대한 설명 : <meta name="descript" content="head 설명 페이지 입니다.">
+검색 엔진에 대한 키워드 : <meta name="keywords" content="HTML, CSS, XML, JavaScript">
+페이지 작성자 : <meta name="author" content="Hong SeongMin">
+30초마다 문서 새로 고침 : <meta http-equiv="refresh" content="30">
+
+
+
+## <title> tag ##
+-> 페이지의 제목을 나타내는 태그
+-> 브라우저 창 이름을 설정 할 수 있음
+
+작성법
+<title> 타이틀 내용 </title>
+
+
+## <script> tag ##
+-> 페이지에서 스크립트를 사용하기 위해 쓰는 태그
+	※ 꼭 head에만 명시할 수 있는 것은 아님 (일반적으로는 head에 명시함)
+
+
+작성법
+<script> 스크립트 내용 </script>
+
+
+## <style> tag ##
+-> 태그의 스타일을 지정하기 위해 사용하는 태그
+-> css 속성들을 이용하여 적용하기 위해 사용함
+
+작성법
+<style> css구문 </style>

@@ -1,0 +1,22 @@
+		Scanner sc = new Scanner(System.in);
+		Random r = new Random();
+
+		while(true) {
+			System.out.print("동전 앞뒤 맞추기 게임 ver 1.0 \n");
+			int comCoin = r.nextInt(2)+1; // 1~2
+			System.out.print("선택하세요(1.앞면/2.뒷면) : ");
+			int userCoin = sc.nextInt();
+
+			if(comCoin==userCoin) // 맞추었을 경우
+			{
+				System.out.println("맞추셨습니다!!! 운이 좋네요");
+			}
+			else
+			{
+				System.out.println("틀리셨습니다!! 운이 없군요!!");
+			}
+			System.out.print("계속 하시겠습니까?(y,n) : ");
+			char select = sc.next().charAt(0);
+			if(select=='n') break;
+		}
+		System.out.println("동전 앞뒤 맞추기 게임을 종료합니다! ");

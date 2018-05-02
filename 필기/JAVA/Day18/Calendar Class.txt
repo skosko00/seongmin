@@ -1,0 +1,49 @@
+
+@ Calendar Class
+-> 현재 시간과 관련 있는 Class
+-> Calendar 클래스는 추상클래스로써, 생성자가 Protected 이기 때문에
+new를 통해 객체 생성을 하지 못하고, getInstance() 메소드를 통해 객체를 생성 함
+-> 년, 월, 일, 시, 분, 초 정보를 필드들을 이용하여 사용 할 수 있음
+	※ Calendar의 필드 Month(월)은 값이 0부터 시작하므로
+	1월달은 0으로 나옴 (값으로 출력시에는 +1을 해서 출력 해주어야 함)
+
+
+-> set 메소드를 통해 설정값을 변경 할 수 있음
+-> Calender.getTimeMillis() 메소드를 사용하면 현재 시간을
+	밀리초 단위로 변경하여 가져옴(long형 데이터형)
+
+		Calendar today = Calendar.getInstance();
+//		today.set(Calendar.YEAR, 2015);
+		System.out.println(today.get(Calendar.YEAR));		//년도
+		System.out.println(today.get(Calendar.MONTH)+1);	//월(0부터 시작)
+		System.out.println(today.get(Calendar.DATE));		//일
+		System.out.println(today.get(Calendar.AM_PM));		//0==AM, 1==PM
+		System.out.println(today.get(Calendar.HOUR));		//시간
+		System.out.println(today.get(Calendar.MINUTE));		//분
+		System.out.println(today.get(Calendar.SECOND));		//초
+		System.out.println(today.get(Calendar.DAY_OF_WEEK));	//요일
+									//(1:일요일~7:토요일)
+		
+		System.out.println(today.getTimeInMillis());
+
+
+@ Date Class
+-> 시스템으로부터 현재 날짜, 시간 정보를 가져와서 다룰 수 있게 만들어진 클래스로
+생성자 2개(디폴트, 매개변수 있는)만 사용 가능하고 나머지는 deprecated 임
+-> Calendar 클래스의 사용을 권장 함
+-> java.util 패키지에 포함되어 있음
+
+		Date today = new Date();
+		System.out.println(today);
+
+@ SimpleDateFormat Class
+-> Date의 날짜, 시간 정보를 원하는 format으로 출력하도록 기능을 제공하는 클래스
+-> Java.test 패키지에 속해 있음
+
+		Date today = new Date();
+		System.out.println(today);
+		
+		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+		String strToday = ft.format(today);
+		System.out.println(strToday);
+

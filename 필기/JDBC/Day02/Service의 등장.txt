@@ -1,0 +1,7 @@
+
+
+
+기존 비즈니즈 모델의 문제점
+
+View -> Controller -> DAO -> DB
+

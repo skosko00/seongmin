@@ -1,0 +1,87 @@
+
+@ 패키지
+-> 자바의 패키지와 동일한 개념
+-> 같은 테이블을 참조하는 프로시저나 함수일 경우 같은 패키지로 묶을 수 있음
+-> 동일한 프로시저 또는 함수를 구분
+
+
+
+@ 패키지 선언 방법
+
+CREATE [OR REPLACE] PACKAGE 패키지명
+IS
+	정의될 프로시저와 함수
+END;
+/
+
+
+@ 패키지에 소속된 프로시저나 함수 실행
+
+EXEC 패키지명, 저장프로시저명[(전달값.....)];
+
+
+ex)
+CREATE [OR REPLACE] PACKAGE package_name
+IS
+	PROCEDURE procedure_name1;
+	PROCEDURE procedure_name2;
+END;
+/
+
+
+-- ID(사번)값을 입력하면 특정 정보(사번, 이름, 주민번호, 폰번호)를 출력하는
+-- 프로시저를 생성,
+-- 2. ID(사번)값을 입력하면 보너스값을 리턴하는
+-- 함수를 생성
+-- 이때 프로시저의 함수를 묶는 패키지를 만들어라.!!
+
+-- 패키지 생성
+
+SET SERVEROUTPUT ON;
+
+CREATE PACKAGE EMP_PACK
+IS
+    PROCEDURE SELECT_USER(ID EMP.EMP_ID%TYPE);
+    FUNCTION BONUS_RETURN(ID EMP.EMP_ID%TYPE) RETURN NUMBER;
+END;
+/
+CREATE PACKAGE BODY EMP_PACK
+IS
+PROCEDURE SELECT_USER(ID EMP.EMP_ID%TYPE)
+IS
+    E_ID    EMP.EMP_ID%TYPE;
+    E_NAME  EMP.EMP_NAME%TYPE;
+    E_NO    EMP.EMP_NO%TYPE;
+    E_PHONE EMP.PHONE%TYPE;
+BEGIN
+    SELECT EMP_ID,EMP_NAME,EMP_NO,PHONE
+    INTO E_ID,E_NAME,E_NO,E_PHONE
+    FROM EMP
+    WHERE EMP_ID = ID;
+    DBMS_OUTPUT.PUT_LINE('사원번호 : ' || E_ID);
+    DBMS_OUTPUT.PUT_LINE('사원이름 : ' || E_NAME);
+    DBMS_OUTPUT.PUT_LINE('주민번호 : ' || E_NO);
+    DBMS_OUTPUT.PUT_LINE('전화번호 : ' || E_PHONE);
+END;
+FUNCTION BONUS_RETURN(ID EMP.EMP_ID%TYPE)
+RETURN NUMBER
+IS
+    E_BONUS     EMP.BONUS%TYPE;
+    E_SALARY    EMP.SALARY%TYPE;
+    SAL         NUMBER;
+BEGIN
+    SELECT SALARY, NVL(BONUS,0)
+    INTO E_SALARY,E_BONUS
+    FROM EMP
+    WHERE EMP_ID=ID;
+    SAL := E_SALARY * E_BONUS;
+    RETURN SAL;
+END;
+END;    
+/
+-- 패키지 BODY 종료 END
+
+EXEC EMP_PACK.SELECT_USER(201);
+SELECT EMP_PACK.BONUS_RETURN(204) FROM DUAL;
+
+DROP PACKAGE EMP_PACK;

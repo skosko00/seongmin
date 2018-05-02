@@ -1,0 +1,33 @@
+
+@ 파일 내용을 읽어올때에는 InputStream 혹은 Reader를 사용함
+
+BufferedReader bfr;
+		
+		try {
+			bfr = new BufferedReader(new FileReader("test.txt"));
+			String line = null;
+//			try {
+//				for(int linenumber=1; (line=bfr.readLine())!=null;linenumber++)
+//				{
+//					System.out.println(linenumber + " : " + line);
+//				}
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+			int lineNumber=1;
+			while(true)
+			{
+				try {
+					line = bfr.readLine();
+					if(line==null) break;
+					else System.out.println(lineNumber++ + " : "+line);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}				
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}

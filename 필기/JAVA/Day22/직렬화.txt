@@ -1,0 +1,122 @@
+
+@ 직렬화
+-> 객체를 스트림을 통해 전송을 하기 위해서는 직렬화 작업을 해주어야 함
+	- 객체는 큰 덩어리 형태이기 때문에 바이트 단위로 잘라주어야 함
+-> 직렬화의 반대 과정은 역직렬화 라고 함
+	- 잘라진 바이트들을 다시 객체화 시키는 것
+-> 객체는 일반 변수들과는 다르게 객체화 되어 있기 때문에 스트림으로 전송하기 위해서는
+직렬화를 필수적으로 해주어야 함
+-> 정확하게는 객체 안에 만들어져 있는 필드들의 변수값들을 일렬로
+나열하여 전송 할 수 있게 해주는 형태
+
+
+
+@ 직렬화를 하기 위한 조건
+1. 해당 class에 java.io.Serializable가 implements 되어 있어야 함
+-> Serializable interface를 implements 하지 않은 class는 직렬화가 불가능하고
+직렬화를 진행하지 않는 객체는 스트림으로 전송이 불가능함
+
+2. Serializable이 구현되지 않은 클래스의 인스턴스는 직렬화에서 제외됨
+
+
+@ serialVersionUID
+-> serialVersionUID는 직렬화시에 사용되는 객체의 고유 번호
+-> Serializable 인터페이스를 implements 하면 serialVersionUID가 선언되지
+않았다는 경고(Warning)이 발생함
+-> 실제로 선언하지 않아도 자동으로 JVM이 임의의 번호를 붙여 생성하기 때문에
+경고가 발생하는 것(자동으로 만들어 지지 않았다면 에러가 발생 했을 것)
+-> 하지만 serialVersionUID는 직접 선언하는 것을 권장함
+
+package kh.java.com;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.Scanner;
+
+public class StreamTest {
+	private Student s;
+	private Scanner sc = new Scanner(System.in);
+	public StreamTest() {}
+	public void start()
+	{
+		while(true)
+		{
+		System.out.println("1. 학생 정보 입력 ");
+		System.out.println("2. 학생 정보 출력 ");
+		System.out.println("3. 저장 ");
+		System.out.println("4. 불러오기 ");
+		System.out.println("0. 종료");
+		System.out.print("선택 : ");
+		switch(sc.nextInt())
+		{
+		case 1: input();break;
+		case 2: ouput();break;
+		case 3: save();break;
+		case 4: load();break;
+		case 0:System.exit(0);
+		}
+		}
+	}
+	private void load() {
+		try(ObjectInputStream oIs = new ObjectInputStream(new FileInputStream("object.txt")))	//객체(Object) 타입의 아웃풋 해 줄 수 있는 ObjectInputStream 보조 스트림
+		{
+			try {
+				s = (Student) oIs.readObject();
+				System.out.println("로드 완료");
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
+	}
+	private void save() {
+
+//		try(ObjectOutputStream oOs = new ObjectOutputStream(new FileOutputStream("object.txt")))	//객체(Object) 타입의 아웃풋 해 줄 수 있는 ObjectOutputStream 보조 스트림 
+//		{
+//			oOs.writeObject(s);
+//			System.out.println("저장 완료");
+//		}catch (IOException e) {
+//			e.printStackTrace();
+//		}
+		
+		ObjectOutputStream oOs = null;;
+		
+		try {
+			oOs = new ObjectOutputStream(new FileOutputStream("object.txt"));
+			oOs.writeObject(s);
+			System.out.println("저장 완료");
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				oOs.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	private void ouput() {
+		System.out.println("이름 : "+s.getName());
+		System.out.println("나이 : "+s.getAge());
+		System.out.println("주소 : "+s.getAddr());
+		
+	}
+	private void input() {
+		s = new Student("홍길동",20,"경기도");
+		
+	}
+}

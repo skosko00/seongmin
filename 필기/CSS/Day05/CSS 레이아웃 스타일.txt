@@ -1,0 +1,328 @@
+
+
+@ height / width
+-> 컨텐츠(내용)이 차지하고 있는 영역의 크기를 조절할 수 있는 속성
+
+선택자 { width : 숫자(단위); height : 숫자(단위); }
+
+-> height 값으로 크기를 조절하려면 블록 레벨 요소여야 함
+
+
+@ 블록 레벨 요소와 인라인 레벨 요소
+-> html 태그에는 블록과 인라인 형태가 있음
+
+
+## 블록레벨 요소 ##
+-> 한 줄 전체를 차지하는 요소 (박스 모델이라고도 함)
+-> 한 줄에 여러 요소가 올 수 없음
+-> 블록 단위이기 때문에 크기 조절이 가능
+-> 자동 줄 개행이 됨
+-> 종류 : div, h1~h6 태그, p 태그, 목록 태그 등등..
+
+
+## 인라인 레벨 요소 ##
+-> 한 줄에서 일부분만 차지하는 요소
+-> 한 줄에 여러 요소가 올 수 있음
+-> 한 부분만 해당 되기 때문에 크기 조절 불가능
+-> 자동 줄 개행을 안함
+-> 종류 : span, a 태그, input 태그, 글자형식 태그 등....
+
+
+
+@ display 속성
+-> 해당 태그의 기본적인 눈에 보이는 속성을 변경하는 속성값
+-> 대표적인 display 속성에는 block, inline, none, inline-block이 있음
+	(더 많이 있음)
+
+
+## none 속성 ##
+-> 말 그대로 없애는 속성
+ex)
+    #btn1:active{
+        display: none;
+    }
+
+## block 속성 ##
+-> inline 레벨 요소 태그를 block 속성으로 변경
+-> block 속성으로 변경되면 inline 요소라 하더라도 크기를 조절 할 수 있음
+inline 요소는 width와  height로 크기 변경 불가
+
+ex)
+#span5{background-color: yellow; display: block;}
+
+
+## inline-block 속성 ##
+-> 텍스트는 inline 이지만 (줄계행 안함) 영역 표시를 block 단위로 처리하고 싶을때 사용하는 속성
+
+ex)
+#span5{background-color: yellow; display: inline-block;}
+
+
+## inline 속성##
+-> block 레벨 요소 태그를 inline 속성으로 변경
+
+
+@ 레이아웃 테두리 스타일
+-> 테두리 레이아웃을 실행할 수 있는 속성
+
+## border-style ##
+-> 테두리 스타일 지정
+
+none	: 테두리가 나타나지 않음 (기본값) - 우선순위 최하위
+hidden	: 테두리가 나타나지 않음 (none과 같음) - 우선순위 최하위
+dashed	: 짧은 (dotted 보다 긴 실선) 점선으로 표시
+dotted	: 점선의 테두리로 지정
+double	: 두 개의 실선으로 지정
+groove	: 테두리가 안으로 파진것처럼 보임
+inset	: 테두리를 포함한 컨텐츠 영역이 안으로 들어간것처럼 보임
+ridge	: 테두리가 밖으로 튀어나온것처럼 보임
+solid	: 실선으로 지정
+
+
+
+## border-width ##
+-> 테두리의 두께를 정하는 속성
+
+선택자 { border-[위치]-width : 숫자(단위) 또는 속성값; }
+
+속성값	: thin(얇게), medium(중간 크기), thick(두껍게)
+숫자	: 두께 정도 표시
+위치	: top, right, left, bottom
+
+※ 위치를 설정하지 않고 작성시 시계방향으로 (top-right-bottom-left) 각 위치별 설정 가능
+
+ex)
+    #div1{border-top-width: thick;}
+    #div2{border-right-width: thick;}
+    #div3{border-bottom-width: thick;}
+    #div4{border-left-width: thick;}
+    #div5{border-width: thick;}
+    #div6{border-width: thick thin thick thin;}
+
+
+
+## border-color ##
+-> 테두리의 색상을 정하는 속성
+
+선택자 { border-[위치]-color : 색상값; }
+
+※ border-width와 같이 각 테두리별 설정하려면 위치(top,right,bottom,left)를 정할 수 있고, 한번에
+설정하는 것은 border-color를 사용함
+
+
+
+## border ##
+-> 테두리 두께, 스타일, 색상을 한번에 지정할 수 있는 속성
+
+선택자 { border-[위치] : 두께 스타일 색상값; }
+
+
+## border-radius ##
+-> 박스의 모서리를 둥글게 하는 속성
+-> 위치 : top-left, top-right, bottom-left, bottom-right
+
+선택자 { border-[위치]-radius : 숫자(단위); }
+
+※ 각 테두리의 변에서부터 설정할 값만큼의 반지름을 가지는 원이 모서리에 그려지고
+그 외곽부분이 그 원을 따라 둥글게 됨
+
+ex)
+    #div1{border-top-left-radius: 50px;}
+    #div2{border-top-right-radius: 50px;}
+    #div3{border-bottom-left-radius: 50px;}
+    #div4{border-bottom-right-radius: 50px;}
+    #div5{border-radius: 50px;}
+
+
+
+@ 여백 스타일
+-> 여백은 블록 요소의 상하좌우에 빈 공간을 두는 것
+-> 요소끼리 너무 인접해 있으면 시각적으로 갑갑해 보일 뿐만 아니라 터치 환경에서
+정확한 터치 입력도 어려움
+-> 여백 스타일에는 margin(마진), padding(패딩)이 있음
+
+
+margin
+- 요소의 바깥쪽에 배치되는 여백이며 외부의 부모나 형제 사이에 삽입되는 빈 공간
+- 요소의 크기에서 제외 됨
+
+padding
+- 요소의 안쪽에 배치되는 여백이며 요소의 경계션과 내용물 사이에 삽입되는 빈 공간
+- 요소의 크기에 포함 됨
+
+
+
+## margin ##
+-> box레벨이나 inline 레벨의 요소들간의 간격을 조절하는 속성
+
+선택자 { margin-[위치] : 숫자(단위); }
+
+
+## padding ##
+-> 테두리(border) 와 내용(content) 영역 사이의 거리를 조절하는 속성
+선택자 { padding-[위치] : 숫자(단위); }
+
+
+
+@ 포지셔닝
+-> box 모델(block), inline 모델을 페이지상에서 배치하는 스타일
+-> 즉, 페이지 안 요소들을 원하는 위치에 배치하는 속성을 의미
+-> position 스타일, float 스타일이 있음
+
+
+## position ##
+-> 페이지의 요소들을 자유롭게 배치해 주는 속성
+-> top, left, right, bottom 으로 위치 지정
+
+
+static		: 요소를 문서의 흐름에 맞춰 배치 (default) - 위치가 지정되지 않음
+relative	: 자연 스럽게 배치, top, left, right, bottom 을 통해 위치 지정이 가능
+		, 요소가 겹쳐지지 않음
+
+absolute	: 원하는 위치에 배치, 요소들이 겹쳐질 수 있음
+		, 부모를 기준으로 위치 좌표를 설정 할 수 있음
+		(부모의 position이 relative 여야 함)
+
+fixed		: 원하는 위치에 고정 배치(스크롤을 내리더라도 따라 내려감)
+
+선택자 { position : 속성값 [위치:숫자(단위)]; }
+
+
+ex)
+    <style>
+        #div1 {
+            height: 300px;
+            width: 300px;
+            border: 3px solid black;
+            position: relative;
+        }
+
+        #div2 {
+            height: 90%;
+            width: 90%;
+            background-color: red;
+            left: 5%;
+            top: 5%;
+            position: relative;
+            margin: 0;
+        }
+
+        #div3 {
+            height: 40%;
+            width: 80%;
+            background-color: blue;
+            left: 10%;
+            top: 5%;
+            position: relative;
+            margin: 0;
+        }
+        
+        #div5 {
+            height: 80%;
+            width: 80%;
+            background-color: pink;
+            left: 10%;
+            top: 10%;
+            position: absolute;
+            margin: 0;
+        }
+        
+        #div4 {
+            height: 40%;
+            width: 80%;
+            background-color: yellow;
+            left: 10%;
+            top: 15%;
+            position: relative;
+            margin: 0;
+        }
+        
+        #div6 {
+            height: 80%;
+            width: 80%;
+            background-color: black;
+            left: 10%;
+            top: 10%;
+            position: absolute;
+            margin: 0;
+        }
+    </style>
+
+<body>
+    <div id="div1">
+        <div id="div2">
+            <div id="div3">
+                <div id="div5">
+                </div>
+            </div>
+            <div id="div4">
+                <div id="div6"></div>
+            </div>
+        </div>
+    </div>
+</body>
+
+
+
+## z-index ##
+-> 페이지 안의 요소들을 순서대로 위로 쌓는 속성
+-> 속성 값이 크면 가장 위에 있는 요소, 작으면 밑에 있는 속성
+
+※ 항상 맨위에 요소가 위치해야 한다면 값을 999 또는 1000 으로 설정
+	(큰 값이 맨 위로 감)
+
+선택자 { z-index : 속성값; }
+
+
+
+
+## float ##
+-> 페이지 내의 요소 위치를 왼쪽이나 오른쪽으로 지정하는 속성
+
+right : 오른쪽 배치
+left : 왼쪽 배치
+none : 배치 값을 설정하지 않음
+
+선택자 { float : 속성값; }
+
+
+
+## clear ##
+-> 페이지에 float 설정이 되어 있으면 그 속성이 그대로 다음 요소에 영향을 미치게 됨
+-> 이때 이 속성을 초기화 하는 속성
+
+right : 오른쪽 배치 취소
+left : 왼쪽 배치 취소
+none : 설정하지 않음 (앞에 내용 그대로 적용)
+both : 두 개 다 취소
+
+선택자 { clear : 속성값; }
+
+
+## overflow ##
+-> 표현하는 컨텐츠가 넘쳤을때 표현하는 기법
+
+scroll	: 가로, 세로 스크롤이 무조건 생김
+auto	: 스크롤이 내용에 따라 생김
+hidden	: 넘치는 것을 보여주지 않음
+visible	: 기본값, 넘치더라도 그냥 보여줌
+
+
+선택자 { overflow : 속성값; }
+
+
+
+## box-sizing
+-> 요소들은 모두 content 영역과 padding 영역, margin 영역으로 나누어져 있음
+-> 이 요소들의 크기 (width 속성)을 어떠한 영역까지 포함할 것인지를 결정하는 속성
+
+
+content-box	: default 값, 컨텐츠 영역으로 설정
+border-box	: border까지 영역으로 설정
+
+※ 쉽게 이야기 하면
+content-box는 size(width, height)를 정해주게 되면 content의 영역 크기만을 말하는 것
+border-box는 size(width, height)를 정해주게 되면 content, padding, border 영역을 포함한
+크기를 말하는 것
+
+

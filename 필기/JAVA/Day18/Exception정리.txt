@@ -1,0 +1,85 @@
+
+@ Exception
+-> 예외
+-> 프로그래머가 만든 프로그램에서 예상한 정상적인 처리에서 벗어나는 경우를
+예외 라고 볼 수 있음
+-> 이 때, 예외에 대한 처리를 해주어야 하는데 그것을 예외처리 라고 부름
+-> 자바에서 예외처리를 하기 위한 문법을 try ~ catch 구문 이라고 부름
+
+@ try ~ catch
+-> 예외 처리를 하기 위한 문법
+-> try는 반드시 예외 처리를 해야 하는 구문
+-> catch는 예외가 발생하면 실행되는 구분
+
+
+@ finally
+-> try 와 catch 구문에 관계 없이 무조건 실행되는 구문
+-> try와 catch 이후에만 사용 할 수 있고, try코드가 정상처리 되어도
+finally 코드를 실행하고, catch(예외) 코드를 실행하게 되어도 finally 코드를 실행 함
+
+@ try ~ with ~ resource
+-> 자바 7에서 추가된 기능으로, finally에서 작성되었던 리소스 반납(close()) 처리를
+자동으로 처리해주는 try~catch 구문
+
+
+@ 예외의 종류
+Throwable : 예외의 가장 큰 조상
+Eroor : 프로그램 문제가 아닌 시스템 에러 (프로그램 개발자가 해결 할 수 있음)
+Exception : 프로그램 코드 문제로 발생하는 에러 (프로그램 개발자가 처리 해야 함)
+RuntimeException : 어플리케이션이 동작하는 도중에 발생하는 에러
+
+
+@ Checked Exception과 Unchecked Exception
+-> 예외처리는 크게 2가지로 설정 할 수 있음
+	- 강제화 할 것인가? 아니면 선택화 할 것인가?
+
+-> Checked Exception은 예외처리를 강제화 시키는 것
+	- 즉, Checked Exception이 설정된 메소드는 사용시 강제로 try ~ catch 구문
+-> Unchecked Exception은 예외처리를 선택화 시키는 것
+	-즉, Unchecked Exception이 설정된 메소드는 사용시 try ~ catch 구문
+	처리를 해도 되고 안해도 됨
+
+
+@ RunTimeException 클래스
+-> RunTimeException은 Exception의 자식이며, Unchecked Exception 임
+-> 주로 프로그래머의 부주의로 인한 bug가 많기 때문에 Exception 처리 보다는
+코드를 수정해야 하는 경우가 많음 (예외 처리를 강제화 하지 않음)
+
+## ArithmeticException ##
+-> 0으로 나누는 연산을 할 경우에 발생
+
+## NullPointException ##
+-> Null인 래퍼런스, 변수로 객체 멤버 참조 시도시 발생
+
+## NegativeArraySizeException ##
+-> 배열 크기를 음수 또는 0으로 지정한 경우 발생
+
+## ArrayindexOutOfBoundException ##
+-> 배열의 index 범위를 넘어서 참조하는 경우 발생
+
+## ClasscastException ##
+-> cast 연산자 사용시 타입 오류 일 때 발생
+
+
+@ Exception 확인하기
+-> Exception 처리를 할 때 에는 가장 큰 Exception으로 처리해도 되지만
+명확한 Exception 별로 처리 하는것을 권장 함
+-> 이때 어떠한 Exception 처리를 해야 할지 알기 위해서는 API Document 사이트에서
+해당 클래스에 대한 생성자나 메소드를 검색하면, 그 메소드가 어떠한
+Exception을 발생시킬 가능성이 있는지를 확인 할 수 있음
+
+ex)다중 Exception
+		Scanner sc = new Scanner(System.in);
+		try {
+		System.out.println("첫번째 숫자 입력 : ");
+		int su1 = sc.nextInt();
+		System.out.println("두번째 숫자 입력 : ");
+		int su2 = sc.nextInt();
+		
+		System.out.println(su1/su2);
+		}catch(ArithmeticException e)
+		{
+			System.out.println("0으로 나눌 수 없습니다.");
+		}catch (InputMismatchException e) {
+			System.out.println("숫자만 입력해주세요");
+		}

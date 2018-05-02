@@ -1,0 +1,134 @@
+
+@ 스윙 컴포넌트의 이벤트
+-> 스윙 컴포넌트들이 다양한 이벤트를 발생 시킴
+-> 스윙 컴포넌트가 발생하는 이벤트는 크게 2가지로 볼 수 있음
+	- 모든 컴포넌트가 공통적으로 지원하는 이벤트
+	- 일부 컴포넌트만 지원하는 이벤트
+
+
+@ 모든 컴포넌트들이 지원하는 이벤트
+-> 이런 종류의 이벤트는 일반적으로 저수준 이벤트(log-level event)
+-> 보통 마우스, 키보드로부터 이러한 이벤트가 발생됨
+-> 이 이벤트들은 상당히 자주 발생하기 때문에 이벤트 처리에 있어서
+많은 시간을 소비 하면 안됨
+
+Component	컴포넌트의 크기나 위치가 변경되었을 경우 발생
+Focus		키보드 입력을 받을 수 있는 상태가 되었을 때, 혹은 그 반대의 경우에 발생
+Container	컴포넌트가 컨테이너에 추가되거나 삭제될 때 발생
+Key		사용자가 키를 눌렀을 때 키보드 포커스를 가지고 있는 객체에서 발생
+Mouse		마우스 버튼이 클릭되었을 때, 또는 마우스가 객체의 영역으로 들어오거나 나갈때
+MouseMotion	마우스가 움직였을 때 생성
+MouseWheel	컴포넌트 위에서 마우스 휠을 움직이는 경우 발생
+Window		윈도우에 어떤 변화가 있을 때 발생(알림, 닫힘, 아이콘화 등등)
+
+@ 일부 컴포넌트들이 지원하는 이벤트
+-> 이 이벤트들은 의미적 이벤트(semantic event) 라고 부름
+-> 가능하다면 저수준 이벤트보다는 의미적 이벤트를 처리하는 것이 좋음
+-> 의미적 이벤트를 사용하는 것이 코드를 간결하게 만들고 이식성도 좋음
+
+Action		사용자가 어떤 동작을 하는 경우에 발생
+Caret		텍스트 삽입점이 이동하거나 텍스트 선택이 변경되었을 경우 발생
+Change		일반적으로 객체의 상태가 변경되었을 경우 발생
+Document	문서의 상태가 변경되는 경우 발생
+Item		선택 가능한 컴포넌트에서 사용자가 선택을 하였을 때 발생
+ListSelection	리스트나 테이블에서 선택 부분이 변경되었을 경우에 발생
+
+
+@ 액션 이벤트 예제
+-> 버튼을 누르면 숫자가 증가되는 프로그램 만들어 보기
+
+package kh.java.com;
+
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+public class CountClick extends JFrame{
+	private JButton increButton = new JButton("숫자 증가");
+	private JButton initButton = new JButton("초기화");
+	private JLabel label = new JLabel("count");
+	private JLabel countLabel = null;
+	private JFrame myFrame = this;
+	
+	private int count = 0;
+	public void comImit()
+	{
+		this.add(label);
+		countLabel = new JLabel(Integer.toString(count));
+		countLabel.setFont(new Font("Serif",Font.BOLD,100));
+		this.add(countLabel);
+		this.add(increButton);
+		this.add(initButton);
+		increButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(e.getSource()==increButton)
+					{
+					count++;
+					countLabel.setText(Integer.toString(count));
+					}				
+			}
+		});
+		initButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(e.getSource()==initButton)
+				{
+					count=0;
+					countLabel.setText(Integer.toString(count));
+					myFrame.remove(initButton);
+					repaint();
+				}
+				
+			}
+		});
+	}
+	
+	public CountClick()
+	{
+		super("카운트 증가 프로그램");
+		this.setSize(270, 300);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setLayout(new FlowLayout());
+		this.setLocationRelativeTo(null);
+		this.setVisible(true);
+		comImit();
+	}
+	
+}
+
+
+@ Key 이벤트
+-> Key 이벤트는 사용자가 키보드를 이용하여 입력하는 경우에 발생
+-> Key를 누를때도 발생하지만 Key에서 손을 떼는 경우에도 발생함
+-> keyEvent가 발생하려면 컴포넌트에서 반드시 키보드 포커스를 가지고 있어야 함
+-> 키보드 포커스를 얻으려면 requestFocus() 라는 메소드를 사용함
+-> KeyEvent를 받기 위해서는 KeyListener를 implements 해야함
+
+
+@ KeyListener 인터페이스
+KeyTyped(KeyEvent e)	: 사용자가 글자를 입력했을 경우에 호출
+KeyPressed(KeyEvent e)	: 사용자가 키를 눌렀을 경우에 호출
+keyReleased(KeyEvent e)	: 사용자가 키에서 손을 떼었을 경우에 호출
+
+
+@ KeyEvent 클래스
+
+int getKeyChar() 	KeyEvnet에 들어 있는 글자(유니코드)를 반환
+int getKeyCode() 	KeyEvent에 들어 있는 키코드(keycode)를 반환
+	※ 키코드(keycode)란?
+	- 글자가 아니라 키보드 자판의 각 각의 키를 가리키는 상수값
+	ex) Enter == Event.VK_ENTER
+
+boolean inActionKey()	이벤트를 발생시킨 키가 액션 키 이면 true를 변환
+	※ 액션키(ActionKey)란?
+	- Cut, Copy, Paste, Page Up, Page Down, Caps Lock 등의 function키를 의미	
+
+

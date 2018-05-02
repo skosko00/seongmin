@@ -1,0 +1,25 @@
+
+
+@ has a 포함 관계
+-> A has a B : A안에는 B가 포함되어 있다 라는 뜻이 있음
+-> 자바 에서 포함이란 재활용하고 싶은 클래스의 객체를 멤버변수로 선언하는 방법임
+-> A 클래스 안에 B 클래스를 멤버 변수로 사용하겠다 라는 것
+-> 자바에서는 데이터를 표현하는 클래스와 해당 데이터를 운영하는 클래스를 별도로 두고 있음
+	※ 기존에는 하나의 클래스 안에 데이터저장과 운용을 한번에 했었음
+
+	- 데이터가 되는 클래스 : Entity, VO, DTO
+	- 데이터를 컨트롤 하는 클래스 : Controller
+	
+
+
+public Student // 데이터가 되는 클래스 (Entity 또는 VO 또는 DTO 라고 부름)
+{
+	private String name;
+	public void setName(String name) { this.name = name; }
+	public String getName() { return this.name; }
+}
+
+public StuMgr
+{
+	private Student s;
+}

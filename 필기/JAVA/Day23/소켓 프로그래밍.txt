@@ -1,0 +1,194 @@
+
+@ 소켓 프로그래밍 (== 네트워크 프로그래밍)
+-> 소켓 프로그래밍은 소켓을 이용한 통신 프로그램을 뜻 함
+-> 소켓(socket)은 서로 멀리 떨어진 두 사람이 통신을 하기 위해서는 전화기가 필요한 것처럼
+프로세스간의 통신을 위해서는 별도의 무언가가 필요하고 그 무언가를 소켓이라고 부름
+-> 즉, 정리하면 소켓프로그래밍은 통신을 할 수 있는 프로그램을 만드는 것을 말함
+-> 앞서 말했듯이 자바에서는 java.net 패키지를 통해 소켓 프로그래밍을 지원 함
+-> 소켓 프로그래밍은 서버 소켓과 클라이언트 소켓을 생성 해야 함
+
+
+@ TCP 소켓 프로그래밍
+
+## 서버용 소켓 ##
+
+1. 서버의 포트 번호를 정함 ex) 7777
+2. 서버용 소켓 객체를 생성함
+	ServerSocket 래퍼런스 = new ServerSocket(포트번호);
+	ex) ServerSocket serverSocket = new ServerSocket(7777);
+
+3. 클라이언트쪽에서 접속 요청이 오길 기다림
+4. 접속 요청이 오면 요청을 수락하고 해당 클라이언트에 대한 소켓 객체를 생성함
+	Socket 클라이언트소켓래퍼런스 = 서버소켓래퍼런스.accept();
+	ex) Socket clientSocket = serverSocket.accept();
+
+5. 연결된 클라이언트와 입출력 스트림을 생성함
+	InputStream input스트림패런스 = 클라이언트소켓래퍼런스.getInputStream;
+	OutputStream output스트림래패런스 = 클라이언트소켓래퍼런스.getOutputStream;
+
+	ex) InputStream in = clientSocket.getInputStream();
+	ex) OutputStream out = clientSocket.getOutputStream();
+
+5-1 보조스트림을 붙여 성능을 개선 해도 됨
+	ex) DataInputStream dis = new DataInputStream(in);
+	ex) DataOutputStream dos = new DataOutputStream(out);
+
+	바이트스트림을 문자 스트림으로 변경하는 법
+
+	#입력용 스트림#
+	BufferedReader 래퍼런스 = new BufferedReader(input스트림래퍼런스);
+	
+	#출력용 스트림#
+	PrintWriter 래퍼런스 = new PrintWriter(output스트림래퍼런스);
+
+6. 스트림을 통한 읽고 쓰기를 함
+
+	ex) dis.readUTF();
+	ex) dos.writeUTF("안녕");
+	
+	읽기용래퍼런스.read() 또는 읽기용래퍼런스.readLine() 가능
+	쓰기용래퍼런스.println() 가능
+
+7. 통신 종료 (스트림 정리)
+	입력스트림래퍼런스.close();
+	출력스트림래퍼런스.close();
+	소켓래퍼런스.close();
+
+package kh.java.server.socket;
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.Scanner;
+
+ex)
+	public class TcpServerSocket {
+	Scanner sc = new Scanner(System.in);
+	public TcpServerSocket()
+	{
+		ServerSocket serverSocket = null;	// 서버용 소켓
+		Socket clientSocket = null;	// 클라이언트용 소켓
+		int port = 7777;
+		try {
+			serverSocket = new ServerSocket(port);	// 서버 오픈
+			System.out.println("Port listen Ok!!");
+			clientSocket = serverSocket.accept();	// 클라이언트 접속
+			OutputStream out = clientSocket.getOutputStream();	// 출력
+			DataOutputStream dos = new DataOutputStream(out);	// 보조스트림
+			InputStream In = clientSocket.getInputStream();		// 입력
+			DataInputStream dis = new DataInputStream(In);
+
+			System.out.println(clientSocket.getInetAddress() + " 클라이언트가 접속하였습니다.");
+
+			dos.writeUTF("[Notice] SMLOVE 서버에 오신것을 환영 합니다.");
+			// 해당 클라이언트한테 전달하는 메시지
+
+			System.out.println("메시지 전송 완료");
+
+			dos.writeUTF(sc.nextLine());
+			String data = dis.readUTF();
+			System.out.println(data);
+
+			dos.close();
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				clientSocket.close();	// 클라이언트 소켓 종료
+				serverSocket.close();	// 서버 소켓 종료
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+}
+
+
+## 클라이언트 소켓 ##
+
+1. 서버가 정한 포트번호와 서버의 IP 주소가 필요함
+	ex) String serverIpAddress = "127.0.0.1" //127.0.0.1은 루프백주소
+	// 루프백 주소는 자기자신을 말하는 주소임
+	ex) int serverPort = 7777;
+
+2. 클라이언트용 소켓 객체를 생성함
+	Socket 소켓래퍼런스 = new Socket(서버IP, 포트번호);
+	// 객체 생성시 서버와 자동 연결 요청함
+	// 연결이 실패하면 null값이 리턴됨
+	// 연결을 끊고나서 다시 연결을 원할때는 connect() 메소드를 사용
+	ex) Socket socket = new Socket(serverIpAddress,serverPort);
+
+3. 서버와 입출력 스트림을 생성
+	InputStream input스트림래퍼런스 = 소켓래퍼런스.getInputStream();
+	OutputStream output스트림래퍼런스 = 소켓래퍼런스.getOutputStream();
+
+	ex) InputStream in = socket.getInputStream();
+
+3-1 보조 스트림을 활용하여 성능 개선도 할 수 있음
+	ex) DataInputStream dis = new DataInputStream(in);
+
+4. 스트림을 통한 읽고 쓰기
+	읽기용래퍼런스.read() 또는 읽기용래퍼런스.readLine();
+	쓰기용래퍼런스.println()
+	
+	한글 처리를 위하여 readUTF 메소드와 writeUTF 메소드를 추천
+	
+	ex) dos.writeUTF
+	ex) dis.readUTF();
+
+5. 통신을 종료 하려면
+	입력스트림래퍼런스.close();
+	출력스트림래퍼런스.close();
+	소켓래퍼런스.close();
+
+ex)
+package kh.java.client.socket;
+
+import java.io.DataInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.Socket;
+import java.net.UnknownHostException;
+
+public class TcpClientSocket {
+	public TcpClientSocket()
+	{
+		String serverIpAddress = "127.0.0.1";
+		int serverPort = 7777;
+		Socket clientScoket = null;
+		
+		try {
+			clientScoket = new Socket(serverIpAddress,serverPort);
+			// 서버와 연결
+			System.out.println("서버와의 연결이 되었습니다.");
+			
+			InputStream in = clientScoket.getInputStream();	// 스트림 생성
+			DataInputStream dis = new DataInputStream(in);	// 보조 스트림 생성
+			
+			String data = dis.readUTF();
+			System.out.println("서버로부터 전송된 메시지 : "+data);
+			
+			dis.close();			
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				clientScoket.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+}

@@ -1,0 +1,83 @@
+
+
+@ JavaScript를 이용한 HTML 태그에 접근
+-> 자바스크립트를 이용하여 HTML을 동적으로 처리하기 위해서는
+메소드를 통하여 해당 HTML 태그에 접근할 수 있어야 함
+
+
+
+## HTML 태그에 접근하기 위한 메소드 ##
+
+getElementById("ID명");
+-> 태그의 id 속성값을 이용해서 태그 엘리먼트 객체 정보를 가져옴 (1개만 가져옴)
+
+getElementsByName("name명");
+-> 태그의 name 속성값을 이용해서 태그 엘리먼트의 객체 정보를 배열에 담아서 가져옴
+-> 같은 이름의 태그가 여러 개 존재 할 수 있기 때문에 기본적으로 배열로 리턴함
+
+getElementsByTagName("tag명");
+-> 태그명을 이용해서 해당 태그들의 객체 정보를 배열에 담아서 가져옴
+
+
+
+## document.getElementById() ##
+-> HTML 태그의 id 속성을 이용하여 JavaScript에서 접근하기 위한 메소드
+-> 리턴 값 : 단일값 형태 (하나의 태그)
+
+var 변수 : document.getElementById("ID명");
+
+ex)
+<p id="p1"> 안녕하세요 </p>
+
+<script>
+	var p1 = document.getElementById("p1");
+	console.log(p1);
+	console.log(p1.innerHTML);
+</script>
+
+
+## document.getElementsByName() ##
+-> HTML 태그의 name 속성의 값(이름)으로 객체 정보를 가져올 때 사용
+-> 리턴 값 : 배열(name은 중복 가능하기 때문에 배열로 가져옴)
+
+var 변수 = document.getElementsByName("이름");
+	- 변수는 자동으로 배열 형태가 됨
+
+ex)
+<p name="pp">안녕하세요</p>
+<p name="pp">자바스크립트</p>
+<p name="pp">재미나용</p>
+
+<script>
+	var pp = document.getElementsByName("pp");
+	console.log("1번재 : " + pp[0].innerHTML);
+	console.log("2번재 : " + pp[1].innerHTML);
+	console.log("3번재 : " + pp[2].innerHTML);
+</script>
+
+
+## document.getElementsByTagName() ##
+-> HTML 태그의 태그명을 이용해서 태그들을 한꺼번에 몽땅 가져와서 순서대로 제어함
+-> 리턴 값 : 배열 (태그 중복 가능)
+
+var 변수 = document.getElementsByTagName("태그명");
+	※ 변수는 자동 배열이 됨
+
+ex)
+<p>안녕하세요</p>
+<p>이제 곧 </p>
+<p>집에갑니다</p>
+<p>고기먹고싶다</p>
+<p>홍대 파티원 모집중</p>
+
+<script>
+	var arr = document.getElementsByTagName("p");
+	for(var i=0;i<arr.length;i++)
+	{
+		console.log(arr[i].innerHTML);
+	}
+</script>
+
+	※ 자바 스크립트의 반복문은 자바와 같음 (변수의 데이터형만 var로 쓰면 됨)
+
+

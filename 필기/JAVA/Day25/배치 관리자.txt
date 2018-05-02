@@ -1,0 +1,30 @@
+
+
+@ 배치 관리자 (Layout Manager)
+-> 프로그래머가 원하는 GUI 프로그램을 작성하려면 각 컴포넌트의 크기와 위치를 지정 할 수 있어야 함
+-> 자바에서는 컴포넌트들의 위치를 사용자가 직접 지정 할 수도 있고 배치 관리자에게 맡길 수 있음
+-> 배치 관리자란 자동적으로 컴포넌트들의 위치와 크기를 결정하는 객체
+-> 자바에서는 크게 5가지의 배치관리자를 사용함
+
+1. BorderLayout		: 동서남북중으로 5가지 형태로 컴포넌트를 배치하는 구조
+2. FlowLayout		: 순서대로 배치하는 구조
+3. GridLayout		: 격자 구조
+4. GridBagLayout	: 동적 격자 구조
+5. CardLayout		: 페이지 전환 (배치라고 보기에는 조금 애매함)
+
+1. BorderLayout	
+	this.setLayout(new BorderLayout());		
+	
+	this.add(button1,BorderLayout.WEST);
+	this.add(button2,BorderLayout.EAST);
+	this.add(button3,BorderLayout.NORTH);
+	this.add(button4,BorderLayout.SOUTH);
+	this.add(button5,BorderLayout.CENTER);
+
+2. FlowLayout
+
+	this.setLayout(new FlowLayout());
+
+3. GridLayout
+	this.setLayout(new GridLayout(5,1)); //5행 1열
+

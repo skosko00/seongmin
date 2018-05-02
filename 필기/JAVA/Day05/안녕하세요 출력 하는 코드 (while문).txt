@@ -1,0 +1,11 @@
+		int i;
+		Scanner sc = new Scanner(System.in);
+		i=0; // 초기값
+		
+		System.out.print("몇번을 출력하시겠습니까? ");
+		int su = sc.nextInt();
+		
+		while(i<su) {
+			i++;
+			System.out.println(i+". 안녕하세요");			
+		}

@@ -1,0 +1,349 @@
+
+
+@ 서브 쿼리(Sub Query)
+-> 하나의 SQL 문안에 포함되어 있는 또 다른 SQL 문
+-> 알려지지 않은 조건에 근거한 값들을 검색하는 SELECT 문장을 작성하는데 유용함
+-> 메인 쿼리가 서브 쿼리를 포함하는 종속적인 관계
+-> 서브쿼리는 반드시 소괄호로 묶어야 함
+	- (SLECT ... FROM ....) 형태
+-> 서브쿼리는 연산자의 오른쪽에 위치 해야함
+-> 서브쿼리 내에서 order by 문법은 지원 안됨 (최종 결과물은 메인 쿼리 이므로!)
+
+ex) SELECT EMP_NAME AS "관리자 이름"
+FROM EMPLOYEE
+WHERE EMP_ID = (SELECT MANAGER_ID FROM EMPLOYEE WHERE EMP_NAME = '전지연');
+
+
+@ 서브쿼리 (SUBQUERY)의 유형
+1. 단일행 서브쿼리
+2. 다중행 서브쿼리
+3. 다중열 서브쿼리
+4. 다중행 다중열 서브쿼리
+5. 상관 서브 쿼리
+6. 스칼라 서브 쿼리
+
+
+
+@ 단일행 서브쿼리
+-> 서브쿼리의 조회 결과 값(행 혹은 튜플)의 개수가 1개 일 때
+
+ex) 전 직원의 평균 급여보다 많은 급여를 받고 있는 직원의 사번, 이름, 직급코드, 급여를 조회하시오
+SELECT EMP_ID, EMP_NAME, JOB_CODE, SALARY
+FROM EMPLOYEE
+WHERE SALARY>(SELECT FLOOR(AVG(SALARY)) FROM EMPLOYEE);
+
+
+
+@ 다중행 서브쿼리
+-> 서브쿼리의 조회 결과 값(행 또는 튜플)이 여러개 일 때
+-> 다중 서브쿼리 앞에는 일반 비교연산자는 사용 불가
+	- 사용 가능 연산자 : IN / NOT IN, ANY, ALL, EXISTS
+
+
+IN : 쿼리의 비교 조건이 결과 중에서 하나라도 일치하는 것
+	ex) SELECT * FROM EMPLOYEE WHERE DEPT_CODE IN('D9','D5');
+	※ DEPT_CODE가 'D9' 이거나 'D5'인 것 (OR와 같음)
+
+
+
+NOT IN : 쿼리의 비교 조건이 결과 중에서 하나라도 일치하지 않는 것
+	ex) SELECT * FROM EMPLOYEE WHERE DEPT_CODE NOT IN ('D9','D5');
+	※ DEPT_CODE가 'D9'가 아니거나 'D5'가 아닌것
+
+
+ANY : 서브 쿼리의 결과 중에서 하나라도 참이면 참
+	> ANY : 최소값보다 크면
+	>= ANY : 최소값보다 크거나 같으면
+	< ANY : 최대값보다 작으면
+	<= ANY : 최대값보다 작거나 같으면
+	= ANY : IN과 같은 효과
+	!= ANY : NOT IN과 같은 효과
+
+ex) x > ANY (...)
+
+
+SELECT EMP_NAME, SALARY
+FROM EMPLOYEE
+WHERE SALARY < ANY (2000000,5000000);
+
+-- ex) J3 코드를 가진 사람의 급여들을 가지고 비교
+
+SELECT SALARY
+FROM EMPLOYEE
+WHERE JOB_CODE = 'J3';
+
+-- J3 코드를 가진 사람들의 급여 중에서 가장 작은 사람보다 큰 급여들을 출력
+
+SELECT EMP_NAME, SALARY
+FROM EMPLOYEE
+WHERE SALARY > ANY (SELECT SALARY
+FROM EMPLOYEE
+WHERE JOB_CODE = 'J3');
+
+
+-- 'D1' 또는 'D5' 부서코드를 가지고 있는 사원들의
+-- 급여 중에서  가장 높은 급여보다 작은 모든 사원들의 이름, 급여,부서코드를 출력하여라.
+
+SELECT EMP_NAME, SALARY, DEPT_CODE
+FROM EMPLOYEE
+WHERE SALARY < ANY (SELECT SALARY
+FROM EMPLOYEE
+WHERE DEPT_CODE IN ('D1','D5'));
+
+-- < ANY (OR)
+-- 서브쿼리에서 나온 결과물 중에서
+-- 하나라도 작다면!
+
+-- 부서별 평균 급여를 조사하였을 때 가장 낮은 부서의 급여보다
+-- 높거나 같은 모든 사람들의 이름,급여,부서명을 출력하시오
+SELECT EMP_NAME, SALARY, DEPT_TITLE
+FROM EMPLOYEE
+JOIN DEPARTMENT ON (DEPT_CODE = DEPT_ID)
+WHERE SALARY > ANY (SELECT AVG(SALARY) FROM EMPLOYEE GROUP BY DEPT_CODE);
+
+
+ALL : 서브 쿼리의 결과 중에서 모두 참이면 참
+	> ALL : 최대값보다 크면
+	>= ALL : 최대값보다 크거나 같으면
+	< ALL : 최소값보다 작으면
+	<= ALL : 최소값보다 작거나 같으면
+	= ALL : 같다면
+	(SUBSELECT의 결과가 1건이면 상관없지면 여러건이면 정상 처리 되지 않음)
+	!= ALL : 같지 않다면
+	(위와 마찬가지로 결과가 여러건이면 오류)
+
+ex) x > ALL(...)
+
+SELECT EMP_NAME, SALARY
+FROM EMPLOYEE
+WHERE SALARY > ALL(2000000, 5000000);
+
+
+-- 실습 1
+-- 'D2'부서있는 사원들의 급여보다 적은 급여를 받는 모든 사원을 조회
+SELECT EMP_NAME, SALARY
+FROM EMPLOYEE
+WHERE SALARY < ALL(SELECT SALARY FROM EMPLOYEE WHERE DEPT_CODE='D2');
+
+
+@ EXISTS : 서브쿼리의 결과 중에서 만족하는 값이 하나라도 존재하면 참
+	※ 중요한것은 단순 참, 거짓을 판단하는 기준이 되는 서브쿼리 연산자
+
+-- 보너스 포인트 3.0 이상인 사원들이 있다면
+-- 모든 사원의 정보를 출력해 주어라.
+SELECT EMP_NAME,BONUS
+FROM EMPLOYEE
+WHERE EXISTS 
+(SELECT NULL
+FROM EMPLOYEE
+WHERE NVL(BONUS,0) >= 0.3);
+
+-- 보너스율이 1 이상인 사원이 없다면
+-- 모든 사원의 이름, 급여를 출력하되 10% 인상된 급여로 출력하여라
+-- 보너스율이 1 이상인 사원이 있다면
+-- 출력하지 말아라.
+
+SELECT EMP_NAME, SALARY*1.1
+FROM EMPLOYEE
+WHERE NOT EXISTS
+(SELECT NULL
+FROM EMPLOYEE
+WHERE NVL(BONUS,0) >= 1);
+
+
+
+@ 다중열 서브쿼리
+-> 서브쿼리의 조회 결과 컬럼의 개수가 여러개 일 때
+	(다중행과는 다르게 결과 값이 아닌 컬럼이 여러개 일 때)
+
+-- 회사에서 퇴사한 여직원(1명만 있을때를 가정)과 같은 부서 및 직급인 사원 검색 하시오
+-- (이름,직급,부서,입사일을 출력)
+SELECT EMP_NAME,JOB_CODE,DEPT_CODE,HIRE_DATE
+FROM EMPLOYEE
+WHERE (DEPT_CODE,JOB_CODE) IN
+(SELECT DEPT_CODE,JOB_CODE
+FROM EMPLOYEE
+WHERE ENT_YN = 'Y' -- ENT_YN 값이 Y이면 퇴사한 직원
+AND SUBSTR(EMP_NO,8,1)=2);
+
+
+-- @실습문제
+-- 기술지원부이면서 급여가 2,000,000원
+-- 직원의 이름,부서코드,급여,부서의지역명을 출력하시오
+SELECT EMP_NAME,DEPT_CODE,SALARY, LOCAL_NAME
+FROM EMPLOYEE
+JOIN DEPARTMENT ON (DEPT_CODE = DEPT_ID)
+JOIN LOCATION ON (LOCATION_ID = LOCAL_CODE)
+WHERE (DEPT_TITLE,SALARY) IN (SELECT DEPT_TITLE,SALARY
+FROM EMPLOYEE
+JOIN DEPARTMENT ON (DEPT_CODE = DEPT_ID)
+WHERE DEPT_TITLE = '기술지원부' AND SALARY = 2000000);
+
+-- ORACLE 문법
+SELECT EMP_NAME, DEPT_CODE, SALARY, LOCAL_NAME
+FROM EMPLOYEE, LOCATION
+WHERE (DEPT_CODE,LOCAL_CODE) IN
+(SELECT DEPT_ID,LOCATION_ID
+FROM DEPARTMENT
+WHERE DEPT_TITLE='기술지원부')
+AND SALARY = 2000000;
+
+-- ANSI 문법
+SELECT EMP_NAME, DEPT_CODE, SALARY, LOCAL_NAME
+FROM EMPLOYEE
+JOIN LOCATION ON (DEPT_CODE,LOCAL_CODE)
+IN (SELECT DEPT_ID,LOCATION_ID
+FROM DEPARTMENT
+WHERE DEPT_TITLE='기술지원부')
+AND SALARY = 2000000;
+
+
+@ 다중행 다중열 서브쿼리
+-> 서브쿼리의 조회 결과 컬럼의 개수와 행의 개수가 여러개 일 때
+
+ex)-- 직급별 최소 급여를 받는 직원의 이름, 사번, 부서코드, 입사일, 연봉을 출력
+SELECT EMP_NAME,JOB_CODE,DEPT_CODE,HIRE_DATE,SALARY
+FROM EMPLOYEE
+WHERE (JOB_CODE,SALARY)
+IN (SELECT JOB_CODE, MIN(SALARY)
+FROM EMPLOYEE
+GROUP BY JOB_CODE);
+
+
+@ 상관 서브쿼리 (상호 연관 서브쿼리)
+-> 메인쿼리의 값을 서브쿼리에 주고 서브쿼리를 수행한 다음 그 결과를
+다시 메인 쿼리로 반환해서 수행하는 쿼리
+-> 성능이 좋진 않음
+-> 이전까지는 서브쿼리가 독단적으로 행동하고 내놓은 결과값을 사용하였고
+상관 서브쿼리는 메인쿼리의 테이블을 가져다가 사용하는 쿼리문
+
+-- 상관 쿼리 예시
+-- 관리자가 있는 사원들 중 관리자의 사번이 EMPLOYEE 테이블에 존재하는
+-- 직원의 사번과 같을 때 직원의 사번, 이름, 소속부서, 관리자 사번을 조회 하시오
+SELECT EMP_ID,EMP_NAME,DEPT_CODE,MANAGER_ID
+FROM EMPLOYEE E
+WHERE EXISTS (SELECT NULL
+FROM EMPLOYEE E2
+WHERE E.MANAGER_ID = E2.EMP_ID);
+
+
+
+@ 스칼라 서브쿼리
+-> 상관쿼리 이면서 결과값이 1개인 서브쿼리
+-> 스칼라 서브쿼리는 다양하게 사용함
+
+
+### 스칼라 서브쿼리 - SELECT 절에서 사용 ###
+ex)
+SELECT E.EMP_ID, E.EMP_NAME, E.MANAGER_ID,
+	NVL((SELECT E2.EMP_NAME
+		FROM EMPLOYEE E2
+		WHERE E.MANAGER_ID = E2.EMP_ID),'없음') AS "관리자명"
+FROM EMPLOYEE E
+ORDER BY 1;
+
+-- @실습문제
+--1. 사원명, 부서코드, 부서별 평균임금을 스칼라서브쿼리를 이용해서 출력
+SELECT EMP_NAME,DEPT_CODE,
+FLOOR(
+(SELECT AVG(E2.SALARY)
+FROM EMPLOYEE E2
+WHERE NVL(E.DEPT_CODE,'없음') = NVL(E2.DEPT_CODE,'없음')
+GROUP BY DEPT_CODE
+)) AS "부서별 평균임금"
+FROM EMPLOYEE E;
+
+
+### 스칼라 서브쿼리 - WHERE 절에서 사용 ###
+
+ex) 자신이 속한 직급의 평균 급여보다 많이 받는 직원의 이름, 직급 코드, 급여를 출력
+
+SELECT EMP_NAME, JOB_CODE, SALARY
+FROM EMPLOYEE E1
+WHERE SALARY >= (SELECT AVG(SALARY)
+		FROM EMPLOYEE E2
+		WHERE E2.JOB_CODE = E1.JOB_CODE)
+ORDER BY 2;
+
+
+@ 인라인 뷰 (FROM 절에서의 서브쿼리)
+-> FROM 절에 서브쿼리를 사용한 것을 인라인뷰(INLINE-VIEW)라고 함
+ex)
+SELECT *
+FROM (SELECT EMP_NAME, SALARY, DEPT_CODE
+FROM EMPLOYEE
+WHERE SALARY >= 3000000)
+WHERE DEPT_CODE IN ('D9','D5');
+
+
+SELECT *
+FROM (SELECT *
+FROM (SELECT EMP_NAME, SALARY, DEPT_CODE
+FROM EMPLOYEE
+WHERE SALARY >= 3000000)
+WHERE DEPT_CODE IN ('D9','D5'));
+
+
+# TOP-N 분석이란?
+	-> TOP-N 질의는 컬럼에서 가장 큰 N개의 값 또는 가장 적은 N개의 값을
+	요청할 때 사용이 됨
+
+	ex) 회사에서 가장 적게 팔린 제품 10가지는?
+	혹은
+	회사에서 가장 소득이 많은 사람 3명은?
+
+ex) 회사에서 급여가 가장 높은 사람 5명을 검색하시오
+SELECT ROWNUM,뷰.*
+FROM 
+(SELECT EMP_NAME, SALARY
+FROM EMPLOYEE
+ORDER BY 2 DESC) "뷰"
+WHERE ROWNUM <= 5;
+
+
+@ WITH
+-> 서브쿼리에 이름을 붙여주고, 인라인뷰로 사용시 서브쿼리의 이름으로
+FROM 절에 기술 할 수 있음
+-> 같은 서브쿼리가 여러번 사용될 경우 중복 작성을 피할 수 있고,
+실행 속도도 빨라지는 장점이 있음
+
+-- ex) 회사에서 급여가 가장 높은 사람 5명을 검색하시오
+WITH TOP_N_SAL AS (SELECT EMP_NAME, SALARY FROM EMPLOYEE ORDER BY SALARY DESC)
+
+SELECT ROWNUM, TOP_N_SAL.*
+FROM TOP_N_SAL
+WHERE ROWNUM <= 5;
+
+
+#### 순위를 표현하는 키워드 ####
+
+@ RANK() OVER
+-> 순위를 표현하며, 중복 순위를 표현한 다음은 해당 개수를 건너뛰고 나타냄
+-> 즉, 1,2,3,4,5,6,6,6,9,10
+ex)
+WITH TOP_N AS (SELECT RANK() OVER(ORDER BY SALARY DESC) AS "순위",
+                EMP_NAME, SALARY 
+                FROM EMPLOYEE)
+SELECT *
+FROM TOP_N;
+
+@ DENSE_RANK() OVER
+-> 순위를 표현하며, 중복 순위에 상관없이 순차적으로 반환
+-> 즉, 1,2,3,4,5,6,6,6,7,8
+ex)
+WITH TOP_N AS (SELECT DENSE_RANK() OVER(ORDER BY SALARY DESC) AS "순위",
+                EMP_NAME, SALARY 
+                FROM EMPLOYEE)
+SELECT *
+FROM TOP_N;
+
+@ ROW_NUMBER() OVER
+-> 순위를 표현하며, 중복과 관계없이 무조건 순서대로 반환
+-> 즉, 중복값이 있다 하더라도 중복을 표현하지 않음 -> 1,2,3,4,5,6,7,8,9,10
+ex)
+WITH TOP_N AS (SELECT ROW_NUMBER() OVER(ORDER BY SALARY DESC) AS "순위",
+                EMP_NAME, SALARY 
+                FROM EMPLOYEE)
+SELECT *
+FROM TOP_N;
+

@@ -1,0 +1,257 @@
+
+@ 컴포넌트
+-> 하나의 독립적인 기능을 수행하는 모듈
+-> GUI에서 작동하는 하나의 부품적인 역할을 하는 것
+-> 계산기로 간단히 보면 +버튼, -버튼, 숫자 버튼 등 다양한 컴포넌트들이 존재함
+	※ 주의할점은 컴포넌트 종류 중 버튼이 있는 것일뿐 컴포넌트==버튼 은 아님
+
+@ 컴포넌트 추가 하기
+-> 컨테이너가 생성되었다면 원하는 컴포넌트 객체들을 컨테이너에 추가 할 수 있음
+-> 이 경우에는 JFrame 객체가 컨테이너가 됨
+-> add() 메소드를 이용하여 컴포넌트를 컨테이너에 추가 할 수 있음
+
+
+
+@ JButton
+-> 사용자가 클릭했을 때 어떤 작업이 수행되도록 하기 위해 만드는 컴포넌트
+-> 흔히 우리가 자주 보는 버튼이라고 생각 하면 됨
+
+
+버튼 생성
+-> private JButton button1 = new JButton("버튼1"); 
+
+버튼 추가
+-> this.add(button1);
+
+버튼설정
+-> button1.setSize(100, 50);
+-> button1.setLocation(100, 75);
+
+
+
+@ JCombobox
+-> 여러 item 중에서 하나를 선택 할 수 있는 컴포넌트
+
+콤보박스 생성
+-> private JComboBox box = null;
+
+콤보박스 추가
+-> this.add(box);
+
+콤보박스 설정
+-> String [] food = {"피자","햄버거","치킨","타코야끼"};		
+-> box = new JComboBox(food);
+
+
+
+@ JList
+-> 여러 item 중에서 하나를 선택 할 수 있게 해주는 컴포넌트
+-> 콤보 박스와 비슷하지만 콤보박스는 클릭전에 모든 아이템을 보여주지 않지만
+JList는 리스트 자체를 보여주고 시작함
+
+
+리스트 작성 및 추가
+-> String [] food = {"피자","햄버거","치킨","타코야끼","떡국",
+		"칼국수","김밥","부대찌개","불고기백반","삼겹살",
+		"소고기","볶음밥","짜장면","부침개","초밥","짬뽕","군만두"};	
+-> private JList list = new JList(food);
+-> this.add(list);
+
+
+리스트가 너무 길 때에는 스크롤을 추가 할 수 있음
+-> private JScrollPane scroll = new JScrollPane(list);
+
+단, Frame이나 pannel에 추가 할 때에는 list가 아닌 scroll을 추가 해야 함
+-> this.add(scroll);
+
+
+@ JLabel
+-> 화면에 텍스트를 표시하는데 사용되는 컴포넌트
+-> 일반적으로 IO.Password에 작성하는 필드 옆에 있는 글자 라고 보면 됨
+	ex) ID : 	, Password :
+
+라벨 추가
+-> private JLabel id = new JLabel("ID :");
+-> private JLabel pwd = new JLabel("Password :");
+
+	this.add(id);
+	this.add(pwd);
+
+@ JTextField
+-> 사용자로부터 데이터를 자유롭게 입력 받을 수 있는 컴포넌트
+-> 한 줄만 입력 할 수 있어서 비교적 길지 않은 값 입력에 사용됨 (ID, 검색어 등등)
+
+텍스트필드 추가
+
+-> private JTextField tid = new JTextField(10);
+
+	this.add(tid);
+
+
+@ JPasswordField
+-> 사용자로부터 비밀번호 형태로 입력 받을 수 있는 컴포넌트
+-> 입력시 값이 비밀번호 형태로 나옴
+
+패스워드필드 추가
+
+-> private JPasswordField tpw = new JPasswordField(10);
+
+	this.add(tpwd);
+
+
+@ JTextArea
+-> 여러 줄의 텍스트를 입력하거나 보여줄 수 있는 편집 가능한 컴포넌트
+
+
+JTextArea 생성
+
+-> private JTextArea comments = new JTextArea("하고 싶은 말을 작성",10,34);
+
+JTextArea 추가
+
+-> this.add(comments);
+
+@ JCheckbox 와 JRadioButton
+-> "선택/비선택"을 표현하는데 사용되는 컴포넌트
+
+## 체크박스 추가 및 설정 ##
+	private JCheckBox chFood = new JCheckBox("음식",true);
+	private JCheckBox chMusic = new JCheckBox("음악",false);
+	private JCheckBox chTv = new JCheckBox("TV",false);
+	private JCheckBox chSport= new JCheckBox("운동",false);
+
+		this.add(chFood);
+		this.add(chMusic);
+		this.add(chTv);
+		this.add(chSport);
+
+
+
+## 라디오버튼 추가 및 설정 ##
+
+	private JLabel label = new JLabel("당신은 흡연자 입니까?");
+	private JRadioButton yes = new JRadioButton("Yes",false);
+	private JRadioButton no = new JRadioButton("No",false);
+
+
+
+		this.add(label);
+		ButtonGroup bg = new ButtonGroup();
+		bg.add(yes);
+		bg.add(no);
+		this.add(yes);
+		this.add(no);
+
+※ ButtonGroup을 이용하면 그룹으로 묶어 놓기 때문에 다중 선택 불가
+※ 생성시 true는 체크 on, false 체크 off 상태로 만듦
+
+@ JPanel
+-> 빈 평면 공간을 가지고 있는 종속적인 컨테이너
+-> JPanel 안에 JPanel을 포함한 다양한 컴포넌트를 배치 할 수 있음
+-> 실제 다양한 컴포넌트들을 Frame에 직접 배치하기 보다
+	여러 개의 Panel을 생성하여 Panel에 각 각의 역할에 맞는 컴포넌트를 추가함
+
+## 패널 생성 및 추가 ##
+	private JPanel p1 = new JPanel();
+	private JPanel p2 = new JPanel();
+	private JButton button1 = new JButton("버튼1");
+	private JButton button2 = new JButton("버튼2");
+
+		p1.setSize(470, 210);
+		p1.setLocation(10, 10);
+		p1.setBackground(Color.BLACK);
+		p1.add(button1);
+		this.add(p1);
+		p2.setSize(470, 210);
+		p2.setLocation(10, 240);
+		p2.setBackground(Color.YELLOW);
+		p2.add(button2);
+		this.add(p2);
+
+※ 패널을 생성하여 각 컴포넌트들을 담을 수 있음
+
+
+@ JScrollPane
+-> 단 하나의 컴포넌트만 포함 할 수 있는 종속적인 컨테이너
+-> 제한된 공간에서 큰 컴포넌트를 화면에 보여줄 때 사용함
+
+## JScrollPane 생성 및 사용하기 ##
+
+		JPanel panel = new JPanel();
+		panel.setBackground(Color.black);
+		panel.setSize(460,400);
+		panel.setLocation(10, 10);
+		
+		JTextArea TextArea = new JTextArea(8,34);
+		JScrollPane scrollPane = new JScrollPane(TextArea);
+		panel.add(scrollPane);
+		
+		this.add(panel);
+
+※ textArea 공간의 크기를 넘어가게 되면 자동으로 스크롤이 생성 됨
+
+@ JDialog
+-> JFrame과 같은 독립적인 컨테이너, titlebar와 닫기 버튼을 가지고 있음
+-> 주로 화면에 추가적인 메시지창을 보여주거나 사용자로부터 입력을 받을 때 사용
+
+## 다이얼로그 창 만들기 ##
+
+	JDialog info = new JDialog();
+	info.setSize(300, 300);		
+	info.setLocation(200, 200);
+	info.setVisible(true);
+
+
+## 리스너 사용 다이얼로그 창(ActionListener 상속) ##
+
+public class GuiTest extends JFrame implements ActionListener{
+	
+	private JButton login = new JButton("로그인하기");
+	public void comInit()
+	{
+		login.setSize(100, 50);
+		login.setLocation(50, 50);		
+		this.add(login);
+		login.addActionListener(this);
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource()==login)
+		{
+			Dialog loginDi = new JDialog(this,"로그인");
+			loginDi.setModal(true);
+			loginDi.setSize(500, 100);
+			loginDi.setResizable(false);
+			loginDi.setLocationRelativeTo(null);
+			loginDi.setLayout(new FlowLayout());
+			JLabel lId = new JLabel("ID :");
+			JLabel lPw = new JLabel("PW :");
+			JTextField id = new JTextField(10);
+			JTextField pw = new JTextField(10);
+			
+			loginDi.add(lId);
+			loginDi.add(lPw);
+			loginDi.add(id);
+			loginDi.add(pw);
+			
+			JButton loginStart = new JButton("로그인");
+			loginDi.add(loginStart);
+			loginDi.setVisible(true);
+			
+		}
+	}
+
+@ JFileChooser
+-> 파일을 열거나 저장 할 때 사용하는 Dialog
+
+ex)
+		JFileChooser fc = new JFileChooser();
+		int choiceValue = fc.showOpenDialog(this);
+		if(choiceValue==JFileChooser.APPROVE_OPTION)
+		{
+			System.out.println("선택한 파일 : "+
+		fc.getSelectedFile().getName());
+		}
+
+

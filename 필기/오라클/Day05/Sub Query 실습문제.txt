@@ -1,0 +1,38 @@
+-- 실습 문제 1
+
+-- employee 테이블에서 기본급여가 제일 많은 사람과 제일 적은 사람의 정보 중에서
+-- 사번, 사원명, 기본급여를 나타내세요.
+SELECT EMP_ID, EMP_NAME, SALARY
+FROM EMPLOYEE
+WHERE SALARY=(SELECT MAX(SALARY) FROM EMPLOYEE) OR
+SALARY=(SELECT MIN(SALARY) FROM EMPLOYEE);
+
+
+-- 실습 문제 2
+-- D1, D2부서에 근무하는 사원들 중에서
+-- 기본급여가 D5 부서 직원들의 '평균월급' 보다 많은 사람들만 
+-- 부서번호, 사원번호, 사원명, 월급을 나타내세요.
+SELECT DEPT_CODE, EMP_ID, EMP_NAME,SALARY
+FROM EMPLOYEE
+WHERE SALARY>(SELECT AVG(SALARY) FROM EMPLOYEE WHERE DEPT_CODE = 'D5') AND
+DEPT_CODE IN ('D1','D2');
+
+
+
+--@ 실습문제
+-- 차태연, 전지연, 사원의 급여등급(EMPLOYEE테이블의 SAL_LEVEL컬럼)과
+-- 같은 사원의 직급명, 사원명을 출력
+SELECT JOB_NAME AS "직급명",
+EMP_NAME AS "사원명"
+FROM EMPLOYEE JOIN JOB USING(JOB_CODE)
+WHERE SAL_LEVEL IN (SELECT SAL_LEVEL FROM EMPLOYEE WHERE EMP_NAME IN ('차태연','전지연')) AND
+EMP_NAME NOT IN ('차태연','전지연');
+
+
+--@ 실습문제
+--1. 직급이 대표, 부사장이 아닌 모든 사원을
+-- 이름,부서명,직급코드를 출력하고 부서별로 출력
+SELECT EMP_NAME, DEPT_TITLE, JOB_CODE
+FROM EMPLOYEE
+JOIN DEPARTMENT ON (DEPT_CODE=DEPT_ID)
+WHERE EMP_NAME NOT IN (SELECT EMP_NAME FROM EMPLOYEE JOIN JOB USING(JOB_CODE) WHERE JOB_NAME IN ('대표','부사장'));

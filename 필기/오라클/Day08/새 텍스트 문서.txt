@@ -1,0 +1,36 @@
+CREATE TABLE khacademy
+(
+    NO NUMBER PRIMARY KEY,
+    ID VARCHAR2(20) UNIQUE,
+    PASS VARCHAR2(20) NOT NULL,
+    NAME VARCHAR2(20) NOT NULL,
+    NICKNAME VARCHAR2(20) UNIQUE,
+    GENDER CHAR(1) CHECK (GENDER IN ('M','F')),
+    TEL VARCHAR(20) DEFAULT '010-0000-0000',
+    ADDRESS VARCHAR2(90)
+);
+
+INSERT INTO KHACADEMY
+VALUES(1,'hong11','1234','È«±æµ¿','µ¿ÇØ¹øÂ½','M','010-4958-2333','°æ±âµµ');
+INSERT INTO KHACADEMY
+VALUES(2,'gogo11','4444','°í±æ¶Ë','µÑ¸®¼¼Äû','M',default,'°æ»óµµ');
+INSERT INTO KHACADEMY
+VALUES(3,'kimDDong','6658','±è¸»¶Ë','³»´«Àº¸»¶Ë','F','010-6674-8986','Àü¶óµµ');
+INSERT INTO KHACADEMY
+VALUES(4,'sin','5356','½Å±¸','´ÏµéÀÌ°Ô¸ÀÀ»','M','010-8997-1122','¿ï¸ªµµ');
+INSERT INTO KHACADEMY
+VALUES(5,'mslove','5555','±è¹Î¼ö','¿µ¿øÇÑms','F',default,'¼­¿ï½Ã');
+
+select * from KHACADEMY;
+
+update khacademy
+set pass='9999'
+where NICKNAME='³»´«Àº¸»¶Ë';
+
+update khacademy
+set tel = '¾øÀ½'
+where tel='010-0000-0000';
+
+delete from khacademy where ID='sin';
+
+truncate table khacademy;
