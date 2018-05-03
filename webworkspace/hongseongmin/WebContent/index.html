@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="https://fonts.googleapis.com/css?family=Gugi" rel="stylesheet">
+<style type="text/css">
+    @keyframes img
+    {
+        from{}
+        to
+        {
+            width: 400px;
+            height: 500px;
+        }
+    }
+    div{box-sizing: border-box;}
+    #wrapper{width: 1200px; height: 1000px;}
+    #header{width: 100%; height: 10%;}
+    #header-1{width: 10%; height: 100%; float: left; position: relative;}
+    #header-2{width: 60%; height: 100%; float: left; position: relative;}
+    #headerName{line-height: 42px;}
+    #headerName>a{color: black; text-decoration: none;}
+    #header-3{width: 30%; height: 100%; float: left;}
+    #searchid{margin-top: 40px; margin-right: 0; width: 80%; border-radius: 1em;}
+    input#searchbtn{background: url(img/search.JPG); background-repeat: no-repeat; width:30px; height:18px; border: 0; padding: 0;}
+    #navigator{width: 100%; height: 5%;}
+    #naviul{height: 100%; width: 100%; margin: 0; padding: 0; box-sizing: border-box;}
+    #naviul>li{float: left; list-style-type: none; height: 100%; width: 12.5%; line-height: 46px; color: black; font-family: 'Gugi', cursive; }
+    #naviul>li>a{
+        display: block; text-decoration: none; background: linear-gradient(#fbcac9, #8ca6ce); color: black; height: 100%; width: 100%}
+    #naviul>li>a:hover
+    {
+        color: #ffffff;
+        background: #333333;
+    }
+    #naviul>li>ul
+    {
+        opacity: 0;
+        padding: 0;
+        position: relative;
+        z-index: 999;
+    }
+    #naviul>li:hover ul
+    {
+        opacity: 1;
+        transition-duration: 2s;
+        position: relative;
+        z-index: 999;
+    }
+    #naviul>li:hover ul>li>a
+    {
+        height: 100%;
+        width:100%;
+        position: relative;
+        z-index: 999;
+    }
+    #naviul>li>ul>li
+    {
+        list-style-type: none;
+        background-color: #D8AFAF;
+        font-family: 'Gugi', cursive;
+        position: relative;
+        z-index: 999;
+    }
+    #naviul>li>ul>li>a
+    {
+        display: block;
+        height:0px;
+        text-decoration: none;
+        color: #232323;
+        position: relative;
+        z-index: 999;
+    }
+    #contents>div>a>img:hover
+    {
+        animation-name: img;
+        animation-duration: 2s;
+        position: relative;
+        z-index: 999;
+    }
+    {
+        background-color: black;
+        color: white;
+    }
+    #naviul>li>ul>li
+    #contents{width: 100%; height: 80%;}
+    #contents-1{width: 25%; height: 50%; float: left;}
+    #contents-2{width: 25%; height: 50%; float: left;}
+    #contents-3{width: 25%; height: 50%; float: left;}
+    #contents-4{width: 25%; height: 50%; float: left;}
+    #contents-5{width: 25%; height: 50%; clear: both; float: left;}
+    #contents-6{width: 25%; height: 50%; float: left;}
+    #contents-7{width: 25%; height: 50%; float: left;}
+    #contents-8{width: 25%; height: 50%; float: left;}
+    .mainimg{width: 100%; height: 100%;
+     position: relative;
+        z-index: 10;
+    }
+    #footer{width: 100%; height: 5%;}
+        #footimg{width: 100%; height: 100%;}
+</style>
+</head>
+<body>
+<center>
+<div id="wrapper">
+    <div id="header">
+        <div id="header-1"></div>
+        <div id="header-2">
+            <H1 id="headerName"><a href="#">쇼핑몰</a></H1>
+        </div>
+        <div id="header-3">
+           <form action="http://smartstore.naver.com/zeroskin/search?" method="get">
+            <input type="search" id="searchid" name="q=">
+            <input type="submit" id="searchbtn" alt="search" value=""  name="q=">
+            </form>
+        </div>
+    </div>
+    <div id="navigator">
+        <ul id="naviul">
+            <li><a href="#">케이스</a>
+                <ul>
+                    <li><a href="apple.html">애플</a></li>
+                    <li><a href="samsung.html">삼성</a></li>
+                    <li><a href="http://smartstore.naver.com/zeroskin/category/14efd0f774a04219b5a5dc8f7d40755f?cp=1">LG</a></li>
+                </ul>
+            </li>
+            <li><a href="#">케이블</a>
+                <ul>
+                    <li><a href="#">애플</a></li>
+                    <li><a href="#">삼성</a></li>
+                    <li><a href="#">LG</a></li>
+                </ul>
+                </li>
+            <li><a href="#">필름</a>
+            <ul>
+                    <li><a href="#">애플</a></li>
+                    <li><a href="#">삼성</a></li>
+                    <li><a href="#">LG</a></li>
+                </ul>
+                </li>
+            <li><a href="#">거치대</a></li>
+            <li><a href="#">아이디어상품</a></li>
+            <li><a href="#">전체상품</a></li>
+            <li><a href="#">구매평</a></li>
+            <li><a href="#">공지사항</a></li>
+        </ul>
+    </div>
+    <div id="contents">
+        <div id="contents-1"><a href="http://smartstore.naver.com/zeroskin/products/2201863978"><img src="img/1.JPG" class="mainimg"></a></div>
+        <div id="contents-2"><a href="http://smartstore.naver.com/zeroskin/products/2085214598"><img src="img/2.JPG" class="mainimg"></a></div>
+        <div id="contents-3"><a href="http://smartstore.naver.com/zeroskin/products/2198815019"><img src="img/3.JPG" class="mainimg"></a></div>
+        <div id="contents-4"><a href="http://smartstore.naver.com/zeroskin/products/2654320440"><img src="img/4.JPG" class="mainimg"></a></div>
+        <div id="contents-5"><a href="http://smartstore.naver.com/zeroskin/products/2654327167"><img src="img/5.JPG" class="mainimg"></a></div>
+        <div id="contents-6"><a href="http://smartstore.naver.com/zeroskin/products/2770730006"><img src="img/6.JPG" class="mainimg"></a></div>
+        <div id="contents-7"><a href="http://smartstore.naver.com/zeroskin/products/2654320440"><img src="img/7.JPG" class="mainimg"></a></div>
+        <div id="contents-8"><a href="http://smartstore.naver.com/zeroskin/products/2770751718"><img src="img/8.JPG" class="mainimg"></a></div>
+    </div>
+    <div id="footer">
+        <img id="footimg" src="img2/footer.JPG">
+    </div>
+</div>
+</center>
+</body>
+</html>

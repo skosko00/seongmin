@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트 개요</title>
+
+</head>
+<body>
+	<h1>자바스크립트 개요</h1>
+
+	<dl>
+		<dt>스크립트 언어란?</dt>
+		<dd>
+			기본 프로그램의 동작을 사용자의 요구에 맞게 수행되도록 해주는 용도로 사용된다.<br> 매우 빠르게 배우고 짧은
+			소스코드 파일로 상호작용 하도록 고안되었다.
+		</dd>
+	</dl>
+
+	<dl>
+		<dt>자바스크립트</dt>
+		<dd>
+			웹 브라우저에서 많이 사용하는 인터프리터 방식의 객체지향 프로그래밍 언어이다.<br> ECMA 스크립트 표준을
+			따르는 대표적인 웹 기술이다.
+		</dd>
+
+	</dl>
+
+	<dl>
+		<dt>자바스크립트 사용법</dt>
+		<dd>
+			<ol>
+				<li>태그에 직접 간단소스코드를 작성해서 실행되게 하는 방법</li>
+				<li>script 태그 영역에 작성해서 실행되게 하는 방법</li>
+				<li>별도의 js파일로 작성해서 가져다 사용하는 방법</li>
+			</ol>
+		</dd>
+		<dl>
+			<dt>단, 소스는 함수 단위로 작성하고, 이벤트속성을 사용해서 구동되게 한다.</dt>
+			<dd>
+				이벤트 속성은 태그마다 차이가 있음<br> on이벤트명="실행할 함수명([전달값])"
+			</dd>
+		</dl>
+	</dl>
+
+	<hr>
+	<h2>태그에 직접 자바스크립트 코드를 작성해서 실행되게 하는 경우</h2>
+	<button onclick=javascript:alert("버튼 클릭 확인");>클릭하세요!</button>
+	<br>
+    <script>
+    function testfn(){
+        alert("testfn() 함수 실행됨.");
+    }
+    </script>
+	<h2>script 태그 안에 함수 단위로 소스 작성하고, 태그에서 onevent="함수명();" 로 사용하는 경우</h2>
+
+	<button onclick="testfn();">함수실행 확인용 버튼</button>
+	
+
+	<br>
+	<script src="sample.js"></script>
+	<h2>별도로 작성된 자바스크립트 함수 사용 테스트</h2>
+	<button onclick="samp();">samp() 실행</button>
+
+
+
+</body>
+</html>

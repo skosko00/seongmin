@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ko">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>레이아웃스타일4</title>
+<style type="text/css">
+    .outer{width: 300px; height: 300px; position: relative;}
+    .outer>div:first-child{border: 1px solid black; width: 100%; height: 100%; position: absolute; background-color: yellow;}
+    .outer>div:nth-of-type(2){border: 1px solid black; width:80%; height: 80%; background-color: lightgreen; top: 10%; left: 10%; position: absolute;}
+    .outer>div:last-child{border: 1px solid black; width:60%; height: 60%; background-color: red; top: 20%; left: 20%; position: absolute;}
+    .positioning{border: 1px solid black; width: 100px; height: 100px; background-color: red; position: fixed;}
+    .wrap{width: 250px; height: 250px; position: relative;}
+    .wrap>div:first-child{background-color: yellow; border: 1px solid black; width: 50%; height: 40%; position: absolute; left: 50%; top: 60%; z-index: 1000;}
+    .wrap>div:nth-of-type(2){background-color: green; border: 1px solid black; width: 50%; height: 40%; position: absolute; left: 30%; top: 30%; z-index: 999;}
+    .wrap>div:last-child{background-color: red; border: 1px solid black; width: 50%; height: 40%; position: absolute; z-index: 998;}
+    .float-test{border: 1px solid black; float: right; width: 100px; height: 50px;}
+</style>
+ </head>
+
+ <body>
+ <h1>배치 관련 스타일</h1>
+ <h3>절대위치와 상대위치</h3>
+ <div class="outer">
+	<div class="positioning first"></div>
+	<div class="positioning second"></div>
+	<div class="positioning third"></div>
+ </div>
+  <h3>고정위치</h3>
+  <div class="positioning fixed-area"></div>
+  
+  <br><br><br><br><br><br>
+
+  <hr>
+
+  <h3>z-index</h3>
+  <p>페이지 안의 요소들을 순서대로 위로 쌓는 속성이다.</p>
+  <div class="wrap">
+	<div class="z-test z-test1">요소1</div>
+	<div class="z-test z-test2">요소2</div>
+	<div class="z-test z-test3">요소3</div>
+  </div>
+	
+  <br><br><br><br><br><br><br>
+  <hr>
+  <h3>float속성</h3>
+  <p>페이지 내의 요소의 위치를 왼쪽이나 오른쪽으로 지정하는 속성</p>
+  <div class="float1">
+	<div class="float-test float-test1">111</div>
+	<div class="float-test float-test2">222</div>
+	<div class="float-test float-test3">333</div>
+	<div class="float-test float-test4">444</div>
+	<div class="float-test float-test5">555</div>
+  </div>
+
+
+
+  
+  
+
+
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+ </body>
+</html>

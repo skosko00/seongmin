@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+    #div_navi{
+        height: 30px;
+        width: 500px;
+    }
+    .navi
+    {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    .navi>li{
+        float: left;
+        list-style-type: none;
+        height: 100%;
+        width: 20%;
+        text-align: center;
+        line-height: 29px;
+        background: linear-gradient(to bottom,#c9c9c9,#848484);
+        box-shadow: 5px 5px 5px #bbb;
+    }
+    .navi>li>a{
+        display: block;
+        text-decoration: none;
+        color: #232323;
+        text-shadow: 1px 1px 1px #cccccc;
+        height: 100%;
+        width: 100%;
+    }
+    .navi>li>a:hover
+    {
+        color: #ffffff;
+        background-color: #333333;
+    }
+    .navi>li:first-child{
+        border-top-left-radius: .5em;
+        border-bottom-left-radius: .5em;
+    }
+    .navi>li:last-child{
+        border-top-right-radius: .5em;
+        border-bottom-right-radius: .5em;
+    }
+    .navi>li>ul
+    {
+        opacity: 0;
+        padding: 0;
+    }
+    .navi>li:hover ul
+    {
+        opacity: 1;
+        transition-duration: 2s;
+    }
+    .navi>li>ul>li
+    {
+        list-style-type: none;
+        background-color: #D8AFAF;
+    }
+    .navi>li>ul>li>a
+    {
+        display: block;
+        height: 100%;
+        width: 100%;
+        text-decoration: none;
+        color: #232323;
+    }
+    .navi>li>ul>li:last-child
+    {
+        border-bottom-right-radius: .5em;
+        border-bottom-left-radius: .5em;
+    }
+    .navi>li>ul>li>a:hover
+    {
+        background-color: black;
+        color: white;
+    }
+
+</style>
+</head>
+<body>
+<h2> 그라데이션을 이용한 메뉴 만들기</h2>
+<div id="div_navi">
+    <ul class="navi">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">HTML5</a>
+            <ul>
+                <li><a href="https://www.w3schools.com/">W3C</a></li>
+                <li><a href="https://www.tutorialspoint.com/html5/index.htm">Tutorial</a></li>
+                <li><a href="https://www.javatpoint.com/html5-tutorial">JavaPoint</a></li>
+            </ul>
+        </li>
+        <li><a href="#">CSS3</a></li>
+        <li><a href="#">JavaScript</a></li>
+        <li><a href="#">JQuery</a></li>
+
+    </ul>
+</div>
+
+</body>
+</html>

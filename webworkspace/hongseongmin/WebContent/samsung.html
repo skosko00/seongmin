@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="https://fonts.googleapis.com/css?family=Gugi" rel="stylesheet">
+<style type="text/css">
+    div{box-sizing: border-box;}
+    #wrapper{width: 1200px; height: 1000px;}
+    #header{width: 100%; height: 10%;}
+    #header-1{width: 10%; height: 100%; float: left; position: relative;}
+    #header-2{width: 60%; height: 100%; float: left; position: relative;}
+    #headerName{line-height: 42px;}
+    #headerName>a{color: black; text-decoration: none;}
+    #header-3{width: 30%; height: 100%; float: left;}
+    #searchid{margin-top: 40px; width: 80%; border-radius: 1em;}
+    #searchid{margin-top: 40px; margin-right: 0; width: 80%; border-radius: 1em;}
+    input#searchbtn{background: url(img/search.JPG); background-repeat: no-repeat; width:30px; height:18px; border: 0; padding: 0;}
+    #navigator{width: 100%; height: 5%;}
+    #naviul{height: 100%; width: 100%; margin: 0; padding: 0; box-sizing: border-box;}
+    #naviul>li{float: left; list-style-type: none; height: 100%; width: 12.5%; line-height: 46px; color: black; font-family: 'Gugi', cursive; }
+    #naviul>li>a{
+        display: block; text-decoration: none; background: linear-gradient(#fbcac9, #8ca6ce); color: black; height: 100%; width: 100%}
+    #naviul>li>a:hover
+    {
+        color: #ffffff;
+        background: #333333;
+    }
+    #naviul>li>ul
+    {
+        opacity: 0;
+        padding: 0;
+    }
+    #naviul>li:hover ul
+    {
+        opacity: 1;
+        transition-duration: 2s;
+    }
+    #naviul>li:hover ul>li>a
+    {
+        height: 100%;
+        width:100%;
+    }
+    #naviul>li>ul>li
+    {
+        list-style-type: none;
+        background-color: #D8AFAF;
+        font-family: 'Gugi', cursive;
+    }
+    #naviul>li>ul>li>a
+    {
+        display: block;
+        height:0px;
+      
+        text-decoration: none;
+        color: #232323;
+    }
+    #naviul>li>ul>li>a:hover
+    {
+        background-color: black;
+        color: white;
+    }
+    
+    #contents{width: 100%; height: 80%;}
+    #applediv{width: 100%; height: 6%; text-align: left; font-size: 20px; line-height: 43px; font-weight: bold;}
+    #contents-1{width: 20%; height: 47%; float: left;}
+    #contents-2{width: 20%; height: 47%; float: left;}
+    #contents-3{width: 20%; height: 47%; float: left;}
+    #contents-4{width: 20%; height: 47%; float: left;}
+    #contents-5{width: 20%; height: 47%; float: left;}
+    #contents-6{width: 20%; height: 47%; clear: both; float: left;}
+    #contents-7{width: 20%; height: 47%; float: left;}
+    #contents-8{width: 20%; height: 47%; float: left;}
+    #contents-9{width: 20%; height: 47%; float: left;}
+    #contents-10{width: 20%; height: 47%; float: left;}
+    .mainimg{width: 100%; height: 100%;}
+    #footer{width: 100%; height: 5%;}
+    #footimg{width: 100%; height: 100%;}
+</style>
+</head>
+<body>
+<center>
+<div id="wrapper">
+    <div id="header">
+        <div id="header-1"></div>
+        <div id="header-2">
+            <H1 id="headerName"><a href="index.html">쇼핑몰</a></H1>
+        </div>
+        <div id="header-3">
+            <form action="http://smartstore.naver.com/zeroskin/search?" method="get">
+            <input type="search" id="searchid" name="q=">
+            <input type="submit" id="searchbtn" alt="search" value=""  name="q=">
+            </form>
+        </div>
+    </div>
+    <div id="navigator">
+        <ul id="naviul">
+            <li><a href="#">케이스</a>
+                <ul>
+                    <li><a href="apple.html">애플</a></li>
+                    <li><a href="#">삼성</a></li>
+                    <li><a href="http://smartstore.naver.com/zeroskin/category/14efd0f774a04219b5a5dc8f7d40755f?cp=1">LG</a></li>
+                </ul>
+            </li>
+            <li><a href="#">케이블</a>
+                <ul>
+                    <li><a href="#">애플</a></li>
+                    <li><a href="#">삼성</a></li>
+                    <li><a href="#">LG</a></li>
+                </ul>
+                </li>
+            <li><a href="#">필름</a>
+            <ul>
+                    <li><a href="#">애플</a></li>
+                    <li><a href="#">삼성</a></li>
+                    <li><a href="#">LG</a></li>
+                </ul>
+                </li>
+            <li><a href="#">거치대</a></li>
+            <li><a href="#">아이디어상품</a></li>
+            <li><a href="#">전체상품</a></li>
+            <li><a href="#">구매평</a></li>
+            <li><a href="#">공지사항</a></li>
+        </ul>
+    </div>
+    <div id="contents">
+       <div id="applediv">삼성</div>
+        <div id="contents-1"><img src="img/samsung1.JPG" class="mainimg"></div>
+        <div id="contents-2"><img src="img/samsung2.JPG" class="mainimg"></div>
+        <div id="contents-3"><img src="img/samsung3.JPG" class="mainimg"></div>
+        <div id="contents-4"><img src="img/samsung4.JPG" class="mainimg"></div>
+        <div id="contents-5"><img src="img/samsung5.JPG" class="mainimg"></div>
+        <div id="contents-6"><img src="img/samsung6.JPG" class="mainimg"></div>
+        <div id="contents-7"><img src="img/samsung7.JPG" class="mainimg"></div>
+        <div id="contents-8"><img src="img/samsung8.JPG" class="mainimg"></div>
+        <div id="contents-9"><img src="img/samsung9.JPG" class="mainimg"></div>
+        <div id="contents-10"><img src="img/samsung10.JPG" class="mainimg"></div>
+    </div>
+    <div id="footer">
+        <img id="footimg" src="img2/footer.JPG">
+    </div>
+</div>
+</center>
+</body>
+</html>

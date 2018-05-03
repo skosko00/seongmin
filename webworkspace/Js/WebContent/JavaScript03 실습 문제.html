@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>HTML태그에 접근하기</title>
+<style>
+	.area {
+		width:300px;
+		height:100px;
+		border:1px solid black;
+	}
+</style>
+</head>
+<body>
+    <script type="text/javascript">
+    function accessId()
+        {
+            var area1 = document.getElementById("area1");
+            area1.style.backgroundColor = "yellow";
+            area1.innerHTML = "아이디로 접근 성공!!";
+        }
+    </script>
+	<h1>HTML태그에 접근하기</h1>
+	<h3>아이디로 접근하기</h3>
+	(css 속성에 접근은 id.style로 접근할 수 있습니다.)
+	<div id="area1" class="area"></div>
+	<button onclick="accessId();">아이디로 접근</button>
+	
+	<hr>
+	<script type="text/javascript">
+        function accessTagName()
+        {
+        var testli = document.getElementsByTagName("li");
+        var color = 0;
+        for(var i=0; i<testli.length; i++)
+            {
+                console.log(testli[i]);
+             testli[i].style.backgroundColor = "rgb(255,255,"+color+")"; 
+             color += 50;
+            }
+        }
+    </script>
+	<h3>태그명으로 접근</h3>
+	<ul>
+		<li>목록1</li>
+		<li>목록2</li>
+		<li>목록3</li>
+		<li>목록4</li>
+		<li>목록5</li>
+	</ul>
+	<button onclick="accessTagName();">태그명으로 접근</button>
+	
+	<hr>
+	
+	<h3>name으로 접근</h3>
+	<script type="text/javascript">
+    function accessName()
+        {
+            var name = document.getElementsByName("hobby");
+            var area2 = document.getElementById("area2");
+            var result;
+            for(var i=0; i<name.length; i++)
+                {
+                    if(name[i].checked==true){
+                        result += name[i].value+"선택함<br>";
+                        }
+                }
+            area2.innerHTML = result;
+        }
+    </script>
+	<form>
+		<fieldset>
+			<legend>취미</legend>
+			<table>
+				<tr>
+					<td><input type="checkbox" name="hobby" value="game" id="game"><label for="game">게임</label></td>
+					<td><input type="checkbox" name="hobby" value="music" id="music"><label for="music">음악감상</label></td>
+					<td><input type="checkbox" name="hobby" value="movie" id="movie"><label for="movie">영화보기</label></td>
+				</tr>
+				<tr>
+					<td><input type="checkbox" name="hobby" value="book" id="book"><label for="book">독서</label></td>
+					<td><input type="checkbox" name="hobby" value="travle" id="travle"><label for="travle">여행</label></td>
+					<td><input type="checkbox" name="hobby" value="exercise" id="exercise"><label for="exercise">운동</label></td>
+				</tr>
+			</table>
+		</fieldset>
+	</form>
+	<div id="area2"class="area"></div>
+	
+	<button onclick="accessName();">name으로 접근</button>
+	
+	<hr>
+	
+	<h3>text박스의 value값 읽어오기</h3>
+	<script type="text/javascript">
+    function readValue()
+        {
+            var value1 = document.getElementById("username").value;
+            area3.innerHTML = value1;
+        }
+    </script>
+	<form>
+		이름 : <input type="text" name="username" id="username">
+		<br>
+		<input type="button" onclick="readValue();" value="inut값 확인">
+	</form>
+	<div id="area3" class="area"></div>	
+	
+	
+</body>
+</html>

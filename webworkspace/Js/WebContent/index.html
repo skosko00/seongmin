@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<style type="text/css">
+    #div1
+    {
+        border: 1px solid black;
+        height: 300px;
+        width: 400px;
+    }
+</style>
+
+<script type="text/javascript">
+    function myfunc()
+    {
+        var div1 = document.getElementById("div1");
+        var num1 = 2;
+        var num2 = "3";
+        
+        div1.innerHTML = num1+num2 +"<br>";
+        div1.innerHTML += num1+Number(num2) +"<br>";
+        div1.innerHTML += num1+parseInt(num2) +"<br>";
+        div1.innerHTML += num1+parseFloat(num2) +"<br>";
+        div1.innerHTML += num1-num2 +"<br>";
+        div1.innerHTML += num1*num2 +"<br>";
+        div1.innerHTML += num1/num2 +"<br>";
+        div1.innerHTML += num1%num2 +"<br>";
+    }
+</script>
+<div id="div1"></div>
+<button onclick="myfunc();">클릭</button>
+
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+    div{
+        border : 1px solid red;
+        height:100px;
+        width:300px;
+    }    
+</style>
+</head>
+<body>
+<script type="text/javascript">
+    function myfunc1()
+    {
+        div1.innerHTML = "성공";
+        console.log(div1);
+    }
+    function myfunc2()
+    {
+        test.value = "성공";
+    }
+    function myfunc3()
+    {
+        console.log(span.innerHTML);
+    }
+    window.onload = function()
+        {
+//        document.getElementById("test2").type = "text";
+        test2.type="text";
+        console.log(test2);
+    }
+    </script>
+
+문제1. div 안에 있는 내용을 "성공" 으로 바꾸어 보세요 <br>
+(JavaScript로만 바꾸는걸 잊지마세요!)
+<div id="div1">
+    저를 바꾸어보세요^^
+</div>
+<button onclick="myfunc1();">도전</button>
+<br><br>
+
+문제2. "바꿀수 있을까? 라는 문구를 "성공" 으로 바꾸어 보세요 <br>
+<div id="div2">
+    <input type="text" id="test" value="바꿀수 있을까?"/>
+</div>
+<button onclick="myfunc2();">도전</button>
+<br><br>
+문제3. 해당 값을 읽어서 개발자도구 : 콘솔에 출력해보세요
+<div id="div3">
+    <p id="p1">
+        <span id="span">저를 읽어서 콘솔에 출력해보세요</span>
+    </p>
+</div>
+<button onclick="myfunc3();">도전</button>
+<br><br>
+
+문제4. 해당 태그의 타입을 변경하여 볼 수 있도록 해보세요(버튼이 없는 문제입니다.)
+<div id="div4">
+    <input type="hidden" id="test2" value="성공">
+</div>
+
+
+</body>
+</html>
