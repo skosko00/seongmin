@@ -118,22 +118,22 @@
                     result.innerHTML=value.innerHTML;
                         }
                 }
-            else
+            else if(result.innerHTML!=0)
             {
                 if(value.id!='equal' && value.id!='clear')
                         {
                     result.innerHTML+=value.innerHTML;
                         }
-            }
-            switch(value)
+                else if(value.id=='clear')
                 {
-                    case clear:
                         result.innerHTML=0;
-                        break;
-                    case equal:
-                        result.innerHTML = eval(result.innerHTML);
-                        break;
                 }
+            else if(value.id=='equal')
+                {
+                        result.innerHTML = eval(result.innerHTML);
+                }
+            }
+            
         }
     </script>
 	
