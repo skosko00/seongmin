@@ -5,19 +5,24 @@
 <title>Insert title here</title>
 </head>
 <body>
+010-
+<input type="text" id="centerNumber" size="5" maxlength="4"/>-
+<input type="text" id="lastNumber" size="5" maxlength="4"/><br>
+<button onclick="check();">확인</button>
 
-<p id="p1"></p>
-<button onclick="arrayTest();">출력</button>
 <script type="text/javascript">
-    function arrayTest()
+    function check()
     {
-        var arr = [1,2,3,4,5];
-        
-        document.getElementById("p1").innerHTML = arr;
-        
-//        document.getElementById("p1").innerHTML = arr.toString();
-        console.log(arr);
-        console.log(arr.toString());
+        var centerNumber = document.getElementById("centerNumber").value;
+        var lastNumber = document.getElementById("lastNumber").value;
+        if(isFinite(centerNumber) && isFinite(lastNumber))
+            {
+                alert("전화번호를 정상 입력하였습니다.");
+            }
+        else
+        {
+            alert("전화번호는 숫자만 입력해주세요");
+        }
     }
 </script>
 

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	table {
+		border:3px solid blue;
+	}
+	#result {
+		height:50px;
+		font-size:2em;
+		font-weight:bold;
+		text-align:right;
+		border:1px solid black;
+	}
+	button {
+		font-size:1.5em;
+		font-weight:bold;
+		width:50px;
+		height:50px;
+	}
+</style>
+</head>
+<body>
+	<h1>연습4</h1>
+	<h3>계산기 만들기</h3>
+	<hr>
+	
+	<div>
+		<table align="center">
+			<tr>
+				<td colspan="4">
+					<div id="result">0</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<button id="left" onclick="buttonClick(this);">(</button>
+				</td>
+				<td>
+					<button id="right" onclick="buttonClick(this);">)</button>
+				</td>
+				<td>
+					<button id="percent" onclick="buttonClick(this);">%</button>
+				</td>
+				<td>
+					<button id="clear" onclick="buttonClick(this);">AC</button>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<button id="seven" onclick="buttonClick(this);">7</button>
+				</td>
+				<td>
+					<button id="eight" onclick="buttonClick(this);">8</button>
+				</td>
+				<td>
+					<button id="nine" onclick="buttonClick(this);">9</button>
+				</td>
+				<td>
+					<button id="devide" onclick="buttonClick(this);">/</button>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<button id="four" onclick="buttonClick(this);">4</button>
+				</td>
+				<td>
+					<button id="five" onclick="buttonClick(this);">5</button>
+				</td>
+				<td>
+					<button id="six" onclick="buttonClick(this);">6</button>
+				</td>
+				<td>
+					<button id="astric" onclick="buttonClick(this);">*</button>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<button id="one" onclick="buttonClick(this);">1</button>
+				</td>
+				<td>
+					<button id="two" onclick="buttonClick(this);">2</button>
+				</td>
+				<td>
+					<button id="three" onclick="buttonClick(this);">3</button>
+				</td>
+				<td>
+					<button id="minus" onclick="buttonClick(this);">-</button>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<button id="zero" onclick="buttonClick(this);">0</button>
+				</td>
+				<td>
+					<button id="dot" onclick="buttonClick(this);">.</button>
+				</td>
+				<td>
+					<button id="equal" onclick="buttonClick(this);">=</button>
+				</td>
+				<td>
+					<button id="plus" onclick="buttonClick(this);">+</button>
+				</td>
+			</tr>
+			
+		</table>
+	</div>
+	<script type="text/javascript">
+        function buttonClick(value)
+        {
+            var result=document.getElementById("result");
+            if(result.innerHTML==0)
+                {
+                    if(value.id!='equal')
+                        {
+                    result.innerHTML=value.innerHTML;
+                        }
+                }
+            else
+            {
+                if(value.id!='equal' && value.id!='clear')
+                        {
+                    result.innerHTML+=value.innerHTML;
+                        }
+            }
+            switch(value)
+                {
+                    case clear:
+                        result.innerHTML=0;
+                        break;
+                    case equal:
+                        result.innerHTML = eval(result.innerHTML);
+                        break;
+                }
+        }
+    </script>
+	
+	
+	
+	
+	
+	
+</body>
+</html>

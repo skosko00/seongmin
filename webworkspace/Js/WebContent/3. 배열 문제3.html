@@ -1,0 +1,78 @@
+    <!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+</head>
+
+<body>
+
+
+    <h1> 배열 실습 문제 3</h1>
+    <br><br>
+   문제5. 다음 보기의 그림을 클릭하면 그림이 사라지고 그림을 모두 클릭하면 클릭한 순서대로 그림이 나올수 있도록 만들어라.<br>
+    (힌트 : 태그 자체를 가져올때에는 outerHTML을 사용하면 됨)<br>
+
+    <fieldset>
+        <style>
+            .divss {
+                float: left;
+            
+            }
+        </style>
+        <legend>보기</legend>
+        <div id="div5">
+            <div style="border:1px solid black; height:100px; width:100px; background-color:red;" class="divss" onclick="clickDiv('red')" id="red" ;></div>
+            <div style="border:1px solid black; height:100px; width:100px; background-color:blue;" class="divss" onclick="clickDiv('blue')" id="blue" ;></div>
+            <div style="border:1px solid black; height:100px; width:100px; background-color:green;" class="divss" onclick="clickDiv('green')" id="green" ;></div>
+            <div style="border:1px solid black; height:100px; width:100px; background-color:pink;" class="divss" onclick="clickDiv('pink')" id="pink" ;></div>
+            <div style="border:1px solid black; height:100px; width:100px; background-color:yellow;" class="divss" onclick="clickDiv('yellow')" id="yellow" ;></div>
+        </div>
+
+    </fieldset><br>
+    <script type="text/javascript">
+        var img = [];
+        var count = 0;
+        function clickDiv(value)
+        {
+            switch(value)
+                {
+                    case 'red':
+                       img.push(document.getElementById("red").outerHTML);
+                        count++;
+                        document.getElementById("red").outerHTML=("");
+                        break;
+                    case 'blue':
+                        img.push(document.getElementById("blue").outerHTML);
+                        count++;
+                        document.getElementById("blue").outerHTML=("");
+                        break;
+                    case 'green':
+                        img.push(document.getElementById("green").outerHTML);
+                        count++;
+                        document.getElementById("green").outerHTML=("");
+                        break;
+                    case 'pink':
+                        img.push(document.getElementById("pink").outerHTML);
+                        count++;
+                        document.getElementById("pink").outerHTML=("");
+                        break;
+                    case 'yellow':
+                        img.push(document.getElementById("yellow").outerHTML);
+                        count++;
+                        document.getElementById("yellow").outerHTML=("");
+                        break;
+                }
+            if(count==5)
+                {
+                    document.getElementById("div5").innerHTML = img.join("");
+                    count=0;
+                    img = [];
+                }
+        }
+    </script>
+
+</body>
+
+</html>
