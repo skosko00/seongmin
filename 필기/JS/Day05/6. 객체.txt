@@ -1,0 +1,135 @@
+
+
+@ 객체
+-> 자바스크립트에서도 객체를 선언하여 사용할 수 있음
+
+
+@ 객체 선언 및 호출
+-> 객체는 키 값을 사용하여 속성(멤버변수)을 식별
+-> 중괄호를 사용하여 객체를 생성함
+-> '[ ]'(대괄호) 또는 '.'(점)으로 요소의 값에 접근
+-> 속성에 모든 자료형이 올 수 있음, 그 중 함수 자료형도 요소로 넣을 수 있음
+-> 객체의 모든 속성을 출력하려면 for in 문을 사용 해야 함
+
+※ 식별자로 사용할 수 없는 문자(띄어쓰기, 특수문자)를 속성으로 사용할 경우
+	' '로 묶어서 선언하고, 접근시에는 [ ]만 가능
+
+
+
+## 객체 선언 방법 ##
+
+var 객체명 = {
+	속성(키값) : 값,
+	속성(키값) : 값,
+	속성(키값) : 값
+		.
+		.
+		.
+};
+
+※ key : value 형태라고 보면 됨
+
+## 속성값 접근 ##
+	변수명['요소명'];
+또는
+	변수명.요소명;
+※ 변수명은 객체명을 뜻 함, 요소명은 키 값을 뜻함
+
+
+
+## in/with 키워드 ##
+-> in : 객체 내부에 해당 속성이 있는지 확인하는 키워드
+-> with : 코드를 줄여주는 키워드, 호출시 객체명 생략 가능
+
+
+in 키워드
+-> 속성명 in '변수명(객체명)'
+-> 있으면 true, 없으면 false
+-> 쉽게 정리해서 키값이 있는지를 확인하는 키워드 라고 보면 됨
+
+
+
+with 키워드
+-> 객체 안에 데이터를 넣을때 객체명을 생략하고 작성할 수 있도록 해주는 키워드
+※ 정확한 의미는 생략보다도 한번만 작성하여 코드를 줄여주는 의미로 보면 됨
+
+
+
+## 객체 안에 속성을 추가 및 삭제 ##
+-> 속성 및 함수를 동적으로 추가 및 삭제 가능함
+
+
+# 추가 #
+
+변수명(객체명).속성명 = '값';
+변수명(객체명).속성명 = function(){
+	함수 로직;
+	[return 리턴값];
+}
+
+※ 추가 하는 방법은 별도의 함수를 호출하는것이 아닌 바로 명시하여 즉석에서 추가 할 수 있음
+
+<script type="text/javascript">
+    function myfunc(){
+        var object = {a:100, b:200,test:function(){alert("Test");
+            
+        }
+                     };
+        
+        object.c = 300;
+        object.test2 = function(){
+            alert("test2");
+            //return도 가능함
+        }
+        console.log(object);
+    }
+</script>
+<button onclick="myfunc();">클릭</button>
+
+
+
+# 삭제 #
+delete(변수명(객체명).속성명);
+
+※ 속성명 => 키값
+
+
+<script type="text/javascript">
+    function myfunc(){
+        var object = {a:100, b:200,test:function(){alert("Test");
+            
+        }
+                     };
+       delete (object.a);
+        console.log(object);
+    }
+</script>
+<button onclick="myfunc();">클릭</button>
+
+
+
+## 객체를 이용한 데이터 저장 및 출력 ##
+
+<script type="text/javascript">
+    function myfunc(){
+        var name = window.prompt("당신의 이름은?");
+        var age = window.prompt("당신의 나이는?");
+        var addr = window.prompt("당신의 주소는?");
+        
+        var object = {name:name,
+                     age:age,
+                     addr:addr,
+                     printData:function()
+                     {
+                         var str = "이름 : "+this.name + "\n"
+                         + "나이 : " + this.age + "\n"
+                         + "주소 : " + this.addr + "\n";
+                         return str;
+                     }
+                     };
+        console.log(object.printData());
+    }
+</script>
+<button onclick="myfunc();">클릭</button>
+
+
