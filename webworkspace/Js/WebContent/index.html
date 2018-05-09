@@ -6,35 +6,28 @@
 </head>
 <body>
 <script type="text/javascript">
-    function myfunc(){
-    var name = document.getElementById("name").value;
-    var age = document.getElementById("age").value;
-    var addr = document.getElementById("addr").value;
-        
-    var object = {name:name, age:age, addr:addr,  memberinfo:function(){
-        var str = "이름 : " + this.name + "\n" +
-            "나이 : " + this.age + "\n" +
-            "주소 : " + this.addr;
-        return str;
-    }};
-        
-    console.log(object.memberinfo());
+    var latitude;   //위도
+    var longitude;  //경도
+    
+    window.onload = function myfunc()
+    {
+        navigator.geolocation.getCurrentPosition(showYourLocation);
     }
+    function showYourLocation(position)
+    {
+        latitude = position.coords.latitude;
+        longitude = position.coords.longitude;
+    }
+    
+    function myfunc()
+    {
+        var str = "위도 : " + latitude + "\n" +
+                    "경도 : " +longitude + "\n";
+        alert(str);
+    }
+    
 </script>
-<h1>문제</h1>
-각 input 태그에 맞는 데이터를 입력 받은 후 <br>
-처리 버튼을 클릭하면 자바스크립트 내부에서 객체에 저장하여<br>
-console.log로 객체 정보룰 츨력하여라.<br>
-단, console.log(object.memberinfo);를 하였을때<br>
-이름,나이,주소가 출력 될 수 있도록 만들어라.<br>
-
-이름 : <input type="text" id="name"/><br>
-나이 : <input type="text" id="age"/><br>
-주소 : <input type="text" id="addr"/><br>
-
-<button onclick="myfunc();">처리</button>
-
-
+<button onclick="myfunc();">경도,위도 확인</button>
 
 </body>
 </html>

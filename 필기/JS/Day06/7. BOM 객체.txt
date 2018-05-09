@@ -1,0 +1,223 @@
+
+
+@ BOM
+-> Browser Object Model 의 약자로써 브라우저 객체 모델이라고 부름
+-> 브라우저의 정보나 URL 정보, 모니터 화면 정보 등을 취득하거나 제어할 수 있는 객체
+-> 브라우저 객체의 최상위 객체는 window 객체
+-> window 하위 객체는 document, location, screen, history, navigator가 있음
+-> document 객체는 DOM(Document Object Model) 객체에 속함
+
+
+@ window 객체
+-> 자바스크립트에서는 존재하는 객체 중 최상위 객체
+-> 생성되는 모든 객체가 window 객체 하위에 존재함
+-> 브라우저 창에 대한 객체
+
+
+
+## window.open 함수 ##
+-> 별도의 브라우저 창을 새롭게 열 때 사용하는 함수
+-> 높이와 너비를 입력하면 팝업창 형태로 해당 크기를 가지고 띄워짐
+
+첫번째 인수값 : "주소"
+두번째 인수값 : "열릴 경로"
+세번째 인수값 : "형태(옵션)"
+
+
+## window.setTimeout(함수,시간(ms)) ##
+-> 일정시간 후 함수를 한번 실행
+
+
+<script type="text/javascript">
+    function myfunc()
+    {
+        var newWindow = window.open();
+        newWindow.alert("확인 버튼을 누른후 5초뒤 브라우저 종료");
+        newWindow.setTimeout(function(){
+            newWindow.close();//close 함수는 브라우저 종료 함수
+        },5*1000);
+    }
+</script>
+
+<button onclick="myfunc();">클릭</button>
+
+※ window.close 함수는 브라우저를 종료함
+
+
+## window.setInterval(함수,시간(ms)) ##
+-> 일정 시간마다 함수를 계속 반복 실행
+-> 리턴값으로 id값을 리턴함
+
+<script type="text/javascript">
+    function myfunc()
+    {
+        var p1 = document.getElementById("p1");
+        window.setInterval(function(){
+            var date = new Date();
+            p1.innerHTML = date.getHours() + " : " +
+                            date.getMinutes() + " : " +
+                            date.getSeconds();
+        },1*1000);
+    }
+</script>
+<center>
+<h1>현재시간</h1>
+<p id="p1" style="border:5px solid black; height:200px; width:500px; font-size:50px; color:blue;"><br></p></center>
+<button onclick="myfunc();">클릭</button>
+
+
+※ Date() 객체는 시간을 갖고오는 객체
+
+
+## clearTimeout(id), clearInterval(id) 함수 ##
+-> clearTimeout 함수는 setTimeout 함수를 종료
+-> clearInterval(id) 함수는 setInterval 함수를 종료
+-> setTimeout 함수와 setInterval 함수를 실행하면 id값을 리턴하게 됨
+-> 해당 id 값을 가지고 clear 함수들을 이용하여 종료를 설정 할 수 있음
+
+<script type="text/javascript">
+    var intervalID;
+    function myfunc()
+    {
+        var p1 = document.getElementById("p1");
+        intervalID = window.setInterval(function(){
+            var date = new Date();
+            p1.innerHTML = date.getHours() + " : " +
+                            date.getMinutes() + " : " +
+                            date.getSeconds();
+        },1*1000);
+    }
+    function mystop()
+    {
+        window.clearInterval(intervalID);
+    }
+</script>
+<center>
+<h1>현재시간</h1>
+<p id="p1" style="border:5px solid black; height:200px; width:500px; font-size:50px; color:blue;"><br></p></center>
+<button onclick="myfunc();">시작</button>
+<button onclick="mystop();">중단</button>
+
+
+
+@ screen 객체
+-> client 운영체제 화면에 대한 속성값을 가지는 객체
+
+height		화면 높이
+width		화면 너비
+availWidth	실제 화면에서 사용가능한 너비
+availHeight	실제 화면에서 사용가능한 높이
+colorDepth	사용 가능한 색상수
+pixelDepth	한 픽셀당 비트수
+
+
+<script type="text/javascript">
+    function myfunc()
+    {
+        var str = "화면 높이 값 : " + screen.height+"\n"+"화면 넓이 값 : " + screen.width;
+        alert(str);
+    }
+</script>
+
+<button onclick="myfunc();">나의 해상도 확인</button>
+
+
+
+@ location 객체
+-> 브라우저의 주소표시줄(URL)과 관련된 객체
+-> 프로토콜 종류, 호스트 이름, 문서 위치 등의 정보를 가짐
+
+
+host		호스트 이름과 포트 번호
+hostname	호스트 이름
+href		문서 URL 주소
+origin		호스트 이름, 프로토콜, 포트번호
+pathname	디렉토리 경로
+port		포트번호
+protocol	프로토콜 종류
+search		요청 매개변수
+
+네이버 서버 (웹 서비스)
+-> IP 주소 : 125.209.222.142
+-> port 주소 : 80
+
+host : 125.209.222.142:80
+host : www.naver.com:80
+hostname : www.naver.com
+
+## 호스트 ##
+-> 네트워크 상에서 통신을 할 수 있는 개별적인 PC
+-> host 값 : 네트워크주소:포트번호
+-> hostname : 네트워크주소
+
+## IP 주소 ##
+-> 네트워크 상에서 호스트를 찾아 갈 수 있는 네트워크 주소
+
+## Port 주소 ##
+-> 서비스를 구분하기 위한 주소
+
+## DNS 주소 ##
+-> 네트워크 상에서 IP 주소를 대체하여 호스트를 표현할 수 있는 도메인 명
+
+
+## location 메소드 ##
+
+assign('주소')		새로운 페이지 로드 (뒤로 가기 가능)
+reload()		현재 문서 페이지를 다시 로드
+replace('주소')		현재 페이지를 새로운 페이지로 교체 (뒤로 가기 불가)
+
+
+@ navigator 객체
+-> 브라우저에 대한 정보를 가지는 객체
+
+appCodeName	: 브라우저 코드명
+	-> 최신 브라우저의 대부분은 호환성을 이유로 "Mozilla"라고 반환 함
+
+appName		: 브라우저 이름
+	-> FireFox나 Chrome, Safari, IE의 경우 모두 Netscape로 출력 됨
+
+appVersion	: 브라우저 버전
+platform	: 사용중인 운영체제
+userAgent	: 브라우저 전체 정보
+geolocation	: 위도와 경도를 출력
+language	: 브라우저 언어
+
+
+ex) geolocation
+<script type="text/javascript">
+    var latitude;   //위도
+    var longitude;  //경도
+    
+    window.onload = function myfunc()
+    {
+        navigator.geolocation.getCurrentPosition(showYourLocation);
+    }
+    function showYourLocation(position)
+    {
+        latitude = position.coords.latitude;
+        longitude = position.coords.longitude;
+    }
+    
+    function myfunc()
+    {
+        var str = "위도 : " + latitude + "\n" +
+                    "경도 : " +longitude + "\n";
+        alert(str);
+    }
+    
+</script>
+<button onclick="myfunc();">경도,위도 확인</button>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
