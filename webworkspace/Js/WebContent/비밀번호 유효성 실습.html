@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+</head>
+
+<body>
+
+    <script>
+        function check(){
+            var pwd = document.getElementById("pwd");
+            var pwd_re = document.getElementById("pwd_re");
+            if(pwd.value!=pwd_re.value)
+            {
+                alert("비밀번호 입력을 재확인 해주세요");
+                pwd.style.backgroundColor="red";
+                pwd_re.style.backgroundColor="red";
+                return false;
+            }
+            else(pwd.value==pwd_re.value)
+                {
+                    return true;
+                }
+        }
+    </script>
+    <center>
+    
+    <pre>
+   <form action="/join.html" method="get">
+   <fieldset style="height:300px;width:300px;">
+    <legend>회원가입</legend>
+    ID :     <input type="text" id="id" /><br>
+    PW :     <input type="password" id="pwd"/><br>
+    PW(re) : <input type="password" id="pwd_re"/><br>
+    NAME :   <input type="text" id="name" /><br>
+    </fieldset>
+    <input type="submit" value="회원가입" onclick="return check();"/> <input type="reset" value="취소">
+   </form>
+  </pre>
+   
+   </center>
+    
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<style>
+    #div1{
+        border:5px solid black;
+        height:800px;
+        width:1000px;
+    }
+</style>
+<center>
+    문제1. 추가 버튼을 클릭하면 이름,나이,주소를 입력 받은 후 테이블에 추가하도록 하여라.
+    <table border="1" id="member">
+        <tr><th>이름</th><th>나이</th><th>주소</th></tr>     
+    </table>
+<button onclick="add();">추가</button>
+    </center>
+    
+<script type="text/javascript">
+    function add()
+    {
+        var name = prompt("이름 입력 : ");
+        var age = prompt("나이 입력 : ");
+        var addr = prompt("주소 입력 : ");
+        var arr = [name,age,addr];
+        console.log(arr);
+        var table = document.getElementById("member");
+        var trTag = document.createElement('tr');
+        for(var i=0; i<3; i++)
+            {
+                var tdTag = document.createElement('td');
+                var text = document.createTextNode(arr[i]);
+                tdTag.appendChild(text);
+                trTag.appendChild(tdTag);
+            }
+        table.appendChild(trTag);
+    }
+</script>
+
+</body>
+</html>
+    

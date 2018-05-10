@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+</head>
+
+<body>
+
+    <script>
+        function deleteFunc(id,element) {
+            document.getElementById(id).remove();
+            element.remove();
+        }
+    </script>
+
+    <span id="span1">내용1</span>
+    <button onclick="deleteFunc('span1',this);">삭제</button>
+    <span id="span2">내용2</span>
+    <button onclick="deleteFunc('span2',this);">삭제</button>
+    <span id="span3">내용3</span>
+    <button onclick="deleteFunc('span3',this);">삭제</button>
+    <span id="span4">내용4</span>
+    <button onclick="deleteFunc('span4',this);">삭제</button>
+    <span id="span5">내용5</span>
+    <button onclick="deleteFunc('span5',this);">삭제</button>
+    
+</body>
+
+</html>

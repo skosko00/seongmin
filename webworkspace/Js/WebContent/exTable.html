@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<script type="text/javascript">
+    function myfunc1()
+    {
+        var div1 = document.getElementById("div1");
+        var tag = document.createElement('h1');
+        var text = document.createTextNode('성공!');
+        tag.appendChild(text);
+        div1.appendChild(tag);
+    }
+    function myfunc2()
+    {
+        var div2 = document.getElementById("div2");
+        var table = document.createElement('table');
+        table.border = "1px";
+        var count = 1;
+        for(var i = 0; i< 3; i++)
+            {
+                var trTag = document.createElement('tr');
+                for(var j=0; j<4;j++)
+                    {
+                        var tdTag = document.createElement('td');
+                        trTag.appendChild(tdTag);
+                        tdTag.appendChild(document.createTextNode(count++));
+                    }
+                table.appendChild(trTag);
+            }
+        div2.appendChild(table);
+    }
+</script>
+문제1.<br>
+동작1 버튼을 클릭하면 아래 div안에 요소노드가 h1 이면서<br>
+textnode가 성공! 인 글자를 출력하도록 하시오<br>
+
+<div id="div1" style="border:1px solid black; height:300px; width:400px;"></div>
+<button onclick="myfunc1();">동작1</button><br>
+
+문제2.<br>
+동작2 버튼을 클릭하면 아래 div안에 3행 4열을 가진<br>
+테이블이 추가 될 수 있도록 만드시오.<br>
+(내용 : 홍길동,20,경기도,운동
+        김말똥,30,서울시,노래
+        고길똥,40,강원도,댄스)
+
+<div id="div2" style="border:1px solid black; height:300px; width:400px;"></div>
+<button onclick="myfunc2();">동작2</button>
+
+</body>
+</html>

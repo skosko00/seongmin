@@ -1,0 +1,112 @@
+@ 이벤트
+-> 웹 페이지에서 어떠한 행위(사용자의 행동)가 발생한 것을 이벤트 라고 함
+(우리는 이미 onclick(클릭했을 경우) 이벤트를 사용했었음)
+-> 웹에서는 다양한 이벤트가 존재함
+	※ 너무 내용이 많으니.. 구글 검색 : 자바스크립트 이벤트 종류
+
+
+@ 이벤트의 활용
+-> 이벤트 속성과 이벤트 핸들러(함수)를 연동하여 이벤트 발생시
+특정 기능을 하도록 할 수 있음
+
+
+@ 이벤트 설정 방법
+-> 고전 이벤트 모델
+-> 인라인 이벤트 모델
+-> 표준 이벤트 모델
+
+## 고전 이벤트 모델 ##
+-> 요소객체가 가지고 있는 이벤트 속성에 이벤트 핸들러를 연결하는 방법
+-> 이름은 고전 이지만 현재에도 많이 사용되는 방법임
+-> 이벤트를 제거할때에는 속성값에 null을 넣어 주면 됨
+
+
+ex) 클릭시 이벤트 기능 설정
+
+var h = document.getElementById('id명');
+h.onclick=function(){
+	수행기능 설정;
+	h.onclick = null; // 이벤트 기능 삭제 (함수안에 설정시 1번만 실행하는 이벤트임)
+};
+
+    <script>
+        window.onload = function() {
+            var btn1 = document.getElementById("btn1");
+            btn1.onclick = function() {
+                alert("첫번째 버튼이 실행되었습니다.");
+            }
+            var btn2 = document.getElementById("btn2");
+            btn2.onclick = function() {
+                alert("두번째 버튼이 실행되었습니다");
+            }
+        }
+    </script>
+
+    <button id="btn1">클릭1</button>
+    <button id="btn2">클릭2</button>
+
+
+
+## 인라인 이벤트 모델 ##
+-> 요소 내부에 이벤트 작성하는 방법
+-> 인라인 방식은 <script> 태그에 있는 함수를 호출하는 방식을 선호함
+
+
+ex) 클릭 이벤트 처리
+<button onclick='처리로직'>클릭</button>
+
+혹은
+
+<button onclikc="함수호출">클릭</button>
+
+
+
+## 표준 이벤트 모델 ##
+-> w3c에서 공식적으로 지원한 이벤트 모델
+-> 한번에 여러가지 이벤트 핸들러 설정 가능
+-> 이벤트 리스너를 설정하는 방법
+
+
+# 이벤트 생성 #
+addEventListener(이벤트이름, 핸들러)
+
+# 이벤트 삭제 #
+removeEventListener(이벤트이름, 핸들러)
+
+
+ex) 클릭시 이벤트 설정
+var h = document.getElementById('id명');
+h.addEventListener('click',function(){
+			수행기능 설정
+		});
+
+
+    <script>
+        window.onload = function() {
+            var btn1 = document.getElementById("btn1");         
+            var btn_click = function() {
+                alert('클릭하셨습니다');
+            }         
+            btn1.addEventListener('click',btn_click);           
+            var mouseUp = function()
+            {
+                console.log("마우스가 버튼위에 있습니다");
+            };           
+            btn1.addEventListener('mouseenter',mouseUp);          
+            var btn2 = document.getElementById("btn2");          
+            btn2.addEventListener('click',function(){
+                btn1.removeEventListener('mouseenter',mouseUp);
+                btn1.removeEventListener('click',btn_click);
+            }); 
+        }
+    </script>
+    
+    <button id="btn1">클릭1</button>
+    <button id="btn2">이벤트 삭제</button>
+
+
+@ 기본 이벤트 제거
+-> 기본 이벤트 : 태그 중 이벤트 핸들러를 기본적으로 가지고 있는 것
+	※ a 태그, input type=submit" 등...
+
+

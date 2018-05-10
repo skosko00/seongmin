@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<script type="text/javascript">
+    var latitude;   //위도
+    var longitude;  //경도
+    
+    window.onload = function myfunc()
+    {
+        navigator.geolocation.getCurrentPosition(showYourLocation);
+    }
+    function showYourLocation(position)
+    {
+        latitude = position.coords.latitude;
+        longitude = position.coords.longitude;
+    }
+    
+    function myfunc()
+    {
+        var str = "위도 : " + latitude + "\n" +
+                    "경도 : " +longitude + "\n";
+        alert(str);
+    }
+    
+</script>
+<button onclick="myfunc();">경도,위도 확인</button>
+
+</body>
+</html>
