@@ -1,0 +1,61 @@
+
+
+@ JQuery
+-> 존 레식(John Resic)에 의해 만들어진 JavaScript 프레임 워크(라이브러리)
+-> 기존의 JavaScript를 사용하는 방법보다 훨씬 단순하고 간결한 코드형태를 제공함
+-> JQuery의 가장 큰 특징들
+	- DOM과 관련된 처리를 쉽게 구현
+	- 일관된 이벤트 연결을 쉽게 구현
+	- 시각적 효과를 쉽게 구현
+	- Ajax 애플리케이션을 쉽게 구현
+
+
+@ JQuery 사용하기
+-> JQuery는 라이브러리가 있어야 사용가능하기 때문에 사용하려면
+	2가지 방법 중 1가지는 꼭 설정 해주어야 함
+	1. CDN(Content Delivery Network) 방식
+	- 네트워크를 통하여 js 파일을 불러와서 실행
+	- 코드 한줄로 쉽게 구현이 가능함
+	- 네트워크가 연결되어 있지 않다면 JQuery를 사용할 수 없게 됨
+	2. 파일 다운로드 후 로드 방식
+	- JQuery 홈페이지에서 js파일을 다운로드한 후 로드하는 방식
+	- 다운 받아야 하는 불편함은 있지만 네트워크에 연결되어 있지
+	않아도 JQuery를 사용할 수 있음
+
+
+## CDM 방식 ##
+-> https://code.jquery.com 사이트로 이동
+-> JQuery 버전 확인후 uncompressed(다른 것도 상관 없음)를 클릭하여
+나오는 <script> 코드를 복사하여 제작하는 페이지에 붙여넣기 하면 됨
+
+ex)
+
+<script
+  src="https://code.jquery.com/jquery-3.3.1.js"
+  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+  crossorigin="anonymous"></script>
+
+## 다운로드 하여 로딩하는 방식 ##
+-> http://jquery.com 이동
+-> Download -> Download the compressed, production jQuery 3.X.X 를 클릭하여
+다운로드 받음
+-> 해당 파일을 웹 프로젝트 경로로 이동
+-> 웹 페이지 제작시 <script src="경로/jquery-3.3.1.min.js"></script> 를 작성
+
+
+@ JQuery 기본 문법
+-> $(selector).action();
+
+설명
+-> $는 JQuery를 선언하거나 접근할 때 사용 함(선택자를 말함)
+-> $는 JQuery의 별칭(alias)
+-> 따라서 $(selector).action() 형태로 표현하여도 되고, JQuery(selector).action()으로 표현 해도
+같은 의미임(주로 $를 많이 씀)
+-> selector는 CSS와 같은 선택자를 의미함
+-> action()은 HTML에서 요소를 가지고 설정하는 함수
+
+
+ex) $('#p1').css('color','red');
+-> ID가 p1인 태그(요소)의 글자 색상(color)을 빨간색(red)로 설정하여라.
+
+

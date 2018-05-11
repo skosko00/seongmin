@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+</head>
+<body>
+
+    
+<style>
+    fieldset{
+        height:400px;
+        width:400px;
+    }
+</style>
+        문제<br>
+    회원가입시 각 필드마다 유효성 검사를 하여 처리 할 수 있도록 만들어라. <br>
+    1. ID는 영어소문자,숫자만 가능해야함(4~12자리,소문자로 시작해야함) <br>
+    2. PW는 영어소문자,대문자,숫자만 입력 가능해야 하고 (최소 8~12자리) <br>
+    3. PW와 PW_re는 같아야 함<br>
+    4. NAME은 무조건 한글만 가능해야 함(최소1글자 이상)<br>
+    5. 주소에는 영어 사용 불가(공백 불가)<br>
+    6. 우편번호는 무조건 숫자만 입력 가능해야 함<br>
+    7. 이메일은 @가 포함 되어야 함(@앞에가 영문자,숫자로  4~12글자 ) <br>
+    8. 전화번호는 첫번째 필드는 010만 입력 가능 해야 함 <br>
+                두번째 필드는 3자리 이상 입력 해야 함 <br>
+                세번째 필드는 무조건 4자리 입력 해야함 <br>
+               (모두 숫자만 가능 해야함) <br>
+    
+<center>
+
+    <fieldset>
+        <legend>회원가입</legend>
+<pre>
+<span id="message" style="color:blue;"></span>
+            <form action="join" method="post">
+ID :        <input type="text" id="user_id" /><br>
+PW :        <input type="password" id="pw" /><br>
+PW_re :     <input type="password" id="pw_re" /><br>
+NAME :      <input type="text" id="user_name" /><br>
+ADDRESS :   <input type="text" id="addr" /><br>
+POST NUMBER:  <input type="text" size="5" id="post_1" /> - <input type="text" size="5" id="post_2" /> <br>
+E-MAIL :    <input type="text" id="email" /><br>
+PHONE :     <input type="text" id="tel1" size="2" maxlength="3" />-<input type="text" id="tel2" size="2" maxlength="4" />-<input type="text" id="tel3" size="2" maxlength="4" /><br>
+<input type="submit" value="회원가입" onclick="return check();"/>  <input type="reset" value="취소" />
+            </form>
+</pre>
+    </fieldset>
+</center>
+<script type="text/javascript">
+    function check()
+    {
+        var message = document.getElementById("message");
+        var user_id = document.getElementById("user_id");
+        var pw = document.getElementById("pw");
+        var pw_re = document.getElementById("pw_re");
+        var user_name = document.getElementById("user_name");
+        var addr = document.getElementById("addr");
+        var post_1 = document.getElementById("post_1");
+        var post_2 = document.getElementById("post_2");
+        var email = document.getElementById("email");
+        var tel1 = document.getElementById("tel1");
+        var tel2 = document.getElementById("tel2");
+        var tel3 = document.getElementById("tel3");
+        
+        message.innerHTML = "";
+        user_id.style.backgroundColor="white";
+        pw.style.backgroundColor="white";
+        pw_re.style.backgroundColor="white";
+        user_name.style.backgroundColor="white";
+        addr.style.backgroundColor="white";
+        post_1.style.backgroundColor="white";
+        post_2.style.backgroundColor="white";
+        email.style.backgroundColor="white";
+        tel1.style.backgroundColor="white";
+        tel2.style.backgroundColor="white";
+        tel3.style.backgroundColor="white";
+
+        
+        var regExp = /^[a-z0-9]{4,12}$/;
+        var result = regExp.test(user_id.value);
+        
+        if(result)//ID
+            {
+                regExp = /^[a-z0-9]{8,12}/i;
+                result = regExp.test(pw.value);
+                if(result)//PW
+                    {
+                        if(pw.value==pw_re.value)//PW_re
+                            {
+                                regExp = /^[가-힣+]$/;
+                                result = regExp.test(user_name.value);
+                                if(result)//NAME
+                                    {
+                                        regExp = /^[ㄱ-ㅎㅏ-ㅣ가-힣0-9 ]+$/i;
+                                        result = regExp.test(addr.value);
+                                        if(result)//addr
+                                            {
+                                                regExp = /^[0-9]+$/;
+                                                result = regExp.test(post_1.value);
+                                                var result2 = regExp.test(post_2.value);
+                                                if(result&&result2)//post
+                                                    {
+                                                        regExp = /^[a-z0-9]{4,12}@/;
+                                                        result = regExp.test(email.value);
+                                                        if(result)//email
+                                                            {
+                                                                regExp = /010/;
+                                                                result = regExp.test(tel1.value);
+                                                                regExp = /[0-9]{3,4}/;
+                                                                result2 = regExp.test(tel2.value);
+                                                                regExp = /[0-9]{4}/;
+                                                                var result3 = regExp.test(tel3.value);
+                                                                if(result&&result2&&result3)
+                                                                    {
+                                                                        return true;
+                                                                    }
+                                                                else{
+                                                                    message.innerHTML = "폰 번호를 재확인 해 주세요";
+                                                                    tel1.style.backgroundColor = "red";
+                                                                    tel2.style.backgroundColor = "red";
+                                                                    tel3.style.backgroundColor = "red";
+                                                                    return false;
+                                                                }
+                                                            }
+                                                        else{
+                                                            message.innerHTML = "이메일을 재확인 해주세요";
+                                                            email.style.backgroundColor="red";
+                                                            return false;
+                                                        }
+                                                    }
+                                                else{
+                                                    message.innerHTML = "우편번호는 숫자만 입력 가능합니다";
+                                                    post_1.style.backgroundColor = "red";
+                                                    post_2.style.backgroundColor = "red";
+                                                    return false;
+                                                }
+                                            }
+                                        else{
+                                            message.innerHTML = "주소 입력은 영어 사용이 불가합니다. (공백불가)";
+                                            addr.style.backgroundColor = "red";
+                                            return false;
+                                        }
+                                    }
+                                else{
+                                    message.innerHTML = "이름은 한글(최소1글자)만 가능합니다";
+                                    user_name.style.backgroundColor="red";
+                                    return false;
+                                }
+                            }
+                        else{
+                            message.innerHTML = "비밀번호와 비밀번호 확인 값은 같아야 합니다.";
+                            pw.style.backgroundColor = "red";
+                            pw_re.style.backgroundColor = "red";
+                            return false;
+                        }
+                    }
+                else{
+                        message.innerHTML = "비밀번호는 소문자,대문자,숫자 중 8~12글자로 입력 바랍니다.";
+                        pw.style.backgroundColor = "red";
+                        return false;
+                    }
+            }
+        else{
+            message.innerHTML = "아이디는 소문자,숫자만 가능하고 4~12글자 입력바랍니다.";
+            user_id.style.backgroundColor = "red";
+            return false;
+        }
+    }
+</script>
+</body>
+</html>
+    
+    
+    
+    
+    
+    
