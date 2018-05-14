@@ -1,0 +1,225 @@
+
+
+
+@ 기본 선택자
+-> All Selector		$('*')
+	-> HTML DOM 의 모든 Element 선택
+
+-> Element Selector	$('tag')
+	-> 지정된 tag와 일치하는 모든 Element 선택
+
+-> Id Selector		$('#id')
+	-> 지정된 id와 일치하는 Element 선택
+
+-> Class Selector	$('.class')
+	-> 지정된 class와 일치하는 모든 Element 선택
+
+-> Multiple Selector	$('tag1,tag2')
+	-> 지정된 tag1과 tag2를 일치하는 모든 Element 선택
+
+
+ex)
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('*').css('color','red'); // 전체 선택자
+            $('span').css('background-color','yellow'); // 태그 선택자
+            $('#p4').css('background-color','skyblue'); // ID 선택자
+            $('.test').css('text-decoration','underline'); //.Class 선택자
+            $('#p2,#p3').css('background-color','pink');//Multi선택자
+        });
+    </script>
+
+    <p id="p1" class="test">내용1</p>
+    <p id="p2" class="test">내용2</p>
+    <p id="p3" class="test">내용3</p>
+    <p id="p4">내용4</p>
+    <span id="span1" class="test">내용5</span><br>
+    <span id="span2">내용6</span><br>
+
+
+
+@ 자식선택자
+-> 자식을 선택하는 선택자
+-> '부모>자식' 형태로 사용
+
+
+ex)
+    <script src="jquery-3.3.1.min.js">
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('div>ul').css('color','blue'); //div의 자식인 ul을 선택
+            $('div>h1').css('color','red'); //div의 자식인 h1을 선택
+            $('div>ul>li>h1').css('background-color','pink');
+        });
+    </script>
+
+<div>
+    <ul>
+        <li><h1> Apple </h1></li>
+        <li> Bag </li>
+        <li> Cat </li>
+        <li> Dog </li>
+        <li> Water </li>
+    </ul>
+    <h1> Child H1 </h1>
+</div>
+
+
+
+@ 후손 선택자
+-> 후손을 선택하는 선택자
+-> '요소 A 요소 B'의 형태로 사용
+	- 요소 A의 후손으로 범위 한정 됨
+
+
+ex)
+    <script src="jquery-3.3.1.min.js">
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('div h1').css('color','red');
+        });
+    </script>
+
+<div>
+    <ul>
+        <li><h1> Apple </h1></li>
+        <li> Bag </li>
+        <li> Cat </li>
+        <li> Dog </li>
+        <li> Water </li>
+    </ul>
+    <h1> Child H1 </h1>
+</div>
+
+
+
+@ 속성 선택자
+-> 기본 선택자 뒤에 붙여 사용
+
+요소[속성]	특정 속성을 가지고 있는 객체 선택
+요소[속성=값]	속성 안의 값이 특정 값과 다른 객체 선택
+요소[속성~=값]	속성 안의 값이 특정 값을 단어로써 포함하는 객체 선택
+요소[속성^=값]	속성 안의 값이 특정 값으로 시작하는 객체 선택
+요소[속성$=값]	속성 안의 값이 특정 값으로 끝나는 객체 선택
+요소[속성*=값]	속성 안의 값이 특정 값을 포함하는 객체 선택
+
+
+ex)
+    <script src="jquery-3.3.1.min.js">
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('input[type=text]').css('color','red');
+            $('input[name^=fi]').css('background-color','green');
+            $('input[name$=th]').css('color','blue');
+            
+        });
+    </script>
+
+<input type="text" name="first" value="사과"><br>
+<input type="text" name="second" value="배"><br>
+<input type="password" name="third" value="포도"><br>
+<input type="password" name="fourth" value="바나나"><br>
+
+@ 입력 양식 필터 선택자
+-> input 태그의 type 속성에 따라 문서 객체 선택 가능
+-> 필터 선택자는 기본 선택자 뒤에 사용 함
+
+ex) 'input:button'의 형태로 사용
+
+input:button
+input:checkbox
+input:file
+input:image
+input:password
+input:radio
+input:reset
+input:submit
+input:text
+
+input:checked		input 태그 중 체크된 객체
+input:disabled		input 태그 중 비활성화된 객체
+input:enabled		input 태그 중 활성화된 객체
+input:selected		select 태그의 option 태그 중 선택된 객체
+
+
+ex)
+    <script src="jquery-3.3.1.min.js">
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('input:button').css('color', 'red');
+            $('input:button').click(function() {
+                var value = $('select>option:selected').val();
+                alert(value);
+            });
+        });
+    </script>
+
+    <input type="button" value="버튼">
+    <select>
+    <option >Apple</option>
+    <option >Phone</option>
+    <option >Muzi</option>
+    <option >Sando</option>
+    <option >Water</option>
+</select>
+
+※ JavaScript = value jQuery = val
+
+
+
+@ 위치와 관련된 필터 선택자
+
+요소:odd	홀수 번째에 위치한 객체 선택
+요소:even	짝수 번째에 위치한 객체 선택
+요소:first	첫번째 위치한 객체 선택
+요소:last	마지막에 위치한 객체 선택
+
+
+
+ex)
+
+    <script>
+        $(document).ready(function() {
+            $('tr:odd').css('color','blue');
+            $('tr:even').css('color','green');
+            $('tr:first').css('background-color','yellow');
+        });
+    </script>
+
+<table>
+    <tr><th>이름</th><th>혈액형</th><th>지역</th></tr>    
+    <tr><td>노민수</td><td>B형</td><td>인천</td></tr>
+    <tr><td>곽영훈</td><td>A형</td><td>안양</td></tr>
+    <tr><td>김미경</td><td>AB형</td><td>서울</td></tr>
+    <tr><td>김지섭</td><td>B형</td><td>서울</td></tr>
+    <tr><td>안형조</td><td>B형</td><td>인천</td></tr>
+    <tr><td>정지수</td><td>B형</td><td>인천</td></tr>
+</table>
+
+
+@ 함수 형태의 필터 선택자
+-> 함수 형태를 가지고 있는 선택자
+
+요소:contains(문자열)	특정 문자열을 포함하는 객체 선택
+요소:eq(n)		N번째에 위치하는 객체 선택
+요소:gt(n)		N번째를 초과하는 객체 선택
+요소:has(H1)		H1태그를 가지고 있는 객체 선택
+요소:lt(n)		N번째 미만에 위치하는 객체 선택
+요소:not(선택자)	선택자와 일치하지 않는 객체 선택(부정)
+요소:nth-child(3n+1)	3n+1번재에 위치하는 객체 선택(1,4,7,....)
+	- n은 0부터..
+	- 2n+1 이라면? 1,3,5,...
+
+※ 자바스크립트에서의 배열이 0부터 시작하기 때문에 n번째는 0번째 부터 시작하고,
+nth-child는 jQuery의 표준을 따라서 1번째 부터 시작 함
+
+
+

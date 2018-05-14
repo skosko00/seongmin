@@ -58,4 +58,33 @@ ex)
 ex) $('#p1').css('color','red');
 -> ID가 p1인 태그(요소)의 글자 색상(color)을 빨간색(red)로 설정하여라.
 
+    <script src="jquery-3.3.1.min.js">
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#p1").css('color', 'red');
+            $("#p2").css("background-color","blue");
+        });
+    </script>
+
+    <p id="p1">테스트</p>
+    <p id="p2">테스트</p>
+
+
+-> #(document).ready(function(){});
+	- JavaScript에서 window.onload와 같은 개념의 함수
+	- 페이지 내용을 모두 로드한 후 ready 메소드를 자동 실행함
+
+
+$(document).ready(function(){
+});
+
+또는 축약형으로
+
+$(function(){
+});
+
+으로 작성할 수도 있음
+
 

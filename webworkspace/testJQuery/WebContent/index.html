@@ -9,16 +9,37 @@
 
     <script src="jquery-3.3.1.min.js">
     </script>
-
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $("#p1").css('color', 'red');
-            $("#p2").css("background-color","blue");
+    
+    <style type="text/css">
+        .siblings *{
+            display: block;
+            border: 2px solid lightgrey;
+            color: lightgrey;
+            padding: 5px;
+            margin: 15px;
+        }
+    </style>
+    
+        <script type="text/javascript">
+        $(document).ready(function(){
+            var $select = $('h2').siblings('p'); //h2와 같은 형제들 중에서 p 태그만
+            $select.css('border','2px solid red');
         });
     </script>
 
-    <p id="p1">테스트</p>
-    <p id="p2">테스트</p>
+<div class="siblings" style="width:500px;">
+    <div>
+        div(parent)
+        <p>i'm p</p>
+        <span>i'm span</span>
+        <h2>i'm h2</h2>
+        <h3>i'm h3</h3>
+        <h4>i'm h4</h4>
+        <h5>i'm h5</h5>
+        <h6>i'm h6</h6>
+        <p>i'm p</p>
+    </div>
+</div>
 
 </body>
 </html>
