@@ -1,0 +1,706 @@
+
+
+@ jQuery Traversing
+-> jQuery Traversing은 jQuery의 탐색(순회) 이라는 뜻
+-> 특정 요소를 찾거나 필터링 하는 작업은 대부분 선택자(selector)를 사용 하면 됨
+-> 1차적으로 선택자에 의해 찾은 요소들을 다시 2차 필터링 하거나 새로운 요소를
+추가할때에는 traverse관련 메소드를 사용 하면 됨
+
+※ 처음 필터 처리한 요소들의 집합에서 다시 특정 요소를 찾거나 또는 필터링과 같이
+추가하는 동작이라고 보면 됨
+
+
+
+@ filltering 메소드
+-> 선택자로 지정한 객체를 기준으로 객체 그룹에서 위치를 기준으로 객체 선택을 하는
+메소드
+
+
+## first() ##
+-> 선택된 요소 중 가장 첫번째 요소를 리턴
+
+
+ex1)
+    <script src="jquery-3.3.1.min.js">
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('p').first().css('color','yellow');
+        });
+    </script>
+
+<p>내용1</p>
+<p>내용2</p>
+<p>내용3</p>
+<p>내용4</p>
+<p>내용5</p>
+
+
+ex2)
+    <script src="jquery-3.3.1.min.js">
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.b').first().css('color','yellow');
+        });
+    </script>
+
+<p class="a">내용1</p>
+<p class="b">내용2</p>
+<p class="a">내용3</p>
+<p class="b">내용4</p>
+<p class="a">내용5</p>
+
+
+
+## last() ##
+-> 선택된 요소 중 가장 마지막 요소를 리턴
+
+
+ex)
+    <script src="jquery-3.3.1.min.js">
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.b').last().css('color','yellow');
+        });
+    </script>
+
+<p class="a">내용1</p>
+<p class="b">내용2</p>
+<p class="a">내용3</p>
+<p class="b">내용4</p>
+<p class="a">내용5</p>
+
+
+## eq() ##
+-> 인덱스 번호와 일치하는 요소 리턴 (0부터 시작)
+
+
+ex)
+    <script src="jquery-3.3.1.min.js">
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('p').eq(3).css('color','yellow');
+        });
+    </script>
+
+<p class="a">내용1</p>
+<p class="b">내용2</p>
+<p class="a">내용3</p>
+<p class="b">내용4</p>
+<p class="a">내용5</p>
+
+
+
+## filter() ##
+-> 인자값과 일치하는 요소만 리턴
+-> 2가지 형태로 사용
+	- $(selector).filter(selector);
+	- $(selector).filter(function(){});
+
+
+ex)
+    <script src="jquery-3.3.1.min.js">
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            //var $select = $('p').filter(':even');
+            var $select = $('p').filter(function(index){
+                return index%2==1;
+//                return confirm("선택하시겠습니까?");
+            });
+            $select.css('color','red');
+        });
+    </script>
+
+<p>내용1</p>
+<p>내용2</p>
+<p>내용3</p>
+<p>내용4</p>
+<p>내용5</p>
+<p>내용6</p>
+<p>내용7</p>
+<p>내용8</p>
+<span>내용9</span><br><br>
+<span>내용10</span><br><br>
+<span>내용11</span><br><br>
+
+
+
+## not() ##
+-> 인자값과 일치하지 않는 요소만 리턴
+
+
+ex)
+    <script src="jquery-3.3.1.min.js">
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            var $select = $('p').not('.p');
+            $select.css('color','red');
+        });
+    </script>
+
+<p class="p">내용1</p>
+<p class="p">내용2</p>
+<p class="pp">내용3</p>
+<p class="pp">내용4</p>
+
+
+@ Ancestors 메소드
+-> 선택된 요소의 상위 요소들을 선택할 수 있는 메소드
+
+
+## parent() ##
+-> 선택된 요소의 바로 위(상위요소)만 리턴
+
+ex)
+        <script type="text/javascript">
+        $(document).ready(function(){
+            var $select = $('span').parent();   // span 태그의 부모
+            $select.css('border','2px solid red');
+            
+        });
+    </script>
+
+<div class="ancestors">
+    <div style="width:500px;">
+        i'm div (great-grandparent)
+        <ul>
+            i'm ul (grandparent)
+            <li>i'm li(direct parent)
+            <span>span</span>
+            </li>
+        </ul>
+    </div>
+    <div style="width:500px;">
+        div (grandparent)
+        <p>
+            p(div direct parent)
+            <span>span</span>
+        </p>
+    </div>
+</div>
+
+
+## parents([인자]) ##
+-> 선택된 요소의 모든 상위 요소 리턴
+-> 매개변수가 있으면 매개변수와 일치하는 부모만 리턴
+
+ex)
+    <script src="jquery-3.3.1.min.js">
+    </script>
+    
+    <style type="text/css">
+        .ancestors *{
+            display: block;
+            border: 2px solid lightgrey;
+            color: lightgrey;
+            padding: 5px;
+            margin: 15px;
+        }
+    </style>
+    
+        <script type="text/javascript">
+        $(document).ready(function(){
+//            var $select = $('span').parents();   // span 태그의 부모들
+            var $select = $('span').parents('ul'); // span 태그의 부모들 중 ul태그만
+            $select.css('border','2px solid red');
+            
+        });
+    </script>
+
+<div class="ancestors">
+    <div style="width:500px;">
+        i'm div (great-grandparent)
+        <ul>
+            i'm ul (grandparent)
+            <li>i'm li(direct parent)
+            <span>span</span>
+            </li>
+        </ul>
+    </div>
+    <div style="width:500px;">
+        div (grandparent)
+        <p>
+            p(div direct parent)
+            <span>span</span>
+        </p>
+    </div>
+</div>
+
+
+## parentsUntil([인자]) ##
+-> 선택된 요소부터 인자요소까지 범위의 요소 리턴
+	(선택된 요소는 제외함)
+
+ex)
+    <script src="jquery-3.3.1.min.js">
+    </script>
+    
+    <style type="text/css">
+        .ancestors *{
+            display: block;
+            border: 2px solid lightgrey;
+            color: lightgrey;
+            padding: 5px;
+            margin: 15px;
+        }
+    </style>
+    
+        <script type="text/javascript">
+        $(document).ready(function(){
+            var $select = $('span').parentsUntil('div');
+            $select.css('border','2px solid red');
+            
+        });
+    </script>
+
+<div class="ancestors">
+    <div style="width:500px;">
+        i'm div (great-grandparent)
+        <ul>
+            i'm ul (grandparent)
+            <li>i'm li(direct parent)
+            <span>span</span>
+            </li>
+        </ul>
+    </div>
+    <div style="width:500px;">
+        div (grandparent)
+        <p>
+            p(div direct parent)
+            <span>span</span>
+        </p>
+    </div>
+</div>
+
+
+@ Descendants 메소드
+-> 선택된 요소의 하위 요소들을 선택 할 수 있는 메소드
+
+
+## children([인자]) ##
+-> 선택된 요소의 모든 자손(다음레벨) 객체를 리턴
+-> 선택된 요소의 인자와 일치하는 자손(다음레벨) 객체 리턴
+
+
+ex)
+    <script src="jquery-3.3.1.min.js">
+    </script>
+    
+    <style type="text/css">
+        .descendants *{
+            display: block;
+            border: 2px solid lightgrey;
+            color: lightgrey;
+            padding: 5px;
+            margin: 15px;
+        }
+    </style>
+    
+        <script type="text/javascript">
+        $(document).ready(function(){
+            var $select = $('div').children('.child1');
+            $select.css('border','2px solid red');
+        });
+    </script>
+
+<div class="descendants" style="width:500px;">
+    div (current element)
+    <p class="child1">
+        p(child)
+        <span class="child1">
+            span(grandchild)
+        </span>
+    </p>
+    <p class="child2">
+        p(child)
+        <span>
+            span(grandchild)
+        </span>
+    </p>
+</div>
+
+
+
+## find(인자) ##
+-> 선택된 요소의 인자와 일치하는 모든 후손 (모든 레벨) 객체 리턴
+
+
+ex)
+    <script src="jquery-3.3.1.min.js">
+    </script>
+    
+    <style type="text/css">
+        .descendants *{
+            display: block;
+            border: 2px solid lightgrey;
+            color: lightgrey;
+            padding: 5px;
+            margin: 15px;
+        }
+    </style>
+    
+        <script type="text/javascript">
+        $(document).ready(function(){
+            var $select = $('div').find('span'); //후손들 중 span태그들 선택
+            $select.css('border','2px solid red');
+        });
+    </script>
+
+<div class="descendants" style="width:500px;">
+    div (current element)
+    <p class="child1">
+        p(child)
+        <span class="child1">
+            span(grandchild)
+        </span>
+    </p>
+    <p class="child2">
+        p(child)
+        <span>
+            span(grandchild)
+        </span>
+    </p>
+</div>
+
+
+## siblings([인자]) ##
+-> 같은 레벨에 있는 요소(형제)를 선택할 수 있는 메소드
+ 또는
+-> 같은 레벨에 있는 요소(형제)중 인자와 일치하는 요소 리턴
+
+※ 자신은 제외
+
+
+ex1)
+    <script src="jquery-3.3.1.min.js">
+    </script>
+    
+    <style type="text/css">
+        .siblings *{
+            display: block;
+            border: 2px solid lightgrey;
+            color: lightgrey;
+            padding: 5px;
+            margin: 15px;
+        }
+    </style>
+    
+        <script type="text/javascript">
+        $(document).ready(function(){
+//            var $select = $('h2').siblings(); //h2를 제외한 모든 형제
+            var $select = $('h2').siblings('p'); //h2와 같은 형제들 중에서 p 태그만
+            $select.css('border','2px solid red');
+        });
+    </script>
+
+<div class="siblings" style="width:500px;">
+    <div>
+        div(parent)
+        <p>i'm p</p>
+        <span>i'm span</span>
+        <h2>i'm h2</h2>
+        <h3>i'm h3</h3>
+        <h4>i'm h4</h4>
+        <h5>i'm h5</h5>
+        <h6>i'm h6</h6>
+        <p>i'm p</p>
+    </div>
+</div>
+
+
+
+## next() ##
+-> 선택된 요소의 같은 레벨(형제)들 중 선택된 요소 다음의 한 개 요소를 리턴
+
+ex)
+    <script src="jquery-3.3.1.min.js">
+    </script>
+    
+    <style type="text/css">
+        .siblings *{
+            display: block;
+            border: 2px solid lightgrey;
+            color: lightgrey;
+            padding: 5px;
+            margin: 15px;
+        }
+    </style>
+    
+        <script type="text/javascript">
+        $(document).ready(function(){
+            var select = $('h2').next();//h2다음
+            select.css('border','2px solid red');
+        });
+    </script>
+
+<div class="siblings" style="width:500px;">
+    <div>
+        div(parent)
+        <p>i'm p</p>
+        <span>i'm span</span>
+        <h2>i'm h2</h2>
+        <h3>i'm h3</h3>
+        <h4>i'm h4</h4>
+        <h5>i'm h5</h5>
+        <h6>i'm h6</h6>
+        <p>i'm p</p>
+    </div>
+</div>
+
+
+## nextAll() ##
+-> 선택된 요소의 같은 레벨(형제)들 중 선택된 요소 다음의 모든 요소를 리턴
+
+ex)
+    <script src="jquery-3.3.1.min.js">
+    </script>
+    
+    <style type="text/css">
+        .siblings *{
+            display: block;
+            border: 2px solid lightgrey;
+            color: lightgrey;
+            padding: 5px;
+            margin: 15px;
+        }
+    </style>
+    
+        <script type="text/javascript">
+        $(document).ready(function(){
+            var select = $('h2').nextAll();//h2다음 것들
+            select.css('border','2px solid red');
+        });
+    </script>
+
+<div class="siblings" style="width:500px;">
+    <div>
+        div(parent)
+        <p>i'm p</p>
+        <span>i'm span</span>
+        <h2>i'm h2</h2>
+        <h3>i'm h3</h3>
+        <h4>i'm h4</h4>
+        <h5>i'm h5</h5>
+        <h6>i'm h6</h6>
+        <p>i'm p</p>
+    </div>
+</div>
+
+
+## nextUntil(인자) ##
+-> 선택된 요소부터 같은 레벨(형제)들 중 인자까지 범위의 모든 요소를 리턴
+※ 마지막 범위는 포함 안됨
+
+
+ex)
+    <script src="jquery-3.3.1.min.js">
+    </script>
+    
+    <style type="text/css">
+        .siblings *{
+            display: block;
+            border: 2px solid lightgrey;
+            color: lightgrey;
+            padding: 5px;
+            margin: 15px;
+        }
+    </style>
+    
+        <script type="text/javascript">
+        $(document).ready(function(){
+            var select = $('h2').nextUntil('h6');
+            select.css('border','2px solid red');
+        });
+    </script>
+
+<div class="siblings" style="width:500px;">
+    <div>
+        div(parent)
+        <p>i'm p</p>
+        <span>i'm span</span>
+        <h2>i'm h2</h2>
+        <h3>i'm h3</h3>
+        <h4>i'm h4</h4>
+        <h5>i'm h5</h5>
+        <h6>i'm h6</h6>
+        <p>i'm p</p>
+    </div>
+</div>
+
+
+## prey() ##
+-> 선택된 요소의 같은 레벨(형제)들 중 선택된 요소 이전의 한 개 요소 리턴
+
+
+ex)
+    <script src="jquery-3.3.1.min.js">
+    </script>
+    
+    <style type="text/css">
+        .siblings *{
+            display: block;
+            border: 2px solid lightgrey;
+            color: lightgrey;
+            padding: 5px;
+            margin: 15px;
+        }
+    </style>
+    
+        <script type="text/javascript">
+        $(document).ready(function(){
+            var select = $('h2').prev();
+            select.css('border','2px solid red');
+        });
+    </script>
+
+<div class="siblings" style="width:500px;">
+    <div>
+        div(parent)
+        <p>i'm p</p>
+        <span>i'm span</span>
+        <h2>i'm h2</h2>
+        <h3>i'm h3</h3>
+        <h4>i'm h4</h4>
+        <h5>i'm h5</h5>
+        <h6>i'm h6</h6>
+        <p>i'm p</p>
+    </div>
+</div>
+
+
+## prevAll() ##
+-> 선택된 요소의 같은 레벨(형제)들 중 선택된 요소 이전의 모든 요소를 리턴
+
+
+ex)
+    <script src="jquery-3.3.1.min.js">
+    </script>
+    
+    <style type="text/css">
+        .siblings *{
+            display: block;
+            border: 2px solid lightgrey;
+            color: lightgrey;
+            padding: 5px;
+            margin: 15px;
+        }
+    </style>
+    
+        <script type="text/javascript">
+        $(document).ready(function(){
+            var select = $('h2').prevAll();
+            select.css('border','2px solid red');
+        });
+    </script>
+
+<div class="siblings" style="width:500px;">
+    <div>
+        div(parent)
+        <p>i'm p</p>
+        <span>i'm span</span>
+        <h2>i'm h2</h2>
+        <h3>i'm h3</h3>
+        <h4>i'm h4</h4>
+        <h5>i'm h5</h5>
+        <h6>i'm h6</h6>
+        <p>i'm p</p>
+    </div>
+</div>
+
+
+## prevUntil(인자) ##
+-> 선택된 요소의 같은 레벨(형제)들 중 선택된 요소 이전의 요소를 리턴
+※ 마지막 범위는 포함 안됨
+
+
+ex)
+    <script src="jquery-3.3.1.min.js">
+    </script>
+    
+    <style type="text/css">
+        .siblings *{
+            display: block;
+            border: 2px solid lightgrey;
+            color: lightgrey;
+            padding: 5px;
+            margin: 15px;
+        }
+    </style>
+    
+        <script type="text/javascript">
+        $(document).ready(function(){
+            var select = $('h4').prevUntil('p');
+            select.css('border','2px solid red');
+        });
+    </script>
+
+<div class="siblings" style="width:500px;">
+    <div>
+        div(parent)
+        <p>i'm p</p>
+        <span>i'm span</span>
+        <h2>i'm h2</h2>
+        <h3>i'm h3</h3>
+        <h4>i'm h4</h4>
+        <h5>i'm h5</h5>
+        <h6>i'm h6</h6>
+        <p>i'm p</p>
+    </div>
+</div>
+
+
+## is(인자) ##
+-> 선택된 요소의 범위내에 인자와 동일한 요소가 있는지 찾음!
+	(잇으면 true, 없으면 false 리턴)
+
+
+ex)
+    <script src="jquery-3.3.1.min.js">
+    </script>
+    
+    <style type="text/css">
+        .siblings *{
+            display: block;
+            border: 2px solid lightgrey;
+            color: lightgrey;
+            padding: 5px;
+            margin: 15px;
+        }
+    </style>
+    
+        <script type="text/javascript">
+        $(document).ready(function(){
+            var select = $('h4').prevUntil('p');
+            var result = select.is('h2');
+            console.log(result);
+//            select.css('border','2px solid red');
+        });
+    </script>
+
+<div class="siblings" style="width:500px;">
+    <div>
+        div(parent)
+        <p>i'm p</p>
+        <span>i'm span</span>
+        <h2>i'm h2</h2>
+        <h3>i'm h3</h3>
+        <h4>i'm h4</h4>
+        <h5>i'm h5</h5>
+        <h6>i'm h6</h6>
+        <p>i'm p</p>
+    </div>
+</div>
+
+
+

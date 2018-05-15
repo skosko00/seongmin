@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+</head>
+
+<body>
+ 
+    <script src="jquery-3.3.1.min.js">
+    </script>
+
+
+<style>
+    div{
+        border : 2px solid black;
+        width:100px;
+        height:100px;
+        margin: 5px;
+        float: left;
+    }
+</style>
+
+문제3<br>
+다음 2개의 그림 중 선택한 후 복사 될 수 있도록 구현하여라 <br>
+<fieldset style="width:300px; margin:30px">
+<legend>2개의 그림 중 선택하시오.</legend>
+<div id="img1" style="background-color:red;">
+    
+</div>
+<div id="img2" style="background-color:blue;">
+    
+</div>
+</fieldset>
+
+<fieldset style="width:800px;  margin:30px">
+    
+        <legend>복사되는 공간</legend>
+     
+        <div id="1th">
+            
+        </div >
+        <div id="2th">
+            
+        </div>
+        <div id="3th">
+            
+        </div>
+        <div id="4th">
+            
+        </div>
+        <div id="5th">
+            
+        </div>
+        <div id="6th">
+            
+        </div>
+        <div id="7th">
+            
+        </div>
+</fieldset>
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+        var img;
+        $('#img1').click(function(){
+            img = $('#img1').attr('style');
+            console.log(img);
+        });
+        $('#img2').click(function(){
+            img = $('#img2').attr('style');
+            console.log(img);
+        });
+        $('#1th').click(function(){
+            $('#1th').attr('style',img);
+        });
+        $('#2th').click(function(){
+            $('#2th').attr('style',img);
+        });
+        $('#3th').click(function(){
+            $('#3th').attr('style',img);
+        });
+        $('#4th').click(function(){
+            $('#4th').attr('style',img);
+        });
+        $('#5th').click(function(){
+            $('#5th').attr('style',img);
+        });
+        $('#6th').click(function(){
+            $('#6th').attr('style',img);
+        });
+        $('#7th').click(function(){
+            $('#7th').attr('style',img);
+        });
+        $('#btn1').click(function(){
+            $('fieldset:eq(1) div').removeAttr('style');
+        });
+    });
+</script>
+   
+
+<button id="btn1"> 초기화 </button>
+
+
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

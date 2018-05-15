@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+</head>
+
+<body>
+  
+    <script src="jquery-3.3.1.min.js">
+    </script>
+    <script>
+        $(document).ready(function(){
+            $('#btn').click(function(){
+                var $tr = $('tr');
+                var str = "";
+                $.each($tr,function(index,item){
+                    if(index>0&&$(item).children().eq(0).$('input[type=checkbox]'.is(':checked')))
+                        {
+                            var name = "학생 이름 : " + $(item).children().eq(1).html();
+                            var age = " / 나이 : " + $(item).children().eq(2).html();
+                            var addr = " / 주소 : " + $(item).children().eq(3).html();
+                            str += index+"번째 "+name+age+addr+"<br>";
+                        }
+                });
+                $('#result').html(str);
+            });
+        });
+    </script>
+
+
+    <style>
+    </style>
+
+    <table border="1px" style="text-align:center">
+
+        <tr>
+            <th>체크</th>
+            <th>이름</th>
+            <th>나이</th>
+            <th>주소</th>
+        </tr>
+        <tr>
+            <td><input type="checkbox" /></td>
+            <td>홍길동</td>
+            <td>20</td>
+            <td>서울시</td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" /></td>
+            <td>김말똥</td>
+            <td>30</td>
+            <td>경기도</td>
+
+        </tr>
+        <tr>
+            <td><input type="checkbox" /></td>
+            <td>고길똥</td>
+            <td>40</td>
+            <td>강원도</td>
+
+        </tr>
+        <tr>
+            <td><input type="checkbox" /></td>
+            <td>김지똥</td>
+            <td>50</td>
+            <td>인천광역시</td>
+
+        </tr>
+    </table>
+    <br>
+
+    <label>출력</label>
+    <div style="border:3px solid red; height:200px; width:500px;" id="result">
+
+    </div>
+
+    <button id="btn">출력</button>
+
+   
+
+
+
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

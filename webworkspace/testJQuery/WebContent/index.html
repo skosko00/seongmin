@@ -9,37 +9,26 @@
 
     <script src="jquery-3.3.1.min.js">
     </script>
-    
+
     <style type="text/css">
-        .siblings *{
-            display: block;
-            border: 2px solid lightgrey;
-            color: lightgrey;
-            padding: 5px;
-            margin: 15px;
-        }
+
     </style>
-    
-        <script type="text/javascript">
-        $(document).ready(function(){
-            var $select = $('h2').siblings('p'); //h2와 같은 형제들 중에서 p 태그만
-            $select.css('border','2px solid red');
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#btn1').click(function(){
+//                $('#p4').append($('#p1').clone());//#p4 뒤에다가 p1을 복사
+                ($('#p1').clone().appendTo('#p4'));//#p4 뒤에다가 p1을 복사
+            });
         });
     </script>
-
-<div class="siblings" style="width:500px;">
-    <div>
-        div(parent)
-        <p>i'm p</p>
-        <span>i'm span</span>
-        <h2>i'm h2</h2>
-        <h3>i'm h3</h3>
-        <h4>i'm h4</h4>
-        <h5>i'm h5</h5>
-        <h6>i'm h6</h6>
-        <p>i'm p</p>
-    </div>
-</div>
+    
+    <p id="p1"> test1 </p>
+    <p id="p2"> test2 </p>
+    <p id="p3"> test3 </p>
+    <p id="p4"> test4 </p>
+    
+    <button id="btn1">이동</button>
 
 </body>
 </html>
