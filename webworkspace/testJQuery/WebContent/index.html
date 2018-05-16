@@ -10,25 +10,30 @@
     <script src="jquery-3.3.1.min.js">
     </script>
 
-    <style type="text/css">
-
-    </style>
-
     <script type="text/javascript">
-        $(document).ready(function() {
+        $(document).ready(function(){
             $('#btn1').click(function(){
-//                $('#p4').append($('#p1').clone());//#p4 뒤에다가 p1을 복사
-                ($('#p1').clone().appendTo('#p4'));//#p4 뒤에다가 p1을 복사
+               $('img').animate({
+                   height:'300px',width:'300px',opacity:'0.4'
+               });
+            });
+            $('#btn2').click(function(){
+                $('img').animate({
+                   height:'100px',width:'100px',opacity:'1'
+               });
             });
         });
     </script>
-    
-    <p id="p1"> test1 </p>
-    <p id="p2"> test2 </p>
-    <p id="p3"> test3 </p>
-    <p id="p4"> test4 </p>
-    
-    <button id="btn1">이동</button>
+<style>
+    img{
+        widows: 100px;
+        height: 100px;
+    }
+</style>
+<img src="2.jpg">
+<br>
+<button id="btn1">확대</button>
+<button id="btn2">원본</button>
 
 </body>
 </html>

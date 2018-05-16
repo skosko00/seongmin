@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+</head>
+
+<body>
+
+    <script src="jquery-3.3.1.min.js">
+    </script>
+    
+    <style>
+        .divTest{
+            background-color: red;
+        }
+    </style>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var switchTest=true;
+            $('button').click(function(){
+                    if(switchTest==true)
+                        {
+                            $('button').text('Off');
+                            switchTest=false;
+                            $('div').on('mouseenter',function(){
+                                $('div').addClass('divTest');
+                            });
+                            $('div').on('mouseleave',function(){
+                                $('div').removeClass('divTest');
+                            });
+                        }
+                    else
+                        {
+                            $('button').text('on');
+                            switchTest=true;
+                            $('div').off('mouseenter');
+//                            $('div').off('mouseleave');
+                        }
+            });
+        });
+    </script>
+
+<div style="border:2px solid black; width:100px; height:100px;"></div>
+<button>On</button>
+
+</body>
+</html>

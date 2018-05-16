@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+</head>
+
+<body>
+
+    <script src="jquery-3.3.1.min.js">
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+//            $('#test').keyup(function(){
+//                var $test = $(this).val().length;
+//                var count = $('span').text();
+//                $('span').text(150-$test);
+//            });
+            $('#test').keyup(function(){
+                $('span').text(150-$('#test').val().length);
+            });
+        });
+    </script>
+글 작성<br>
+
+<h1>작성가능한 글자수 : <span>150</span></h1>
+<textarea id="test" style="width:300px; height:100px;" maxlength="150"></textarea>
+
+</body>
+</html>

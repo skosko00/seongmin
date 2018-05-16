@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>04-1-before</title>
+</head>
+
+<body>
+
+    <script src="jquery-3.3.1.min.js">
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('tr').click(function(){
+                var select = $(this).children();
+            if(select.eq(0).text()!='번호'){
+                select.each(function(index,item)
+                           {
+                    $('span').eq(index).text(item.innerHTML);
+                })
+                }
+            });
+        });
+    </script>
+
+<table border="1">
+    <tr><th>번호</th><th>제목</th><th>조회수</th><th>작성일자</th></tr>
+    <tr><td>3</td><td>3번째제목</td><td>0</td><td>11-07-13</td></tr>
+    <tr><td>2</td><td>2번째제목</td><td>0</td><td>11-07-12</td></tr>
+    <tr><td>1</td><td>1번째제목</td><td>0</td><td>11-07-11</td></tr>
+</table>
+선택된 행 : 
+<span id="s1"></span> / <span id="s2"></span>
+/ <span id="s3"></span> / <span id="s4"></span>
+</body>
+</html>

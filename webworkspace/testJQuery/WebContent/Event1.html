@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>04-1-before</title>
+</head>
+
+<body>
+
+    <script src="jquery-3.3.1.min.js">
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('select').change(function(){
+                var select = $('select[name=number] option:selected');
+                console.log(select.attr('value'));
+                switch(select.attr('value'))
+                    {
+                        case '1':
+                            $('#selNum').html(select.text());break;
+                        case '2':
+                            $('#selNum').html(select.text());break;
+                        case '3':
+                            $('#selNum').html(select.text());break;
+                        case '4':
+                            $('#selNum').html(select.text());break;
+                        default :
+                            $('#selNum').html(select.attr('value'));break;
+                            
+                    }
+            });
+        });
+    </script>
+
+<select name="number">
+    <option value=""> == 선택 == </option>
+    <option value="1">1번</option>
+    <option value="2">2번</option>
+    <option value="3">3번</option>
+    <option value="4">4번</option>
+</select>
+<span id="selNum"></span>
+
+</body>
+</html>
