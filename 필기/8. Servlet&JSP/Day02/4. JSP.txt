@@ -1,0 +1,63 @@
+
+
+@ JSP란?
+-> 동적인 웹 페이지를 Java 언어를 이용하여 html 기반으로 작성할 수 있는 기술을 말함
+-> Servlet은 수정시 재 컴파일(서버 리부팅)을 해야하지만 jsp는 동적으로
+컴파일 하기 때문에 서버 리부팅 할 필요 없이 유연성있게 작업이 가능함
+-> 또한, 기존 Servlet은 자바 언어가 "주" 언어로 활용 되기 때문에
+자바 언어를 핵심적으로 공부해야만 Web Page를 표현 할 수 있었음
+-> 하지만 JSP는 "주" 언어가 html 이라고 보면 됨(HTML이 주 이지만 자바 언어를 쓸 수 있음)
+
+
+※ 파일명이 .html로 끝나게 되면 html만 작성이 가능하지만
+파일명이 .jsp로 끝나게 되면 html + java 를 사용할 수 있음
+
+
+@ JSP 특징
+-> JSP 파일이 변경 되어도 서버를 리부트 할 필요가 없음
+-> JSP 파일이 변경될 때 마다, 컨테이너는 자동으로 transiation, compile, load,
+initialization 과정을 수행함 (즉, 자동으로 매 요청시 마다 컴파일 작성 및 실행 함)
+-> JSP 파일의 배포 환경(위치)은 HTML 폴더와 동일함
+	=> WEB_ROOT 폴더 하단에 위치 (ex. WebContent\)
+
+
+
+@ JSP 실행 순서
+1. Client가 jsp 파일을 요청 (ex. http://localhost:8888/web1/jsp/xx.jsp)
+2. JSP Container가 xx.jsp 파일을 xx_jsp.java 파일로 컴파일
+	(JSP 안에는 자바 코드가 있으므로 Java 코드로 컴파일 해야함)
+	(이 때, JSP 코드는 서블릿 코드로 변경 됨)
+3. xx_jsp.java 파일을 다시 xx_jsp.class 파일로 컴파일
+(자바머신이 사용하기 위한 바이트코드)
+4. Servlet Container가 xx_jsp.class 파일의 코드를 실행
+5. 실행의 결과를 view 전용 jsp 파일을 이용하여 응답해줌
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

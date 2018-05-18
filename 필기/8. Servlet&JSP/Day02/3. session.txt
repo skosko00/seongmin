@@ -1,0 +1,129 @@
+
+
+@ HTTP 통신 방법
+-> HTTP는 Server와 Client가 통신을 할 때 요청에 대한 응답을 하고 나면
+연결된 세션을 끊어 버림 (stateless 방식)
+-> Client는 서버에게 다른 서비스를 요청하려면 새로운 세션 연결을 맺고
+요청 및 응답을 진행 함
+
+※ 웹은 수 많은 클라이언트들의 연결을 처리 하기 위해 연결 상태를 유지 하지 않는
+stateless 방식을 쓰고 있음
+	(반대 개념 stateful)
+
+
+@ stateless를 사용함으로써 발생하는 문제점
+-> 연결유지 상태가 아닌 매번 연결이 끊어지기 때문에 유지 되어야 하는 정보들이
+사라지게 됨
+(로그인을 하여도 결국 세션이 끊어지게 되면 로그인 성공 했다라는 정보가 없음)
+
+
+
+@ Cookie 와 Session 값
+-> 연결이 끊어진 이후에도 Client에 대한 정보를 유지하기 위해 Client 측에 연결 정보를
+저장하는 방법(Cookie)과 Server 측에 연결정보를 저장하는 방법(Session)이 있음
+
+-> Client 측에 연결 정보를 저장하는 방법을 Cookie를 이용한 방법이라 하고,
+Server 측에 연결 정보를 저장하는 방법을 Session을 이용한 방법이라고 함
+
+
+※ 보안상 Client에 저장했던 Cookie 방식은 로그인 연결 정보를 저장하기에는
+부적합하여 현재는 쓰지 않는 방식임(Cookie가 탈취 당하면 연결 정보가 탈취 당하는 것과 같음)
+
+현재는 거의 모든 웹들이 session 방식을 사용 함
+
+
+
+@ Session
+-> 서버에 데이터를 저정하는 기술로 Client에는 session ID(token)를 부여하고,
+Client가 request에 Session ID를 넣어 보내면 Session ID를 기준으로
+일치하는 session을 찾아 정보를 사용함
+-> 만일 Client가 보낸 sessionID가 없으면 새롭게 발급 함
+
+@ Session 객체
+-> Session 객체는 개발자가 수동으로 객체를 생성하는 것이 아닌
+컨테이너가 자동으로 생성하는 것이고, 개발자는 session 객체를 가져다 쓰면 됨
+(getSession() 메소드)
+
+-> getSession() 메소드는 Request에 있음
+
+
+## getSession() ##
+-> 사용 방법 두가지
+	1. Request.getSession(); 또는 Request.getSession(true);
+	2. Request.getSession(false);
+
+
+1. SessionID 일치 여부 확인
+	- 있으면 해당 Session을 사용함
+	- 없으면 새롭게 생성함
+
+2. SessionID 일치 여부 확인
+	- 있으면 해당 Session을 사용함
+	- 없으면 null을 리턴함
+
+
+## session과 관련된 메소드 ##
+setAttribute(String.object)
+-> request 객체에 전달하고 싶은 값을 String 이름으로 Object에 저장하는 메소드
+-> String이 key 역할이고 Object가 Value 역할임
+
+getAttribute(String)
+-> 해당 매개변수와 동일한 객체 속성값을 가져오는 메소드
+-> String이 key가 되고, 해당 key에 맞는 값을 가져옴
+
+removeAttribute(String)
+-> request 객체에 저장되어 있는 값 중 매개변수와 동일한 속성값을 삭제하는 메소드
+-? String을 작성하게 되면 해당 값을 삭제함
+
+getId()
+-> 발급되는 SessionID 값을 가져옴
+
+getCreationTime()
+-> Session 객체가 생성된 시간을 반환
+
+invalidate()
+-> 해당 세션을 파기 (삭제)
+
+setMaxinactiveinterval(int)
+-> 객체의 유지 시간을 설정, 지정된 시간이 지나면 객체 자동 삭제
+
+getAttributeNames()
+-> 객체에 저장되어 있는 모든 정보의 이름만 반환
+
+
+
+
+
+
+
+
+
+
+
+
+response.sendRedirect("/web1/views/ex1/login.html");  //페이지 이동
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
