@@ -1,0 +1,107 @@
+
+
+@ Declaration Tag (선언문 태그)
+-> Servlet 클래스의 멤버변수/메소드에 해당하는 코드를 작성할 때 사용
+
+멤버변수 선언
+
+<%! int data = 100 %>
+
+멤버 메소드 선언
+
+<%!
+	public void dataPrint()
+	{
+		return data;
+	}
+%>
+
+
+@ Scriptlet Tag
+-> _jspService 메소드의 로컬변수와 코드를 작성할 때 사용
+
+전역변수는 Declaration Tag(선언문 태그)를 이용하여 만들고
+지역변수는 Scriptlet Tag 안에서 만들면 됨
+
+
+<% int data = 999; %> //_jspService 메소드의 지역 변수가 됨
+
+
+
+@ Expression tag
+-> Servlet 코드에서 out.print()의 역할을 수행
+-> 표현태그에는 ';'을 붙이지 않음
+
+
+ex) 시간을 출력하고 싶다면?
+
+<%= new java.util.Date() %> 을 Servlet으로 변환시 out.print(new java.util.Date());
+
+만약 세미콜론을 붙이게 되면?
+
+<%= new java.util.Date(); %> 을 Servlet으로 변환시 out.print(new java.util.Date(););
+가 되므로 에러가 발생함
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Servlet -> session 객체
+request.getSession(); -> 서블릿에서 사용하는 코드
+session = request.getSession(true);
+//해당 클라이언트가 세션값을 가지고 접속하지 않으면 새로 발급
+//첫 로그인시에는 세션값이 없기 때문에 무조건 새롭게 발급해야 함
+//세션값이 없으면 새롭게 발급하는 것은 인자값으로 true를 주면 됨
+
+request.getSession(false);
+//세션을 가지고 접속했다면 해당 세션값을 사용
+//세션이 없는 상태로 접속했다면 null을 리턴
+
+
+
+jsp에서는 해당 jsp 페이지를 로딩하게 되면 자동으로 session 객체가 사용됨
+getSession(); 해당 코드가 자동으로 되어 있음
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

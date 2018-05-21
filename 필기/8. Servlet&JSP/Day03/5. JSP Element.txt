@@ -1,0 +1,66 @@
+
+
+
+@ JSP Element 표기법
+주석문 : <%-- 내용 --%>
+	- 내용 그대로 주석
+
+지시자 : <%@ 내용 %>
+	- 페이지에 대한 설정
+
+선언문 : <%! 내용 %>
+	- 전역 변수 선언, 클래스 import 등
+
+스크립트릿 : <% Java 코드 %>
+	- 자바코드 작성시 사용
+
+표현식 : <%= 출력내용 %>
+	- jsp에서 사용되는 변수값 표현
+
+
+
+@ 주석
+-> JSP 페이지에서 사용할 수 있는 주석 3가지
+-> HTML 주석 : 내부에서 out.write();로 변환되나 화면에는 보이지 않음
+	ex) <!-- HTML 주석입니다.-->
+
+-> JSP 주석 : JSP 파일 내에만 존재하고, Servlet 코드에는 포함되지 않음
+	ex) <%-- JSP 주석 태그 입니다.--%>
+
+-> Java 주석 : 변환된 Servlet 코드에는 포함되지만 HTTP 응답으로는 전송하지 않음
+	ex) <% //Java 주석입니다. %>
+
+
+@ JSP 지시자 태그
+-> JSP page 전체에 영향을 미치는 정보를 기술 할 때 사용
+
+## page 지시자 태그 ##
+-> jsp 페이지에 대한 설정 정보를 컨테이너에게 알려주는 지시자
+-> 여러개의 page 구문을 사용할 수 있지만, import 속성을 제외하고는 한 페이지에
+한 번씩만 선언 할 수 있음
+-> page 지시자는 JSP 파일의 어느 위치에 와도 상관 없으나 가장 첫 부분에 사용하는 것을 권장 함
+
+ex)
+<%@ page import="java.io.*" %>
+<%@ page contentTyp="text/html; charset=UTF-8"%>
+
+
+## import ##
+-> 변환된 서블릿 클래스에 필요한 자바 클래스의 import 문을 정의함
+java.lang, javax.servlet, javax.servlet.http, java.servlet.jsp는 기본적으로 import 되어 있음
+-> 추가적인 import가 필요할 경우에 추가로 사용할 수 있음
+
+ex)
+<%@ page import="member.model.vo.*" %>
+
+
+## include 지시자 ##
+-> 페이지 내부에 다른 jsp 페이지를 불러오는 지시자
+-> include 지시자 태그를 사용하면 다른 페이지(JSP,HTML)를 포함할 수 있음
+
+
+문법
+<%@ include file="페이지 경로" %>
+
+ex)
+<%@ include file="footer.html" %>

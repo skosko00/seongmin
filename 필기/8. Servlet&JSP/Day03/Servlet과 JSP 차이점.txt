@@ -1,0 +1,36 @@
+
+
+Session 발급 자체는 톰캣이 진행 함
+-> Servlet이든, jsp이든 서버쪽으러 접속하게 되면 톰캣이 무조건 생성함
+-> 단, 생성한것을 가져다 쓰는것은 개발자가 코딩할 수 있음
+	- Servlet은 request.getSession()을 통해 사용함
+	- jsp는 session 이라는 내장객체를 생성하여 자동으로 가져옴
+
+
+※ 정리하면
+Servlet은 request.getSession()을 해야만 하고,
+jsp는 request.getSession()을 하지 않아도 됨 (해도 의미가 없음)
+
+
+Servlet 에서 로그인한 사용자 인지 아닌지를 구분하는 코드
+
+HttpSession session = request.getSession(false);
+if(session != null)
+{
+	로그인 사용자
+}else{
+	비로그인 사용자
+{
+
+jsp에서 로그인한 사용자인지 아닌지를 구분하는 코드
+
+if(session.getAttribute("key값")!=null){
+	로그인 사용자
+}else{
+	비로그인 사용자
+}
+
+※ jsp에서 request.getSession(flase)로는 안되는 이유?
+	-> 무조건 자동으로 session을 가져오기 때문에(비 로그인 포함)
+	flase 인자값을 사용하여도 null이 리턴되는 경우가 없기 때문임!
+

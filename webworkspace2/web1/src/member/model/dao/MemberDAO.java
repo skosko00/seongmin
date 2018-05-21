@@ -10,15 +10,15 @@ import member.model.vo.Member;
 public class MemberDAO {
 
 	public Member selectMember(Connection conn, String userId, String userPwd) {
-		PreparedStatement stmt = null;
+		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		Member m =null;
 		String query = "select * from member where MEMBER_ID=? and MEMBER_PWD=?";
 		try {
-			stmt = conn.prepareStatement(query);
-			stmt.setString(1, userId);
-			stmt.setString(2, userPwd);
-			rset = stmt.executeQuery();
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userId);
+			pstmt.setString(2, userPwd);
+			rset = pstmt.executeQuery();
 			if(rset.next())
 			{
 				m = new Member();
@@ -35,7 +35,7 @@ public class MemberDAO {
 		} finally {
 			try {
 				rset.close();
-				stmt.close();
+				pstmt.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -44,6 +44,63 @@ public class MemberDAO {
 		return m;
 	}
 
-	
+	public int updateMember(Connection conn, Member m) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		ResultSet rest = null;
+		String query = "update member set member_pwd=?, member_addr=? where member_id=?"; 
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, m.getMemberPwd());
+			pstmt.setString(2, m.getMemberAddr());
+			pstmt.setString(3, m.getMemberId());
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+
+	public boolean idCheck(Connection conn, String id) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		boolean result=false;
+		String query = "select * from member where MEMBER_ID=?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, id);
+			rset = pstmt.executeQuery();
+			if(rset.next())
+			{
+				result = true;
+			}else
+			{
+				result = false;
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				rset.close();
+				pstmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return result;
+		
+	}
 
 }

@@ -49,8 +49,8 @@ Client가 request에 Session ID를 넣어 보내면 Session ID를 기준으로
 
 ## getSession() ##
 -> 사용 방법 두가지
-	1. Request.getSession(); 또는 Request.getSession(true);
-	2. Request.getSession(false);
+	1. request.getSession(); 또는 Request.getSession(true);
+	2. request.getSession(false);
 
 
 1. SessionID 일치 여부 확인
