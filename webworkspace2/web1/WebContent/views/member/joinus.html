@@ -7,7 +7,7 @@
 <body>
 <script type="text/javascript">
 function check() {
-	window.open("idCheck.html", "_blank", "width=500,height=500");
+	window.open("idCheck.jsp", "_blank", "width=500,height=500");
 }
 function back() {
 	history.go(-1);
@@ -16,13 +16,14 @@ function back() {
 		<fieldset>
 			<legend>회원가입</legend>
 			<form action="joinus.jsp" method="post">
-			ID : <input type="text" name="userId"><button onclick="check();">ID중복검사</button><br>
+			ID : <input type="text" name="userId" id="userId">
+			<button type="button" onclick="check();">ID중복검사</button><br>
 			PW : <input type="password" name="userPw"><br>
 			PW_re : <input type="password" name="userPw_re"><br>
 			NAME : <input type="text" name="userName"><br>
 			AGE : <input type="text" name="userAge"><br>
 			ADDR : <input type="text" name="userAddr"><br>
-			<input type="submit" value="회원가입" >
+			<input type="submit" value="회원가입">
 			<button type="button" onclick="back();">돌아가기</button>
 			</form>
 		</fieldset>

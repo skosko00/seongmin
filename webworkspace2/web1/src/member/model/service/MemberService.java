@@ -76,7 +76,6 @@ public class MemberService {
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","login_member","login_member");
-			conn.setAutoCommit(false);
 			result = new MemberDAO().idCheck(conn,id);
 			
 		} catch (ClassNotFoundException e) {
@@ -95,6 +94,74 @@ public class MemberService {
 		}
 		return result;
 		
+	}
+	
+	public int memberInsert(Member m)
+	{
+		Connection conn = null;
+		int result = 0;
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","login_member","login_member");
+			conn.setAutoCommit(false);
+			result = new MemberDAO().memberInsert(conn, m);
+			if(result>0)
+			{
+				conn.commit();
+			}
+			else
+			{
+				conn.rollback();
+			}
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
+	public int memberDelete(String id)
+	{
+		Connection conn = null;
+		int result = 0;
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","login_member","login_member");
+			conn.setAutoCommit(false);
+			result = new MemberDAO().memberDelete(conn, id);
+			if(result>0)
+			{
+				conn.commit();
+			}
+			else
+			{
+				conn.rollback();
+			}
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return result;
 	}
 
 }

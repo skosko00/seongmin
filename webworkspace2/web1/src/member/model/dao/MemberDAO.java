@@ -81,10 +81,10 @@ public class MemberDAO {
 			rset = pstmt.executeQuery();
 			if(rset.next())
 			{
-				result = true;
+				result = true;	// 해당 ID 사용자가 있음
 			}else
 			{
-				result = false;
+				result = false;	// 해당 ID 사용자가 없음
 			}
 			
 		} catch (SQLException e) {
@@ -101,6 +101,54 @@ public class MemberDAO {
 		}
 		return result;
 		
+	}
+
+	public int memberInsert(Connection conn, Member m) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "insert into member values(?,?,?,?,?)";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, m.getMemberId());
+			pstmt.setString(2, m.getMemberPwd());
+			pstmt.setString(3, m.getMemberName());
+			pstmt.setInt(4, m.getMemberAge());
+			pstmt.setString(5, m.getMemberAddr());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				pstmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+
+	public int memberDelete(Connection conn, String id) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "delete member where MEMBER_ID=?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, id);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				pstmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return result;
 	}
 
 }
