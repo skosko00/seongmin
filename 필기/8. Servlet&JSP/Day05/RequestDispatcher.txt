@@ -1,0 +1,27 @@
+
+
+
+서블릿에서 JSP를 요청할때 처리하는 방법 2가지
+
+1. 서블릿에서 값을 넘겨주지 않고 페이지만 이동하는 방법
+-> rsponse.sendRedirect("jsp경로");
+	- 해당 jsp경로로 이동하라는 의미
+	- 서블릿에서 처리한 데이터를 별도로 넘길 수 없음 (session 객체 제외)
+
+
+2. 서블릿에서 값을 넘겨주고 해당 페이지에서 처리할 수 있도록 하는 방법
+-> RequestDispatcher view = request.getRequestDispatcher("jsp경로");
+-> request.setAttribute("key",value);
+-> view.forward(request, response);
+	- 서블릿에서 처리한 데이터를 jsp에서 가져다가 사용해야 할 때 쓰는 방법임
+	- RequestDispathcer는 jsp 경로를 저장하고 있는 객체
+	- 생성된 객체명(view)를 가지고 해당 jsp 페이지로 이동할 수 있음
+	- 이때 request와 response 객체를 가지고 이동할 수 있음
+	- 값을 넘겨주기 위해서는 이동하기 전에 request에 정보를 채워서 이동 시킴
+		(request.setAttribute());
+	- 해당 jsp페이지에서는 request.getAttribute() 메소드를 통해 꺼내서 쓸 수 있음
+
+
+
+※ sendRedirect 와 RequestDispatcher를 이용한 forward의 다른점 중에 하나는
+경로 변경되는것이 가시적으로 보이느냐 안보이느냐도 있음
