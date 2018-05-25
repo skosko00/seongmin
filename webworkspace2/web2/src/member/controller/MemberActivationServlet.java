@@ -16,14 +16,14 @@ import member.model.service.MemberService;
 @WebServlet(name = "MemberActivation", urlPatterns = { "/memberActivation" })
 public class MemberActivationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public MemberActivationServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public MemberActivationServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -32,18 +32,23 @@ public class MemberActivationServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		String active = request.getParameter("active");
 		String userId = request.getParameter("userId");
-		if(active.toUpperCase().equals("Y")) {
-			active = "N";
+		if(userId.equals("admin")) {
+			response.sendRedirect("/views/member/adminActivationerror.jsp");
+			return;
 		}
-		else
-		{
-			active = "Y";
+		else {
+			if(active.toUpperCase().equals("Y")) {
+				active = "N";
+			}
+			else
+			{
+				active = "Y";
+			}
 		}
 		int result = new MemberService().activation(active,userId);
 		if(result>0)
 		{
 			response.sendRedirect("/allMember");
-			System.out.println(result);
 		}else
 		{
 			response.sendRedirect("/views/member/activationerror.jsp");

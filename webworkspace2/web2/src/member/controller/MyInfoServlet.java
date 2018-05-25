@@ -1,7 +1,6 @@
 package member.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,16 +14,16 @@ import member.model.service.MemberService;
 import member.model.vo.Member;
 
 /**
- * Servlet implementation class AllMemberServlet
+ * Servlet implementation class MyInfoServlet
  */
-@WebServlet(name = "AllMember", urlPatterns = { "/allMember" })
-public class AllMemberServlet extends HttpServlet {
+@WebServlet(name = "MyInfo", urlPatterns = { "/myInfo" })
+public class MyInfoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public AllMemberServlet() {
+	public MyInfoServlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -34,19 +33,22 @@ public class AllMemberServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
-		if(
-				session.getAttribute("user")!=null && ((Member)session.getAttribute("user")).getUserId().equals("admin"))		//관리자가 요청한 것인지 재확인
-		{
-			ArrayList<Member> list = new MemberService().allMember();
 
-			if(list.isEmpty()) {
-				response.sendRedirect("/views/member/memberError.html");
-			}
-			else
+		//세션값이 있다면 해당 세션값을 사용
+		//세션값이 없다면 null 리턴
+		if(session.getAttribute("user")!=null)	//세션이 null이 아니라면! (즉, 있다면!)
+		{
+			String userId = ((Member)session.getAttribute("user")).getUserId();
+			String userPwd = request.getParameter("userPwd");
+			Member m = new MemberService().selectOne(userId,userPwd);
+			if(m!=null)
 			{
-				RequestDispatcher view = request.getRequestDispatcher("views/member/allMember.jsp");
-				request.setAttribute("userlist", list);
+				RequestDispatcher view = request.getRequestDispatcher("/views/member/myInfo.jsp");
+				request.setAttribute("userInfo", m);
 				view.forward(request, response);
+			}
+			else {
+				response.sendRedirect("/views/member/loginfaile.jsp");
 			}
 		}else
 		{

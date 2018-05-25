@@ -38,4 +38,34 @@ public class MemberService {
 		return result;
 	}
 
+	public int joinus(Member m) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = new MemberDAO().joinus(conn,m);
+		if(result>0)
+		{
+			JDBCTemplate.commit(conn);
+		}
+		else
+		{
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		return result;
+	}
+
+	public int memberUpdate(Member m) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = new MemberDAO().memberUpdate(conn,m);
+		if(result>0)
+		{
+			JDBCTemplate.commit(conn);
+		}
+		else
+		{
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		return result;
+	}
+
 }

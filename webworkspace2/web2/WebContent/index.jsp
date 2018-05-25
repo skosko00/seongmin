@@ -13,7 +13,7 @@
 <% if(m==null){ %>
 <fieldset style="width:300px; height:100px;">
 <legend>로그인</legend>
-<form action="login" method="post" style="display:inline;">
+<form action="/login" method="post" style="display:inline;">
 ID : <input type="text" placeholder="ID를 입력하세요" name="userId"><br>
 PW : <input type="password" placeholder="PW를 입력하세요" name="userPwd"><br>
 <input type="submit" value="로그인">
@@ -24,7 +24,12 @@ PW : <input type="password" placeholder="PW를 입력하세요" name="userPwd"><
 </fieldset>
 <%}else{ %>
 <h1>[<%= m.getUserName() %>]님 반갑습니다.</h1>
-<a href="">마이페이지</a>
+<label onclick="myInfo();" id="infoBtn">마이페이지</label>
+<form action="/myInfo" method="post" style="display: none;" id="myInfo">
+<label style="color:red;">비밀번호 입력 : </label>
+<input type="password" name="userPwd"/>
+<input type="submit" value="확인">
+</form>
 <a href="/logout">로그아웃</a>
 <a href="">회원탈퇴</a>
 <% if(m.getUserId().equals("admin"))
@@ -32,5 +37,19 @@ PW : <input type="password" placeholder="PW를 입력하세요" name="userPwd"><
 	%>
 <a href="/allMember">회원전체조회</a>
 <%}} %>
+<style>
+#infoBtn
+{
+cursor: pointer;
+text-decoration: underline;
+color: blue;
+}
+</style>
+<script type="text/javascript">
+function myInfo() {
+	document.getElementById("myInfo").style="display:inline";
+}
+</script>
 </body>
+
 </html>

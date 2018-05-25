@@ -36,6 +36,7 @@ public class MemberDAO {
 				m.setGender(rset.getString("gender"));
 				m.setHobby(rset.getString("hobby"));
 				m.setEnrolldate(rset.getDate("enrolldate"));
+				m.setActivation(rset.getString("activation"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -88,6 +89,53 @@ public class MemberDAO {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, active);
 			pstmt.setString(2, userId);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+
+	public int joinus(Connection conn, Member m) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "insert into member values(?,?,?,?,?,?,?,?,?,sysdate,'Y')";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, m.getUserId());
+			pstmt.setString(2, m.getUserPwd());
+			pstmt.setString(3, m.getUserName());
+			pstmt.setInt(4, m.getAge());
+			pstmt.setString(5, m.getEmail());
+			pstmt.setString(6, m.getPhone());
+			pstmt.setString(7, m.getAddress());
+			pstmt.setString(8, m.getGender());
+			pstmt.setString(9, m.getHobby());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+
+	public int memberUpdate(Connection conn, Member m) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "update member set userpwd=?, email=?, phone=?, address=?, hobby=? where userid=?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, m.getUserPwd());
+			pstmt.setString(2, m.getEmail());
+			pstmt.setString(3, m.getPhone());
+			pstmt.setString(4, m.getAddress());
+			pstmt.setString(5, m.getHobby());
+			pstmt.setString(6, m.getUserId());
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

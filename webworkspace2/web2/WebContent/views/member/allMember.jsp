@@ -41,7 +41,7 @@
 </table>
 <script type="text/javascript">
 function back() {
-	history.go(-1);
+	location.href="/";
 }
 </script>
 <button onclick="back()">이전 페이지로</button>
