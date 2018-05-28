@@ -18,14 +18,14 @@ import member.model.vo.Member;
 @WebServlet(name = "Login", urlPatterns = { "/login" })
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public LoginServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public LoginServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -43,9 +43,18 @@ public class LoginServlet extends HttpServlet {
 		{
 			if(m.getActivation().equals("Y")) 
 			{
-			HttpSession session = request.getSession();
-			session.setAttribute("user", m);
-			response.sendRedirect("/views/member/loginSuccess.jsp");
+
+				boolean result = new MemberService().changePwdCheck(userId);
+
+				HttpSession session = request.getSession();
+				session.setAttribute("user", m);
+				if(result==true)
+				{
+					response.sendRedirect("/views/member/passwordChage.jsp");
+				}else 
+				{
+					response.sendRedirect("/views/member/loginSuccess.jsp");	//로그인 성공 결과 페이지 전송
+				}
 			}else
 			{
 				response.sendRedirect("/views/member/loginNoActivation.jsp");

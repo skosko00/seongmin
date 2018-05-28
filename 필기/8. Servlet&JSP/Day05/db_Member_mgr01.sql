@@ -33,3 +33,25 @@ commit;
 
 select * from member;
 
+alter table member add(last_modified DATE);
+
+update member set LAST_MODIFIED=sysdate;
+
+update member set LAST_MODIFIED=to_date('18/01/01') where userid='mslove';
+
+commit;
+
+select floor(SYSDATE-last_modified)AS change_date from member where userid='mslove';
+
+select * from NOTICE;
+
+select * from
+(select notice.*, row_number() over(order by noticeno desc)as num from notice)
+where num between 1 and 10;
+
+select count(*)AS totalCount from notice;
+select * from
+(select notice.*, row_number() over(order by noticeno desc)as num from notice where subject like '%공지%')
+where num between 1 and 10;
+
+select count(*)AS totalCount from notice where subject like '%공지%';

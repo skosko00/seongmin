@@ -8,6 +8,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+#infoBtn,#deleteBtn
+{
+cursor: pointer;
+text-decoration: underline;
+color: blue;
+}
+</style>
 </head>
 <body>
 <% if(m==null){ %>
@@ -31,23 +39,26 @@ PW : <input type="password" placeholder="PW를 입력하세요" name="userPwd"><
 <input type="submit" value="확인">
 </form>
 <a href="/logout">로그아웃</a>
-<a href="">회원탈퇴</a>
+<label onclick="myDelete();" id="deleteBtn">회원탈퇴</label>
+<form action="/memberDelete" method="post" style="display: none;" id="myDelete">
+<label style="color:red;">비밀번호 입력 : </label>
+<input type="password" name="userPwd"/>
+<input type="submit" value="확인">
+</form>
 <% if(m.getUserId().equals("admin"))
 	{
 	%>
 <a href="/allMember">회원전체조회</a>
-<%}} %>
-<style>
-#infoBtn
-{
-cursor: pointer;
-text-decoration: underline;
-color: blue;
-}
-</style>
+<%}
+}  %>
+<br>
+<a href ="/notice">공지사항</a>
 <script type="text/javascript">
 function myInfo() {
 	document.getElementById("myInfo").style="display:inline";
+}
+function myDelete() {
+	document.getElementById("myDelete").style="display:inline";
 }
 </script>
 </body>

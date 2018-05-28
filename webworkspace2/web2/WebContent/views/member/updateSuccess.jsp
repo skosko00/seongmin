@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>정보 변경 성공</title>
 </head>
 <body>
 <script type="text/javascript">

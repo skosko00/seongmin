@@ -4,12 +4,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>회원정보 삭제</title>
 </head>
 <body>
 <script type="text/javascript">
 window.onload = function () {
-	alert("회원정보 변경에 실패하였습니다.");
+	alert("회원탈퇴 하였습니다.");
 	location.href="/";
 }
 </script>
