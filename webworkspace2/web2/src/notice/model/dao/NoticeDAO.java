@@ -17,7 +17,7 @@ public class NoticeDAO {
 		ArrayList<Notice> list = new ArrayList<Notice>();
 		
 		// 시작 게시물 계산
-		int startPage = currentPage*recordCountPage -(recordCountPage-1);
+		int startPage = currentPage*recordCountPage-(recordCountPage-1);
 				// 만약 요청한 페이지가 1페이지라면? -> 1
 				// 1 * 10 - (10-1) => 1
 				// 만약 요청한 페이지가 3페이지라면? -> 21
@@ -202,7 +202,7 @@ public class NoticeDAO {
 		ArrayList<Notice> list = new ArrayList<Notice>();
 		
 		// 시작 게시물 계산
-		int startPage = currentPage*recordCountPage -(recordCountPage-1);
+		int startPage = currentPage*recordCountPage-(recordCountPage-1);
 				// 만약 요청한 페이지가 1페이지라면? -> 1
 				// 1 * 10 - (10-1) => 1
 				// 만약 요청한 페이지가 3페이지라면? -> 21
@@ -362,25 +362,107 @@ public class NoticeDAO {
 		StringBuilder sb = new StringBuilder();
 		
 		if(needPrev) { //시작이 1페이지가 아니라면!
-			sb.append("<a href='/searchNotice?currentPage="+(startNavi-1)+"'> << </a>");
-			sb.append("<a href='/searchNotice?currentPage="+(currentPage-1)+"'> < </a>");
+			sb.append("<a href='/search?search="+search+"&currentPage="+(startNavi-1)+"'> << </a>");
+			sb.append("<a href='/search?search="+search+"&currentPage="+(currentPage-1)+"'> < </a>");
 		}
 		for(int i=startNavi; i<=endNavi; i++)
 		{
 			if(i==currentPage)
 			{
-				sb.append("<a href='/searchNotice?currentPage="+i+"'><B> "+i+" </B></a>");
+				sb.append("<a href='/search?search="+search+"&currentPage="+i+"'><B> "+i+" </B></a>");
 			}else
 			{
-				sb.append("<a href='/searchNotice?currentPage="+i+"'> "+i+" </a>");
+				sb.append("<a href='/search?search="+search+"&currentPage="+i+"'> "+i+" </a>");
 			}
 		}
 		if(needNext) {
-			sb.append("<a href='searchNotice?currentPage="+(currentPage+1)+"'> > </a>");
-			sb.append("<a href='searchNotice?currentPage="+(endNavi+1)+"'> >> </a>");
+			sb.append("<a href='/search?search="+search+"&currentPage="+(currentPage+1)+"'> > </a>");
+			sb.append("<a href='/search?search="+search+"&currentPage="+(endNavi+1)+"'> >> </a>");
 		}
 		
 		return sb.toString();
+	}
+
+	public Notice noticeSelect(Connection conn, int noticeNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Notice notice = null;
+		String query = "select * from notice where noticeno=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, noticeNo);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next())
+			{
+				notice = new Notice();
+				notice.setNoticeNo(rset.getInt("noticeno"));
+				notice.setSubject(rset.getString("subject"));
+				notice.setContents(rset.getString("contents"));
+				notice.setUserId(rset.getString("userid"));
+				notice.setRegDate(rset.getDate("regdate"));
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return notice;
+	}
+
+	public int noticeUpdate(Connection conn, String subject, int noticeNo, String contents) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "update notice set subject=?, contents=? where noticeno=?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, subject);
+			pstmt.setString(2, contents);
+			pstmt.setInt(3, noticeNo);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+
+	public int noticeWrite(Connection conn, Notice n) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "insert into notice values(SEQ_NOTICE.NEXTVAL,?,?,?,sysdate)";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, n.getSubject());
+			pstmt.setString(2, n.getContents());
+			pstmt.setString(3, n.getUserId());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+
+	public int noticeDelete(Connection conn, Notice n) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "delete from NOTICE where NOTICENO=? and USERID=?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, n.getNoticeNo());
+			pstmt.setString(2, n.getUserId());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 }

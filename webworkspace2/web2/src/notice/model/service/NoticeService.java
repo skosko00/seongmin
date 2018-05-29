@@ -38,7 +38,7 @@ public class NoticeService {
 		return pd;
 	}
 
-	public PageData noticeAll(int currentPage, String search) {
+	public PageData getSearchPage(int currentPage, String search) {
 		Connection conn = JDBCTemplate.getConnection();
 		
 		int recordCountPage = 10;
@@ -58,6 +58,58 @@ public class NoticeService {
 		
 		return pd;
 		
+	}
+
+	public Notice noticeSelect(int noticeNo) {
+		Connection conn = JDBCTemplate.getConnection();
+		Notice notice = new NoticeDAO().noticeSelect(conn,noticeNo);
+		JDBCTemplate.close(conn);
+		return notice;
+		
+	}
+
+	public int noticeUpdate(String subject, int noticeNo, String contents) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = new NoticeDAO().noticeUpdate(conn,subject,noticeNo,contents);
+		if(result>0)
+		{
+			JDBCTemplate.commit(conn);
+		}else
+		{
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		return result;
+	}
+
+	public int noticeWrite(Notice n) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = new NoticeDAO().noticeWrite(conn,n);
+		if(result>0)
+		{
+			JDBCTemplate.commit(conn);
+		}
+		else
+		{
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		return result;
+	}
+
+	public int noticeDelete(Notice n) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = new NoticeDAO().noticeDelete(conn,n);
+		if(result>0)
+		{
+			JDBCTemplate.commit(conn);
+		}
+		else
+		{
+			JDBCTemplate.rollback(conn);
+		}	
+		JDBCTemplate.close(conn);
+		return result;
 	}
 
 }

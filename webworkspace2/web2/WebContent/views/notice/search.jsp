@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="notice.model.vo.*" import="java.util.*" %>
+    <%@ page import="notice.model.vo.*" import="java.util.*" %>
 <%
 PageData pd = (PageData)request.getAttribute("pageData"); 
 ArrayList<Notice> list = pd.getNoticeList();	// 현재 페이지 리스트
@@ -20,15 +20,15 @@ String pageNavi = pd.getPageNavi();	// navi 리스트
 <% for(Notice n : list) { %>
 <tr>
 <td><%=n.getNoticeNo() %></td>
-<td><%=n.getSubject() %></td>
+<td><a href="/noticeSelect?noticeNo=<%=n.getNoticeNo()%>"><%=n.getSubject() %></a></td>
 <td><%=n.getUserId() %></td>
 <td><%=n.getRegDate() %></td>
 </tr>
 <%} %>
 </table>
 <label><%=pageNavi %></label><br>
-<form action="/searchNotice" method="get">
-<input type="text" name="search">
+<form action="/search" method="get">
+<input type="text" name="search" value=<%=request.getAttribute("search") %>>
 <input type="submit" value="검색">
 </form>
 </center>

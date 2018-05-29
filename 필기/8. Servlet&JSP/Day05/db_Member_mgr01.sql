@@ -55,3 +55,13 @@ select * from
 where num between 1 and 10;
 
 select count(*)AS totalCount from notice where subject like '%공지%';
+
+
+select * from(select notice.*, row_number() over(order by noticeno desc)as num from notice where subject like '%공지%')where num between 11 and 20;
+
+select * from notice;
+
+update notice set contents='ㅜㅜ', subject='91%' where noticeno=124;
+
+rollback;
+

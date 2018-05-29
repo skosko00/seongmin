@@ -8,41 +8,45 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import member.model.vo.Member;
 import notice.model.service.NoticeService;
-import notice.model.vo.PageData;
+import notice.model.vo.Notice;
 
 /**
- * Servlet implementation class SearchNoticeServlet
+ * Servlet implementation class NoticeUpdateReadyServlet
  */
-@WebServlet(name = "SearchNotice", urlPatterns = { "/searchNotice" })
-public class SearchNoticeServlet extends HttpServlet {
+@WebServlet(name = "NoticeUpdateReady", urlPatterns = { "/noticeUpdateReady" })
+public class NoticeUpdateReadyServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public SearchNoticeServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public NoticeUpdateReadyServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
-		String search = request.getParameter("search");
-		
-		int currentPage; //현재 페이지 값을 저장하는 변수
-		if(request.getParameter("currentPage")==null)currentPage=1;
-		else currentPage = Integer.parseInt(request.getParameter("currentPage"));
-		
-		PageData pd = new NoticeService().noticeAll(currentPage,search);
-		if(pd!=null)
+		//2. view에서 보낸 데이터를 변수에 저장
+		int noticeNo = Integer.parseInt(request.getParameter("noticeNo"));
+		Notice notice = null;
+		//3. 비즈니스 로직
+		HttpSession session = request.getSession(false);
+		if(session.getAttribute("user")!=null && ((Member)session.getAttribute("user")).getUserId().equals("admin"))
 		{
-			RequestDispatcher view = request.getRequestDispatcher("/views/notice/searchNotice.jsp");
-			request.setAttribute("pageData", pd);
+			notice = new NoticeService().noticeSelect(noticeNo);
+		}
+		//4. view에 결과 출력
+		if(notice!=null)
+		{
+			RequestDispatcher view = request.getRequestDispatcher("/views/notice/noticeUpdateReady.jsp");
+			request.setAttribute("notice", notice);
 			view.forward(request, response);
 		}else
 		{
