@@ -1,0 +1,65 @@
+
+
+
+@ 파일 업로드
+-> 파일 업로드는 말 그대로 파일을 업로드 하기 위한 로직
+-> 파일을 업로드 하려면 공개된 외부 라이브러리를 사용 해야 함
+-> 자바 웹 에서 파일을 업로드 할 때 COS 라이브러리를 가장 많이 사용 함
+
+※ COS : http://www.servlets.com/cos/
+
+
+## 기본적인 file 업로드 태그 ##
+<form method="post" enctype="multipart/form-data">
+	<input type="file" name="file">
+</form>
+
+파일의 데이터는 일반적인 String형태가 아닌 Binary 형태이기 때문에
+enctype(인코딩 타입)을 multipart/form-data 형태로 바꾸어 주어야 함
+
+
+
+업로드 파일 이름 처리 3가지
+
+1. 파일 업로드시 중복 이름을 1,2,3,4,... 숫자를 붙이는 방법
+	ex) a.bmp 업로드 하게 되면 처음에는 a.bmp 그대로 업로드가 됨
+	a.bmp 파일을 또 다시 업로드 하게 되면 a1.bmp로 변경 되서 업로드가 됨
+	이후에도 동일한 파일 이름을 업로드시 a2.bmp, a3.bmp, a4.bmp ... 등등...
+	파일 이름에 추가적으로 숫자를 붙이는 방법
+
+2. 개인 홈디렉토리 생성후 업로드 하는 방법
+	ex) mslove라는 사용자가 업로드 한다면
+	home\mslove\a.bmp
+
+	ex) kh라는 사용자가 업로드 한다면
+	home\kh\a.bmp
+
+
+3. 원본 이름을 백업 해두고 시간값을 이용하여 업로드 파일 이름을 변경하는 방식
+
+
+String uploadFilePath = getServletContext().getRealPath("/"); -> WebContent 폴더
+
+		//파일 업로드를 구현하려면 몇가지 정보가 필요함
+		//1. 사용자 계정명 (업로드한 사람 정보가 있어야함, session객체에서 꺼냄)
+		HttpSession session = request.getSession(false);
+		String userId = ((Member)session.getAttribute("user")).getUserId();
+		
+		//2. 최대 업로드 파일 사이즈(설정)
+		int FileSizeLimit = 1024*1024*5;//Byte 단위 (5MB)
+		
+		//3. 업로드 될 경로
+		String uploadFilePath = getServletContext().getRealPath("/")+"uploadfile"; 
+		
+		//4. 인코딩 타입(파일 인코딩 타입)
+		String encType = "UTF-8";
+		
+		//위에 정보를 바탕으로
+		//5. MultipartRequest 객체를 생성
+		//인자값 순서 : request, 파일경로, 파일최대사이즈, 인코딩타입, Policy
+		MultipartRequest multi = new MultipartRequest(request, uploadFilePath, FileSizeLimit, encType, new DefaultFileRenamePolicy());
+		// 마지막 인자값인 DefaultFileRenamePolicy 객체를 생성하여
+		// 넣어줌으로써 파일 중복 처리를 자동으로 해결함
+		// ex) a.bmp가 중복으로 업로드 되면 a1.bmp, a2.bmp, a3.bmp ....
+		// MultipartRequest 객체가 생성되면 자동으로 파일은 해당 경로로
+		// 업로드 됨

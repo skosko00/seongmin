@@ -1,7 +1,6 @@
 package notice.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,20 +10,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import notice.model.service.NoticeService;
-import notice.model.vo.Comment;
-import notice.model.vo.Notice;
 
 /**
- * Servlet implementation class NoticeSelectServlet
+ * Servlet implementation class InsertCommentServlet
  */
-@WebServlet(name = "NoticeSelect", urlPatterns = { "/noticeSelect" })
-public class NoticeSelectServlet extends HttpServlet {
+@WebServlet(name = "InsertComment", urlPatterns = { "/insertComment" })
+public class InsertCommentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public NoticeSelectServlet() {
+    public InsertCommentServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,23 +30,20 @@ public class NoticeSelectServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//2. view에서 보낸 데이터를 변수에 저장
+		request.setCharacterEncoding("utf-8");
+		String userId = request.getParameter("userId");
 		int noticeNo = Integer.parseInt(request.getParameter("noticeNo"));
-		//3. 비즈니스 로직 (공지사항 내용)
-		Notice notice = new NoticeService().noticeSelect(noticeNo);
-		//3. 비즈니스 로직 (댓글 내용)
-		ArrayList<Comment> list = new NoticeService().noticeComment(noticeNo);
-		//4. view에 결과 출력
-		if(notice!=null)
+		String comment = request.getParameter("comment");
+		int result = new NoticeService().insertComment(userId,noticeNo,comment);
+		
+		if(result>0)
 		{
-			RequestDispatcher view = request.getRequestDispatcher("/views/notice/noticeSelect.jsp");
-			request.setAttribute("notice", notice);
-			request.setAttribute("comment", list);
-			view.forward(request, response);
+			response.sendRedirect("/noticeSelect?noticeNo="+noticeNo);
 		}else
 		{
 			response.sendRedirect("/views/notice/Error.html");
 		}
+		
 	}
 
 	/**

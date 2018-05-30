@@ -7,7 +7,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>로그인 성공</title>
+<script type="text/javascript">
+window.onload = function(){
+	if(opener!=null)//자신이 팝업창 일 때
+		{
+		opener.location.reload();
+		window.close();
+		}
+}
+</script>
 </head>
 <body>
 <h1>[<%= m.getUserName() %>]님 반갑습니다.</h1>

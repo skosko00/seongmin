@@ -65,7 +65,7 @@
 								<div class="mega-menu-content style-2 clearfix">
 									<ul class="mega-menu-column col-md-12">
 										<li>
-											<div class="widget clearfix">
+											<div class="widget clearfix"><!-- 펜션미리보기 탭 시작 -->
 
 												<div class="col_one_third nobottommargin">
 													<div class="feature-box center media-box">
@@ -100,7 +100,7 @@
 													</div>
 												</div>
 
-											</div>
+											</div><!-- 펜션미리 보기 탭 종료 -->
 										</li>
 									</ul>
 								</div>
@@ -109,7 +109,7 @@
 								<div class="mega-menu-content style-2 clearfix">
 									<ul class="mega-menu-column col-md-16">
 										<li>
-											<div class="widget clearfix">
+											<div class="widget clearfix"><!-- 스페셜 보기 탭 시작 -->
 
 												<div class="col_half nobottommargin">
 													<div class="feature-box center media-box">
@@ -133,7 +133,7 @@
 													</div>
 												</div>
 
-											</div>
+											</div><!-- 스페셜 보기 탭 종료 -->
 										</li>
 									</ul>
 								</div>
@@ -172,8 +172,8 @@
 							<div class="container clearfix">
 								<div class="slider-caption slider-caption-center dark">
 								   <!-- <h4 data-caption-animate="fadeInDown">Introducing</h4>-->
-									<h2 data-caption-animate="fadeInDown">Welome to <br>The Dameun Pension</h2>
-									<p data-caption-animate="fadeInUp" data-caption-delay="200">바다가 있어 더욱 아름다운 “더담은 펜션”</p>
+									<h2 data-caption-animate="fadeInDown">Welome to <br>The Dameun Pension</h2><!-- 위에서 아래로 내려오는 글자 효과 -->
+									<p data-caption-animate="fadeInUp" data-caption-delay="200">바다가 있어 더욱 아름다운 “더담은 펜션”</p><!-- 아래에서 위로 올라오는 글자 효과 -->
 								</div>
 							</div>
 						</div>
@@ -512,12 +512,8 @@
 
 					<div class="col_full center">
 
-                        업체명 : 더담은펜션  / 대표자 성명 : 홍지은<br>
-						문의 : 010-2628-4924 / 041-673-4927<br>
-						입금 계좌 : 새마을금고 9002-1776-0160-3 (예금주 : 홍지은)<br>
-						주소 : 충청남도 태안군 이원면 음포길 135<br>
-						통신판매업 : 제 2017 - 충남태안 - 0052호<br>
-						Copyrights &copy; 2017 All Rights Reserved by 더담은.<br>
+                        업체명 : 주소 : 대표자 : E-Mail : 1234@naver.com TEL : 000-0000-0000 HP : 010-0000-0000 입금계좌 : 농협 000-0000-0000 (OOO)<br>
+                        조 이름 All rights reserved. ©
 					</div>
 
 				</div>

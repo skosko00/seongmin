@@ -556,12 +556,8 @@
 
 					<div class="col_full center">
 
-                        업체명 : 더담은펜션  / 대표자 성명 : 홍지은<br>
-						문의 : 010-2628-4924 / 041-673-4927<br>
-						입금 계좌 : 새마을금고 9002-1776-0160-3 (예금주 : 홍지은)<br>
-						주소 : 충청남도 태안군 이원면 음포길 135<br>
-						통신판매업 : 제 2017 - 충남태안 - 0052호<br>
-						Copyrights &copy; 2017 All Rights Reserved by 더담은.<br>
+                        업체명 : 주소 : 대표자 : E-Mail : 1234@naver.com TEL : 000-0000-0000 HP : 010-0000-0000 입금계좌 : 농협 000-0000-0000 (OOO)<br>
+                        조 이름 All rights reserved. ©
 					</div>
 
 				</div>

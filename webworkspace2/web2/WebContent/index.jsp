@@ -48,11 +48,13 @@ PW : <input type="password" placeholder="PW를 입력하세요" name="userPwd"><
 <% if(m.getUserId().equals("admin"))
 	{
 	%>
-<a href="/allMember">회원전체조회</a>
-<%}
-}  %>
+<a href="/allMember">회원전체조회</a><br>
+<%}%>
+<a href = "/views/file/upload.html">업로드</a>
+<%}  %>
 <br>
-<a href ="/notice">공지사항</a>
+<a href = "/notice">공지사항</a><br>
+
 <script type="text/javascript">
 function myInfo() {
 	document.getElementById("myInfo").style="display:inline";

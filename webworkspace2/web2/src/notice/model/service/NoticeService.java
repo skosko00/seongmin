@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import common.JDBCTemplate;
 import notice.model.dao.NoticeDAO;
+import notice.model.vo.Comment;
 import notice.model.vo.Notice;
 import notice.model.vo.PageData;
 
@@ -108,6 +109,56 @@ public class NoticeService {
 		{
 			JDBCTemplate.rollback(conn);
 		}	
+		JDBCTemplate.close(conn);
+		return result;
+	}
+
+	public ArrayList<Comment> noticeComment(int noticeNo) {
+		Connection conn = JDBCTemplate.getConnection();
+		ArrayList<Comment> list = new NoticeDAO().noticeComment(conn, noticeNo);
+		JDBCTemplate.close(conn);
+		return list;
+	}
+
+	public int insertComment(String userId, int noticeNo, String comment) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = new NoticeDAO().insertComment(conn,userId,noticeNo,comment);
+		if(result>0)
+		{
+			JDBCTemplate.commit(conn);
+		}else
+		{
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		return result;
+		
+	}
+
+	public int updateComment(Comment c) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = new NoticeDAO().updateComment(conn,c);
+		if(result>0)
+		{
+			JDBCTemplate.commit(conn);
+		}else
+		{
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		return result;
+	}
+
+	public int deleteComment(int commentNo, String userId) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = new NoticeDAO().deleteComment(conn,commentNo,userId);
+		if(result>0)
+		{
+			JDBCTemplate.commit(conn);
+		}else
+		{
+			JDBCTemplate.rollback(conn);
+		}
 		JDBCTemplate.close(conn);
 		return result;
 	}
