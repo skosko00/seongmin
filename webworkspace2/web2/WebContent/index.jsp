@@ -37,20 +37,23 @@ PW : <input type="password" placeholder="PW를 입력하세요" name="userPwd"><
 <label style="color:red;">비밀번호 입력 : </label>
 <input type="password" name="userPwd"/>
 <input type="submit" value="확인">
-</form>
+</form><br>
 <a href="/logout">로그아웃</a>
 <label onclick="myDelete();" id="deleteBtn">회원탈퇴</label>
 <form action="/memberDelete" method="post" style="display: none;" id="myDelete">
 <label style="color:red;">비밀번호 입력 : </label>
 <input type="password" name="userPwd"/>
 <input type="submit" value="확인">
-</form>
+</form><br>
 <% if(m.getUserId().equals("admin"))
 	{
 	%>
 <a href="/allMember">회원전체조회</a><br>
 <%}%>
-<a href = "/views/file/upload.html">업로드</a>
+<a href = "/views/file/upload.html">업로드</a><br>
+<a href = "/fileList">다운로드</a><br>
+<a href = "/views/file/upload2.html">업로드2</a><br>
+<a href = "/fileList2">다운로드2</a><br>
 <%}  %>
 <br>
 <a href = "/notice">공지사항</a><br>
