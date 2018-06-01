@@ -22,6 +22,10 @@
 		그외를 선택하였습니다.<br>
 		</c:otherwise>
 	</c:choose>
+	
+	<c:forEach begin="1" end="10" var="i">
+	${i}<br>
+</c:forEach>
 
 </body>
 </html>

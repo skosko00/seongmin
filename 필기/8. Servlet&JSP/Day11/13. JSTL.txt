@@ -199,10 +199,14 @@ var		현재 반복 횟수에 해당하는 변수의 이름
 varStatus	현재 반복에 해당하는 객체의 요소
 
 
+<c:forEach begin="1" end="10" var="i">
+	${i}<br>
+</c:forEach>
 
 
-
-
+<c:forEach items="$(list)" varStatus="m">
+ 내용
+</c:forEach>
 
 
 
