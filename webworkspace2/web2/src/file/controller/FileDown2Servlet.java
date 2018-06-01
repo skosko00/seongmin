@@ -38,9 +38,8 @@ public class FileDown2Servlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		
 		// 파일 다운로드를 받기 위한 정보 2가지
-		String fileName = request.getParameter("afterfileName");
-		Timestamp uploadTime = Timestamp.valueOf(request.getParameter("uploadTime"));
-		DataFile2 df = new FileService().fileSelectDownLoad2(fileName,uploadTime);
+		String afterfileName = request.getParameter("afterfileName");
+		DataFile2 df = new FileService().fileSelectDownLoad2(afterfileName);
 		if(df!=null)
 		{
 			// 해당 파일을 열람

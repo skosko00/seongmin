@@ -26,14 +26,12 @@ ArrayList<DataFile2> list = (ArrayList<DataFile2>)request.getAttribute("fileList
 <td>
 <form action="/fileDown2" method="post">
 <input type="hidden" value="<%=df.getAfterFileName() %>" name="afterfileName">
-<input type="hidden" value="<%=df.getUploadTime() %>" name="uploadTime">
 <input type="submit" value="다운로드" style="width:100%">
 </form>
 </td>
 <td>
 <form action="/fileRemove2" method="post">
 <input type="hidden" value="<%=df.getAfterFileName() %>" name="afterfileName">
-<input type="hidden" value="<%=df.getUploadTime() %>" name="uploadTime">
 <input type="submit" value="파일삭제" style="width:100%">
 </form>
 </td>

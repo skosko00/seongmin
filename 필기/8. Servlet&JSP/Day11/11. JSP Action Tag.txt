@@ -1,0 +1,94 @@
+
+
+
+@ JSP Action Tag
+-> JSP Action Tag는 XML 기술을 이용하여 기존의 JSP 문법을 확장하는 메커니즘을 제공하는 태그로써,
+웹 브라우저에서 실행되는 것이 아니라, 웹 컨테이너에서 실행되고 결과만 브라우저로 탐색
+(즉, 정리하면 프론트 개발자가 사용할 수 있는 백단 코드? 같은 느낌)
+-> JSP Action Tag는 프론트개발자 입장에서 자바코드인 스크립트릿을 보지 않도록
+하기 위해 만들어 짐
+
+
+
+## 표준 액션 태그 ##
+사용법
+-> JSP 페이지에서 사용함
+-> 태그 앞에 jsp 접두어가 붙음
+
+ex) <jsp:include page="../000.jsp" />
+
+
+
+## JSP 에서 기본적으로 제공하는 액션 태그 ##
+
+jsp:include
+	-> 현재 페이지에 특정 페이지를 포함할 때 사용함
+
+jsp:forward
+	-> 현재 페이지에 접근시 특정 페이지로 이동 시킴
+	-> request.forward()와 동일
+
+jsp:usebean
+	-> Java Bean 객체를 사용하기 위한 태그(Java Bean은 VO,DTO,Entity와 동일함)
+
+jsp:setProperty
+	-> Java의 Bean 객체를 사용시 setter 역할
+	-> VO 객체 생성시에 setter가 없으면 사용할 수 없음
+
+jsp:getProperty
+	-> Java의 Bean 객체를 사용시 getter 역할
+	-> VO 객체 생성시에 getter가 없으면 사용할 수 없음
+
+
+
+## jsp:include ##
+<%@ include file="파일명" %>과 쓰임이 동일하나 jsp 파일로 변환 될 때 삽입되는
+<%@ include %> 와는 달리 <jsp:include>는 jsp 파일이 java 파일로 바뀌고 컴파일이 완료 되어
+런타임 시에 삽입이 됨
+
+ex)
+문법 : <jsp:include page="파일 명" />
+
+예시 : <jsp:include page="./header.html" />
+
+
+
+
+
+## jsp:forward ##
+-> 하나의 JSP 페이지에서 다른 JSP페이지로 요청 처리를 전달할 때 사용 함
+-> 전달하는 페이지에서 request, response 객체가 같이 전달되며, URL은 변경되지 않음
+
+ex)
+
+문법 : <jsp forward page="파일 명" />
+
+예시 : <jsp forward page="./A.jsp" />
+
+
+
+## jsp:useBean ##
+-> java Class를 참조하여 빈(비어있는) 객체를 생성하고, setProperty와 getProperty를 통해 값을
+저장하거나, 꺼내올 수 있으며 이미 같은 이름의 객체가 생성된 경우에는
+기존의 객체를 참조함
+
+ex)
+
+문법
+1. 객체 생성후 값 넣기
+<jsp:useBean id="객체명" class="패키지명.클래스명" scope="범위지정자" />
+
+ex)
+
+<jsp:useBean id="m" class="test.member.model.vo.Member" scope="request">
+	<jsp:setProperty name="m" property="userId" value="mslove" />
+</jsp:userBean>
+
+2. 값 꺼내기
+<jsp:getProperty name="m" property="userId"/>
+
+
+
+
+
+

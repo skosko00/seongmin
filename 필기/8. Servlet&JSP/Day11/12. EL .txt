@@ -1,0 +1,86 @@
+
+
+
+@ EL
+-> Expression Language 의 뜻으로써 표현언어라고 부름
+-> 표현 언어는 값을 표현하는데 사용되는 스크립트 언어
+
+
+## EL에서 제공하는 기능 ##
+-> JSP의 기본 객체(4가지)가 제공하는 영역의 속성 사용 가능
+	- pageScope
+	- requestScope
+	- sessionScope
+	- applicationScope
+
+-> 집합객체 접근방법 제공
+-> 수치, 관계, 논리 연산자 제공
+-> 자바클래스 메소드 호출 가능
+-> EL에서 자체 기본 객체 제공
+
+등..
+
+
+## EL 사용 방법 ##
+${expr}
+
+-> 위에 expr 부분에 EL로 정의한 문법에 따라 값을 표현하게 됨
+-> Attribute,request의 파라미터, ServletContext의 초기화 파라미터 등 접근이 가능함
+-> .(dot)연산자를 사용하여 Attribute에 저장된 Map 이나 Beans(VO) 내부의 값 접근 가능
+-> [] 연산자를 사용하여 배열이나 리스트 형태도 접근이 가능함
+
+
+
+
+
+1. 단일 VO 처리
+2. MAP 형태 처리
+3. 배열 처리
+4. 리스트 처리
+
+
+## 단일 VO 처리 ##
+<h1> EL을 이용한 VO 처리</h1>
+이름 : ${requestScope.member.name}<br>
+나이 : ${member.age}<br>
+주소 : ${requestScope.member.addr}<br>
+
+
+
+## MAP 형태 처리 ##
+<h1> EL을 이용한 MAP 처리</h1>
+이름 : ${member.name}<br> member은 request 값 name은 key 값
+나이 : ${member.age}<br> member은 request 값 age은 key 값
+주소 : ${member.addr}<br> member은 request 값 addr은 key 값
+
+
+
+
+## 배열 처리 ##
+<h1> EL을 이용한 배열 처리</h1>
+이름 : ${members[0].name}<br>
+나이 : ${members[0].age}<br>
+주소 : ${members[0].addr}<br>
+이름 : ${members[1].name}<br>
+나이 : ${members[1].age}<br>
+주소 : ${members[1].addr}<br>
+이름 : ${members[2].name}<br>
+나이 : ${members[2].age}<br>
+주소 : ${members[2].addr}<br>
+
+
+## 리스트 처리 ##
+<h1> EL을 이용한 리스트 처리</h1>
+<h3>첫번째 학생</h3>
+이름 : ${members[0].name}<br>
+나이 : ${members[0].age}<br>
+주소 : ${members[0].addr}<br>
+<h3>두번째 학생</h3>
+이름 : ${members[1].name}<br>
+나이 : ${members[1].age}<br>
+주소 : ${members[1].addr}<br>
+<h3>세번째 학생</h3>
+이름 : ${members[2].name}<br>
+나이 : ${members[2].age}<br>
+주소 : ${members[2].addr}<br>
+

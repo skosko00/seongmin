@@ -142,15 +142,14 @@ public class FileDAO {
 		return list;
 	}
 
-	public DataFile2 fileSelectDownLoad2(Connection conn, String fileName, Timestamp uploadTime) {
+	public DataFile2 fileSelectDownLoad2(Connection conn, String afterfileName) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String query = "select * from filetbl2 where afterfileName=? and uploadtime=?";
+		String query = "select * from filetbl2 where afterfileName=?";
 		DataFile2 df = null;
 		try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, fileName);
-			pstmt.setTimestamp(2, uploadTime);
+			pstmt.setString(1, afterfileName);
 			rset = pstmt.executeQuery();
 			if(rset.next())
 			{
@@ -190,14 +189,13 @@ public class FileDAO {
 		return result;
 	}
 
-	public int fileSelectDelete2(Connection conn, String afterfileName, Timestamp uploadTime) {
+	public int fileSelectDelete2(Connection conn, String afterfileName) {
 		PreparedStatement pstmt = null;
 		int result = 0;
-		String query = "delete from filetbl2 where afterfileName=? and uploadtime=?";
+		String query = "delete from filetbl2 where afterfileName=?";
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, afterfileName);
-			pstmt.setTimestamp(2, uploadTime);
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

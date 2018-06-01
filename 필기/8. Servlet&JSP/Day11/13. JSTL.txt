@@ -1,0 +1,212 @@
+
+
+@ JSTL (JSP Standard Tag Library)
+-> JSP에서 사용하는 커스텀 태그로써, 공통으로 사용하는 코드의 집합을 사용하기 쉽게 태그화 하여 표준으로
+제공하는 것을 말함
+-> 우리가 기존 EL을 통하여 스크립트릿을 사용하지 않고 데이터를 표현하는 방법을 배웠지만 EL만으로
+모든것을 처리할 순 없음
+	(제어문 처리 불가)
+-> JSTL을 통하여 제어문을 태그화 하여 처리 가능함
+
+
+## JSTL 선언 방식과 사용 예시 ##
+-> JSTL을 사용하려면 특정 라이브러리가 필요하고 선언하여야 함
+
+선언방식
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+
+
+
+@ JSTL 태그 종류
+
+Core Tags
+-> 변수와 url, 조건문, 반복문 등의 로직과 관련된 JSTL 문법을 제공함
+-> 선언 : <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+Formatting Tags
+-> 메시지 형식이나 숫자, 날짜 형식과 관련된 포맷 방식을 제공
+-> 선언 : <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
+Function Tags
+-> Trim, substring과 같은 여러 문자열 처리 함수를 제공
+-> 선언 : <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix"fn" %>
+
+XML Tags
+-> 데이터의 XML 파싱 처리 등 XML 문서를 화면으로 읽어 오는데 필요한 라이브러리 제공
+-> 선언 : <%@ taglib uri="http://java.sun.com/jsp/jstl/xml" prefix"x" %>
+
+SQL Tags
+-> 페이지 내에서 DataBase와 연동하고, 필요한 쿼리를 실행할 수 있는 라이브러리
+-> 선언 : <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix"sql" %>
+
+※ SQL Tags는 DataBase를 직접 연동하여 용이하게 사용할 수 있으나
+MVC Model2 방식에는 적합하지 않음
+
+
+
+## JSTL Core Tags ##
+
+종류 <c:???>
+
+set		변수를 만들어서 값을 저장하는 태그
+cut		페이지에 값을 출력하는 태그
+if		조건문의 if와 비슷, 반드시 test 속성값으로 비교
+choose		조건문의 switch 또는 else if와 비슷
+		내부의 <c:when>, <c:otherwise>태그와 같이 쓰임
+forEach		제어문 foreach 문과 비슷, 반복을 수행하는 태그
+forTokens	StringTokenizer 객체와 비슷, token 값을 기준으로 문자열을 분할하는 태그
+url		변수에 url과 쿼리스트링 값을 저장하고 호출할 수 있께 하는 태그
+
+
+
+## <c:set> 사용법##
+-> <c:set>에서의 변수 타입은 별도로 선언하지 않음
+	※ 모든 속성의 값은 타입이 String형
+-> 초기값은 반드시 기술 해야 함
+-> <c:set>으로 선언한 변수는 EL 식 안에서 사용할 수 있음
+	단, JSP의 스트립크릿(<% %>) 요소에서는 사용할 수 없음
+-> <c:set>에서 선언한 변수를 JSP 스크립트릿에서 쓰는것은 불가능하지만,
+반대로 스크립트릿에서 선언한 변수를 <c:set>의 value 속성에서 사용하는것은 가능함
+
+ex)
+<c:set var="a" value="100"/>
+<c:set var="b" value="200"/>
+값 출력! : ${a} + ${b} = ${a+b}
+
+## <c:set>태그의 scope 속성 ##
+-> <c:set> 태그를 이용하여 값을 저장시 scope 속성을 이용할 수 있음
+-> scope는 page,request,session,application 영역이 있음
+
+ex) <c:set var="num" value="100" scope="request" />
+	-> request 영역에 num이라는 속성명으로 100을 저장
+
+ex) <c:set var="num" value="100" scope="session" />
+	-> session 영역에 num이라는 속성명으로 100을 저장
+
+※ scope 속성을 지정하지 않게 되면 기본적으로 page가 됨
+
+ex)
+<c:set var="num" value="100"/> <!-- page 영역에 저장 -->
+<c:set var="num" value="200" scope="request"/> <!-- request 영역에 저장 -->
+<c:set var="num" value="300" scope="session"/> <!-- session 영역에 저장 -->
+
+값1 : ${pageScope.num}<br>
+값2 : ${requestScope.num}<br>
+값3 : ${sessionScope.num}<br>
+
+
+
+## <c:out> 태그 ##
+-> <c:out> 태그는 데이터를 출력할 때 사용하는 태그
+
+<c:out> 태그 속성
+value="값"		출력할 값을 지정하는 속성
+dafault="값"		값이 반값(null)이면 출력될 값을 지정하게 만드는 속성
+escapeXml="false"	태그형식의 문자를 태그로 출력하게 만드는 속성
+			(true는 문자 그대로 출력)
+
+ex)
+<c:out value="<br>태그는 줄계행 입니다." escapeXml="true"/>
+<c:out value="<br>태그는 줄계행 입니다." escapeXml="false"/>
+
+-> <.>,& 특수 문자를 자동으로 이스케이프 시퀀스로 바꾸어 줌
+
+<	&lt;
+>	&ft;
+&	&amp;
+
+
+
+## <c:remove> 태그 ##
+-> <c:set>을 이용해서 선언한 변수는 <c:remove> 태그를 이용하여 삭제 할 수 있음
+
+ex) c:remove var="num1" scope="request" />
+-> request 영역에 있는 num1이라는 변수를 제거함
+-> 만약 scope를 지정하지 않게 되면 모든 scope 영역에 있는
+num1 이라는 변수를 삭제함
+
+ex)
+<c:set var="num" value="100"/> <!-- page 영역에 저장 -->
+<c:set var="num" value="200" scope="request"/> <!-- request 영역에 저장 -->
+<c:set var="num" value="300" scope="session"/> <!-- session 영역에 저장 -->
+
+<c:remove var="num" scope="request"/>
+
+${pageScope.num }<br>
+${requestScope.num }<br>
+${sessionScope.num }<br>
+
+
+
+## <c:if> 태그 ##
+-> 자바 프로그램의 if문과 비슷한 역할을 하는 태그
+-> <c:if>태그에서 조건식은 test라는 속성의 값으로 지정해야 함
+-> 이때 조건식은 반드시 EL 형식으로 기술함
+
+ex)
+
+<c:if test="${num1>num2}">
+	num1이 더 큽니다....
+</c:if>
+
+<c:if>속성
+test="값(true or false)		test 값을 기준으로 실행여부 결정 (조건절)
+var="값"			test 결과 값을 저장하는 변수 속성
+scope				범위 (request,session,application)
+
+ex)
+<c:set var="num1" value="100"/>
+<c:set var="num2" value="200"/>
+
+<c:if test="${num1>num2 }" var="result">
+num1이 더 큽니다.
+</c:if>
+결과 : ${result }
+
+
+
+## <c:choose> 태그 ##
+-> 자바 프로그램의 switch문과 비슷한 역할 (elseif 문과 매우 흡사함)
+-> <c:when>, <c:otherwise> 태그와 함께 사용되며
+각 각 switch문의 case와 default문과 비슷한 역할
+
+
+ex)
+	<c:set var="choice" value="3" />
+
+	<c:choose>
+		<c:when test="${choice==1 }">
+		1을 선택하였습니다.<br>
+		</c:when>
+		<c:when test="${choice==2 }">
+		2를 선택하였습니다.<br>
+		</c:when>
+		<c:otherwise>
+		그외를 선택하였습니다.<br>
+		</c:otherwise>
+	</c:choose>
+
+
+## <c:forEach> 태그 ##
+-> 자바의 for, for-in 문에 해당하는 기능을 제공
+
+items		반복할 객체명 (Collection 객체)
+begin		반복이 시작할 요소 번호 (0..1..2..3..n)
+end		반복이 끝나는 요소 번호
+step		반복할 횟수 번호
+var		현재 반복 횟수에 해당하는 변수의 이름
+varStatus	현재 반복에 해당하는 객체의 요소
+
+
+
+
+
+
+
+
+
+
+
+
+
