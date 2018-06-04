@@ -66,3 +66,4 @@ complete : ajax 통신 시 무조건 호출될 이벤트 핸들러
 -> JavaScript Object Notation 의 약자
 - 자바에서 객체를 표현하기 위한 표기법
 - 자바에서 만든 객체를 자바스크립트에서 사용하려면 JSON 객체를 사용 해야 함
+
