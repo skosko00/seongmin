@@ -214,6 +214,39 @@ ${i.count}번째 학생
 
 
 
+## <c:forTokens> 태그 ##
+-> 문자열에 포함된 구분자를 통해 토큰을 분리해서 반복 처리를 함
+-> items 속성에는 토큰을 포함하는 문자열을 지정하고, delims 속성에는 토큰을
+분리하는데 사용할 구획 문자를 기술 함
+
+ex)
+
+<c:forTokens var="color" items="yello,blue,pink,red,green" delims=",">
+	${color}<br>
+</c:forTokens>
+
+
+ex)
+<c:forTokens var="hobby" items="${param.hobby}" delims=",">
+	${hobby}<br>
+</c:forTokens>
+
+
+## <c:url> 태그 ##
+-> url 경로를 생성하고, 해당 url의 param 속성을 선언하여 쿼리스트링을 정의 할 수 있는 태그
+-> 해당 태그를 통해 url 경로와 관련 쿼리스트링의 값을 미리 설정하여 이를 제어할 수 있ㅇ므
+
+ex)
+<c:url var="url" value="jstl.jsp">
+	<c:param name="name" value="abc"/>
+</c:url>
+
+<a href="${url}">이동</a>
+
+
+
+
+
 
 
 

@@ -1,0 +1,68 @@
+
+
+@ jQuery Ajax
+-> Ajax 통신을 jQuery로 작성하게 되면 훨씬 간단하게 구현할 수 있음
+-> 또한 jQuery로 Ajax를 구성하게 되면 크로스브라우징의 문제를 해결 해줌
+	※ 크로스브라우징 : 다양한 브라우저들이 같은 화면을 동일하게 보여주는 것
+-> jQuery Ajax에서 가장 중요한 API는 "$.ajax"임
+
+
+$.ajax의 기본 문법
+-> jQuery.ajax([setttings]);
+혹은
+-> $.ajax([settings]);
+
+ex)
+$.ajax(
+	설정 값1,
+	설정 값2,
+	설정 값3,
+	설정 값4, .....
+);
+
+주요 속성
+
+url : 데이터를 전송할 URL
+data : 서버에 전송할 데이터, key/value 형식의 객체
+dataType : 서버가 리턴하는 데이터 타입 (xml,json,script,html)
+type : 서버로 전송하는 메소드의 타입 (POST,GET)
+success : ajax 통신에 성공했을 때 호출될 이벤트 핸들러
+error : ajax 통신에 실패했을 때 호출될 이벤트 핸들러
+complete : ajax 통신 시 무조건 호출될 이벤트 핸들러
+
+
+<script>
+	function test1() {
+		// 값 가져오기
+		var myName = $("#myName").val();
+		
+		// jQuery Ajax 코드
+		$.ajax({
+			url : "/test1",
+			data : {Name : myName},
+			type : "get",
+			success : function() {
+				console.log("서버로 값 전송 성공");
+			},
+			error : function() {
+				console.log("서버로 값 전송 실패");
+			},
+			complete : function() {
+				console.log("성공이든 실패든 무조건 호출 됨");
+			}
+		});
+		
+	}
+</script>
+
+
+
+@ JSON
+-> 서버에서 만든 객체를 자바스크립트에서 처리 할 수 없음 그렇기 때문에 우리는 서버와 자바스크립트가
+공통적으로 인식 할 수 있는 객체 타입을 사용해야 함 그것을 JSON 객체라고 부름
+
+
+## JSON 이란? ##
+-> JavaScript Object Notation 의 약자
+- 자바에서 객체를 표현하기 위한 표기법
+- 자바에서 만든 객체를 자바스크립트에서 사용하려면 JSON 객체를 사용 해야 함
