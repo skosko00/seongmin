@@ -1,0 +1,5 @@
+
+
+SDI - Single Document Interface (하나의 프레임)
+MDI - Multi Document interface (다수의 프레임으로 여러 페이지를 구성)
+

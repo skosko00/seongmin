@@ -255,5 +255,133 @@
 	}
 </script>
 <hr>
+
+<h2>9. 서버 정보 요청후 표(table) 구성하기</h2>
+<button onclick="test9();">유저 정보 불러오기</button>
+<table id="userTbl" border="1">
+<tr>
+<th>이름</th><th>나이</th><th>주소</th>
+</tr>
+</table>
+
+<script type="text/javascript">
+function test9() {
+	$.ajax({
+		url : "/test9",
+		type : "get",
+		success : function(data) {
+			console.log("성공");
+			for(var i=0;i<data.length;i++){
+			var tr = $("<tr>");
+			var nameTd = $("<td>").text(data[i].name);
+			var ageTd = $("<td>").text(data[i].age);
+			var addrTd = $("<td>").text(data[i].addr);
+			tr.append(nameTd);
+			tr.append(ageTd);
+			tr.append(addrTd);
+			$("#userTbl").append(tr);
+			}
+		},
+		error : function() {
+			console.log("실패");
+		}
+	});
+}
+</script>
+<hr>
+<h2>10. 서버에서 전송한 list 객체를 바탕으로 select 생성 및 선택</h2>
+유저 이름 : <input type="text" id="selectUserName">
+<button onclick="test10();">선택</button>
+<br>
+<select id="selectList"></select>
+<script type="text/javascript">
+	function test10() {
+		var selectUserName = $("#selectUserName").val(); // 입력값 가져오기
+		$.ajax({
+			url : "/test10",
+			type : "get",
+			success : function(data) {
+				console.log("성공");
+				var selected = "";
+				$("#selectList").find("option").remove();
+				for(var i=0;i<data.length;i++){
+					var name = data[i].name;
+					if (name == selectUserName) {
+						selected = "selected";
+					} else {
+						selected = "";
+					}
+					$("#selectList").append("<option " +selected+ ">"+name+"</option>");
+				}
+
+			},
+			error : function() {
+				console.log("실패");
+			}
+		});
+	}
+</script>
+<hr>
+
+<h2>11. Gson을 이용한 List 받아오기</h2>
+<h5>GSON은 구글이 만든 JSON 이라는 뜻</h5>
+<h6>자바 객체 <-> JSON 상호 변환 가능</h6>
+
+<button onclick="test11();">list 가져오기</button>
+<p id="result11" style="width: 300px; height: 300px; border: 1px solid red;"></p>
+
+<script type="text/javascript">
+	function test11() {
+		$.ajax({
+			url : "/test11",
+			type : "get",
+			success : function(data) {
+				console.log("성공");
+				var result = "";
+				for(var i=0;i<data.length;i++)
+					{
+					result +="이름 : " +data[i].name+"/"
+							+"나이 : " +data[i].age+"/"
+							+"주소 : " +data[i].addr+"<br>"
+					}
+				$("#result11").html(result);
+			},
+			error : function() {
+				console.log("실패");
+			}
+		});
+	}
+</script>
+<hr>
+<h2>12. Gson을 이용한 Map 변환</h2>
+<button onclick="test12();">Map 가져오기</button>
+<p id="result12" style="width: 300px; height: 300px; border: 1px solid red;"></p>
+<script type="text/javascript">
+	function test12() {
+		$.ajax({
+			url : "/test12",
+			type : "get",
+			success : function(data) {
+				console.log("성공");
+				var result = "";
+				// MAP 형태로 꺼내려면 키 값을 먼저 추출해야 함
+				var keys = Object.keys(data);
+				// JSON을 MAP 형태로 데이터를 꺼내 오려면
+				// data[키].컬럼 형태로 사용 해야 함
+				
+				for(var i=0; i<keys.length;i++){
+					result += "이름 : "+data[keys[i]].name+"/"
+					+ "나이 : "+data[keys[i]].age+"/"
+					+ "주소 : "+data[keys[i]].addr+"<br>"
+				}
+				$("#result12").html(result);
+			},
+			error : function() {
+				console.log("실패");
+			}
+		});
+	}
+</script>
+<hr>
 </body>
 </html>
