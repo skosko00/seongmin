@@ -1,0 +1,25 @@
+package org.kh.student.model.service;
+
+import org.kh.student.model.vo.Student;
+
+public class StudentServiceImpl implements StudentService{
+
+	@Override
+	public Student selectStudent() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int insertStudent() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+}
+
+/*
+* 맛보기 이므로
+* 데이터를 입력받아서 넣는것이 아닌!
+* 미리 쿼리 구문을 작성하고 처리되는지를 보도록 함
+*/

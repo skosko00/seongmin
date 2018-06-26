@@ -64,6 +64,7 @@ ArrayList<Comment> list = (ArrayList<Comment>)request.getAttribute("comment");
 </form>
 <!-- 댓글 삭제 -->
 <%} %>
+<br>
 <%} %>
 
 <%if(((Member)session.getAttribute("user"))==null){ %>

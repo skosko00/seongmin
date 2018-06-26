@@ -1,0 +1,5 @@
+package org.kh.student.model.service;
+
+public interface StudentService {
+
+}

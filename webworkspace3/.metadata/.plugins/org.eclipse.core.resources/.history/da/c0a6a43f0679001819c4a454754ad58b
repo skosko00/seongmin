@@ -1,0 +1,19 @@
+package org.kh.student.model.service;
+
+import org.kh.student.model.vo.Student;
+
+public class StudentServiceImpl implements StudentService{
+
+	@Override
+	public Student selectStudent() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int insertStudent() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+}

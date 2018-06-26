@@ -1,0 +1,5 @@
+package org.kh.student.model.vo;
+
+public class Student {
+
+}

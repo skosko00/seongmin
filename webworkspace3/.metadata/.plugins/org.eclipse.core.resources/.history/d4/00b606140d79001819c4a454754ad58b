@@ -1,0 +1,8 @@
+package org.kh.student.model.dao;
+
+import org.kh.student.model.vo.Student;
+
+public interface StudentDAO {
+	public Student selectStudent();
+	public int insertStudent();
+}

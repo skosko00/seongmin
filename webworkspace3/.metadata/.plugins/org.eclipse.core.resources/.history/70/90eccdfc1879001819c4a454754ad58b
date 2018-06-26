@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<a href="/mybatisTest1">1. mybatis를 이용한 insert 해보기</a><br>
+2. 이름값 넘겨줘서 insert 해보기
+<form action="/mybatisTest2" method="post">
+이름 : <input type="text" name="studentName"/>
+<input type="submit" value="전송"/>
+</form>
+<br>
+3. 여러개의 정보값을 넘겨줘서 insert 해보기
+<form action="mybatisTest3" method="post">
+이름 : <input type="text" name="studentName"/><br>
+전화번호 : <input type="text" name="studentTel"/><br>
+이메일 : <input type="text" name="studentEmail"/><br>
+주소 : <input type="text" name="studentAddr"/><br>
+</form>
+</body>
+</html>
