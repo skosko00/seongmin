@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="users">
+	<select id="checkList" parameterType="check" resultType="user">
+	select user_no as userNo,
+	<if test="chId!=null">
+	user_id as userId,
+	</if>
+	<if test="chPw!=null">
+	user_pw as userPw,
+	</if>
+	<if test="chName!=null">
+	user_name as userName,
+	</if>
+	<if test="chAddr!=null">
+	user_addr as userAddr,
+	</if>
+	reg_date as regDate
+	from usertbl
+	</select>
+	
+	<select id="searchList" parameterType="search" resultType="user">
+	select user_no as userNo,
+	user_id as userId,
+	user_pw as userPw,
+	user_name as userName,
+	user_addr as userAddr,
+	reg_date as regDate
+	from usertbl
+	<choose>
+		<when test="select.equals('name')">
+			where user_name like '%'||#{keyword}||'%'
+		</when>
+		<when test="select.equals('id')">
+			where user_id like '%'||#{keyword}||'%'
+		</when>
+	</choose>
+	</select>
+	
+	<select id="search2List" parameterType="search" resultType="user">
+	select user_no as userNo,
+	user_id as userId,
+	user_pw as userPw,
+	user_name as userName,
+	user_addr as userAddr,
+	reg_date as regDate
+	from usertbl
+	
+	<!-- if문을 이용하여 주소와 이름을 가지고 회원을 검색한다면? -->
+	<trim prefix="where" prefixOverrides="AND|OR">
+	<if test="userName!=null and userName!=''">
+	user_name like '%'||#{userName}||'%'
+	</if>
+	<if test="userAddr!=null and userAddr!=''">
+	and user_addr like '%'||#{userAddr}||'%'
+	</if>
+	</trim>
+	<!--
+	 prefix 뜻
+	 trim 안에 있는 조건들이 성립되면 쿼리문을 추가할때 prefix의 있는 값이 자동으로 붙게 됨
+	 단, 쿼리문의 시작값이 and 또는 or일 경우 prefixOverrides의 값과 일치할경우 자동으로 제거 됨 
+	 -->
+	</select>
+	
+	<select id="search3List" parameterType="search" resultType="user">
+	select user_no as userNo,
+	user_id as userId,
+	user_pw as userPw,
+	user_name as userName,
+	user_addr as userAddr,
+	reg_date as regDate
+	from usertbl where user_addr in
+	<foreach item="addr" collection="array" open="(" separator="," close=")">
+		#{addr}
+	</foreach>
+	</select>
+	
+</mapper>

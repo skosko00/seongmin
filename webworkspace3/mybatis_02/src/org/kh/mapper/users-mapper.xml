@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="users">
+<insert id="inserUsers" parameterType="org.kh.users.model.vo.Users">
+insert into users values(#{userId},#{userPw},#{userNick},#{userTel},default)
+</insert>
+<select id="idCheck" resultType="org.kh.users.model.vo.Users">
+	select
+	user_id as userId,
+	user_pw as userPw,
+	user_nick as userNick,
+	user_tel as userTel,
+	reg_date as regDate
+	from users where user_id = #{userId}
+</select>
+<select id="oneUserSelect" resultType="org.kh.users.model.vo.Users">
+	select
+	user_id as userId,
+	user_pw as userPw,
+	user_nick as userNick,
+	user_tel as userTel,
+	reg_date as regDate
+	from users where user_id = #{userId} and user_pw = #{userPw}
+</select>
+<select id="allUser" resultType="org.kh.users.model.vo.Users">
+	select
+	user_id as userId,
+	user_pw as userPw,
+	user_nick as userNick,
+	user_tel as userTel,
+	reg_date as regDate
+	from users
+</select>
+<delete id="deleteUser" parameterType="org.kh.users.model.vo.Users">
+delete from users where user_id=#{userId} and user_pw=#{userPw}
+</delete>
+<update id="updateUser" parameterType="org.kh.users.model.vo.Users">
+update users set user_pw=#{userPw}, user_nick=#{userNick}, user_tel=#{userTel} where user_id=#{userId}
+</update>
+</mapper>

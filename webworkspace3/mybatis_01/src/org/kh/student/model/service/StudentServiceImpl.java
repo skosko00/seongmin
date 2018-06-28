@@ -2,6 +2,7 @@ package org.kh.student.model.service;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -91,6 +92,40 @@ public class StudentServiceImpl implements StudentService{
 			session.rollback();
 		}
 		return result;
+	}
+
+	public int updateStudent(Student vo) {
+		SqlSession session = getSqlSession(); // 세션 객체를 가져옴(커넥션객체)
+		int result = new StudentDAOImpl().updateStudent(session, vo);
+		if(result>0) {
+			session.commit();
+		}else {
+			session.rollback();
+		}
+		return result;
+	}
+
+	public int deleteStudent(int studentNo) {
+		SqlSession session = getSqlSession();
+		int result = new StudentDAOImpl().deleteStudent(session,studentNo);
+		if(result>0) {
+			session.commit();
+		}else {
+			session.rollback();
+		}
+		return result;
+	}
+
+	public Student selectOneStudent(int studentNo) {
+		SqlSession session = getSqlSession();
+		Student std = new StudentDAOImpl().selectOneStudent(session,studentNo);
+		return std;
+	}
+
+	public ArrayList<Student> selectAllStudent() {
+		SqlSession session = getSqlSession();
+		ArrayList<Student> list = new StudentDAOImpl().selectAllStudent(session);
+		return list;
 	}
 }
 // JDBC 기본 코드

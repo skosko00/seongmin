@@ -1,0 +1,46 @@
+﻿
+
+@ mybatis-config.xml 에서 사용한 태그
+
+
+## <properties> 태그 ##
+-> 외부 java property 파일의 내용을 불러올 때 사용
+
+<properties resource="경로+파일명.properties">
+	<property name="key명" value="설정값">
+</properties>
+
+
+## <typeAliases> 태그 ##
+-> mybatis에서 자료형을 별칭으로 사용할 때 쓸 수 있는 태그
+
+<typeAliases>
+	<typeAlias type="org.kh.member.model.vo.Member" alias="Member" />
+</typeAliases>
+
+
+## <environments> 태그
+-> mybatis에서 연동할 DataBase 정보를 등록하는 태그
+-> environment 태그 안에는 항상 transactionManager 태그와 dataSource 태그가 있어야 함
+
+<environments default="development">
+	<environment id="development">
+		<transactionManager type="JDBC" />
+		<datasource type="POOLED">
+			<property name="driver" value="값" />
+			<property name="url" value="값" />
+			<property name="username" value="값" />
+			<property name="password" value="값" />
+		</datasource>
+	</environment>
+</environments>
+
+
+## <mappers> 태그 ##
+-> 사용하고자 하는 쿼리가 정의된 mapper 파일을 등록하는 태그
+-> DataBase에 사용되는 쿼리문들을 담고 있는 파일들을 등록함
+
+<mappers>
+	<mapper resource="/mappers/member/member-mapper.xml" />
+</mappers>
+

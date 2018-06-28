@@ -1,16 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="java.sql.Date"/>
-<fullyQualifiedTypeName name="org.kh.student.model.service.StudentService"/>
 <fullyQualifiedTypeName name="org.kh.student.model.dao.StudentDAO"/>
 <fullyQualifiedTypeName name="javax.annotation.Resource"/>
 <fullyQualifiedTypeName name="sun.misc.Resource"/>
+<fullyQualifiedTypeName name="org.kh.student.model.vo.Student"/>
+<fullyQualifiedTypeName name="java.lang.Integer"/>
+<fullyQualifiedTypeName name="javax.security.auth.message.callback.PrivateKeyCallback.Request"/>
+<fullyQualifiedTypeName name="org.kh.student.model.service.StudentService"/>
+<fullyQualifiedTypeName name="org.kh.student.model.service.StudentServiceImpl"/>
+<fullyQualifiedTypeName name="org.kh.student.model.dao.StudentDAOImpl"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="java.sql.Date"/>
+<fullyQualifiedTypeName name="org.kh.users.model.service.UserService"/>
 <fullyQualifiedTypeName name="java.io.InputStream"/>
 <fullyQualifiedTypeName name="org.apache.ibatis.io.Resources"/>
 <fullyQualifiedTypeName name="org.apache.ibatis.session.SqlSessionFactoryBuilder"/>
 <fullyQualifiedTypeName name="org.apache.ibatis.session.SqlSessionFactory"/>
-<fullyQualifiedTypeName name="org.kh.student.model.service.StudentServiceImpl"/>
-<fullyQualifiedTypeName name="org.kh.student.model.vo.Student"/>
+<fullyQualifiedTypeName name="org.kh.users.model.dao.UsersDAO"/>
+<fullyQualifiedTypeName name="org.kh.users.model.vo.Users"/>
+<fullyQualifiedTypeName name="org.kh.users.model.dao.UsersDAOImpl"/>
+<fullyQualifiedTypeName name="javax.servlet.RequestDispatcher"/>
+<fullyQualifiedTypeName name="org.kh.users.model.service.UserServiceImpl"/>
 <fullyQualifiedTypeName name="org.apache.ibatis.session.SqlSession"/>
-<fullyQualifiedTypeName name="org.kh.student.model.dao.StudentDAOImpl"/>
+<fullyQualifiedTypeName name="java.util.List"/>
 </qualifiedTypeNameHistroy>
