@@ -62,7 +62,7 @@
 	 -->
 	</select>
 	
-	<select id="search3List" parameterType="search" resultType="user">
+	<select id="search3List" resultType="user">
 	select user_no as userNo,
 	user_id as userId,
 	user_pw as userPw,
