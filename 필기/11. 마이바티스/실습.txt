@@ -1,0 +1,34 @@
+﻿DROP TABLE MEMBER;
+create table member(
+    member_no number primary key,
+    member_id varchar2(20) not null,
+    member_pw varchar2(20) not null,
+    member_name varchar2(20) not null,
+    member_addr varchar(50) not null,
+    gender Nchar(1) not null,
+    hobby varchar2(50) not null,
+    reg_date date default sysdate
+);
+
+create sequence seq_member;
+
+insert into member values(seq_member.nextval,'test1','1234','테스트','서울시','남','여행,음악감상',default);
+insert into member values(seq_member.nextval,'admin','1234','관리자','경기도','여','없음',default);
+insert into member values(seq_member.nextval,'test2','1111','테스터2','경기도','여','없음',default);
+insert into member values(seq_member.nextval,'test3','3456','테스터3','전라도','남','춤',default);
+insert into member values(seq_member.nextval,'test4','7677','테스터4','강원도','남','음악감상',default);
+insert into member values(seq_member.nextval,'test5','8595','테스터5','제주도','여','여행',default);
+insert into member values(seq_member.nextval,'test6','5489','테스터6','서울시','여','여행,음악감상',default);
+insert into member values(seq_member.nextval,'test7','5734','테스터7','경상도','남','춤',default);
+insert into member values(seq_member.nextval,'test7','6988','테스터8','충청도','남','음악감상,춤',default);
+
+commit;
+select * FROM MEMBER;
+
+
+
+1. 마이바티스를 활용하여 만들기
+2. common 패키지 별도로 만들어서 사용하기
+3. mapper 폴더는 resource 안에 넣어서 만들어서 사용하기
+4. 동적쿼리가 필요한 부분은 동적쿼리 구문을 사용하기
+5. EL, JSTL 사용하기

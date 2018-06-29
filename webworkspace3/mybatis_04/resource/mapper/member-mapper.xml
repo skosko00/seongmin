@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="member">
+	<select id="loginMember" resultType="member" parameterType="member">
+	select 
+	member_no as memberNo,
+	member_id as memberId,
+	member_pw as memberPw,
+	member_name as memberName,
+	member_addr as memberAddr,
+	gender as gender,
+	hobby as hobby,
+	reg_date as regDate
+	from member where member_id=#{memberId} and member_pw=#{memberPw}
+	</select>
+	
+	<update id="updateMember" parameterType="member">
+	update member set member_pw=#{memberPw} where member_no=#{memberNo}
+	</update>
+	
+	<delete id="deleteMember" parameterType="member">
+	delete from member where member_id=#{memberId} and member_pw=#{memberPw}
+	</delete>
+	
+	<select id="allMember" resultType="member">
+	select 
+	member_no as memberNo,
+	member_id as memberId,
+	member_name as memberName,
+	member_addr as memberAddr,
+	gender as gender,
+	hobby as hobby,
+	reg_date as regDate
+	from member
+	</select>
+	
+	<select id="radioSearch" resultType="member" parameterType="radio">
+	select 
+	member_no as memberNo,
+	member_id as memberId,
+	member_name as memberName,
+	member_addr as memberAddr,
+	gender as gender,
+	hobby as hobby,
+	reg_date as regDate
+	from member
+	<choose>
+		<when test="searchRadio.equals('name')">
+			where member_name like '%'||#{searchKeyword}||'%'
+		</when>
+		<when test="searchRadio.equals('id')">
+			where member_id like '%'||#{searchKeyword}||'%'
+		</when>
+		<when test="searchRadio.equals('addr')">
+			where member_addr like '%'||#{searchKeyword}||'%'
+		</when>
+	</choose>
+	</select>
+	
+	<select id="checkBox1" resultType="member" parameterType="check">
+	select 
+	member_no as memberNo,
+	member_id as memberId,
+	<if test="name!=null">
+	member_name as memberName,
+	</if>
+	<if test="addr!=null">
+	member_addr as memberAddr,
+	</if>
+	<if test="gender!=null">
+	gender as gender,
+	</if>
+	<if test="hobby!=null">
+	hobby as hobby,
+	</if>
+	reg_date as regDate
+	from member
+	</select>
+	
+	<select id="checkBox2" resultType="member">
+	select 
+	member_no as memberNo,
+	member_id as memberId,
+	member_name as memberName,
+	member_addr as memberAddr,
+	gender as gender,
+	hobby as hobby,
+	reg_date as regDate
+	from member where member_addr in
+	<foreach collection="array" item="addr" open="(" separator="," close=")">
+	#{addr}
+	</foreach>
+	</select>
+	
+	<insert id="enrollMember" parameterType="member">
+	insert into member values
+	(seq_member.nextval,#{memberId},#{memberPw},#{memberName},#{memberAddr},#{gender},#{hobby},default)
+	</insert>
+</mapper>
