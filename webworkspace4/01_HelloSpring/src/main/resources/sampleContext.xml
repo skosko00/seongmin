@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
+
+<!-- 필요한 bean 작성 (객체 작성) -->
+<!-- 작성법 -->
+<!-- <bean id="변수명" class="패키지.클래스명"/> -->
+<bean id="samsung" class="org.kh.tv.model.vo.SamsungTV"></bean>
+<bean id="lg" class="org.kh.tv.model.vo.LgTV"></bean>
+
+<!-- property는 해당 클래스에 있는 setter를 이용하여 객체를 주입함(DI) -->
+<!-- TVmgr tvMgr = new TVmgr(); -->
+<!-- tvMgr.setTv(samsung); -->
+<bean id="tvMgr" class="org.kh.tv.model.vo.TVmgr">
+	<property name="tv" ref="lg"></property>
+</bean>
+
+</beans>

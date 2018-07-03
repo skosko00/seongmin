@@ -1,0 +1,10 @@
+﻿
+
+@ STS란?
+-> Spring Tool Suite의 약자로 Spring Framework를 사용하기 위한 개발 툴을 말함
+-> 일반적으로 별도의 설치 도구를 통해 설치하나 이클립스 IDE에서 제공하는 STS plug-in을 통해 간단히 설치 할 수 있음
+
+
+※ STS 공식 설치 사이트
+https://spring.io/tools/sts/all
+

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
+
+	<import resource="/personContext.xml" />
+	<import resource="/sampleContext.xml" />
+
+	<bean id="data" class="org.kh.bean.model.vo.TestData" scope="prototype">
+		<constructor-arg>
+			<value>100</value>
+		</constructor-arg>
+	</bean>
+
+	<bean id="list" class="org.kh.bean.model.vo.CollectionListBean">
+		<property name="nameList">
+			<list>
+				<value>홍길동</value>
+				<value>김말똥</value>
+				<value>고길똥</value>
+				<value>김지똥</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="set" class="org.kh.bean.model.vo.CollectionSetBean">
+		<property name="nameList">
+			<list>
+				<value>홍길동</value>
+				<value>김말똥</value>
+				<value>고길똥</value>
+				<value>김지똥</value>
+				<value>김지똥</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="map" class="org.kh.bean.model.vo.CollectionMapBean">
+		<property name="addressMap">
+			<map>
+				<entry>
+					<key>
+						<value>홍길동</value>
+					</key>
+					<value>경기도 부천</value>
+				</entry>
+				<entry>
+					<key>
+						<value>김말똥</value>
+					</key>
+					<value>서울시 강서구</value>
+				</entry>
+				<entry>
+					<key>
+						<value>고길똥</value>
+					</key>
+					<value>인천시 계양구</value>
+				</entry>
+			</map>
+		</property>
+	</bean>
+
+<bean id="computer" class="org.kh.test.ano.Computer">
+
+</bean>
+
+
+
+</beans>
