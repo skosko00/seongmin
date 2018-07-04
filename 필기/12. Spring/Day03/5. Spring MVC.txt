@@ -1,0 +1,64 @@
+﻿
+
+
+@ MVC
+-> 웹 에서 처리하는 로직은 Model, View, Controller로 분류하여 처리하는 방식
+-> 기존에 배웠던 방식을 생각해보면 Model : (Service, DAO, VO)
+	View : (JSP), Controller : (Servlet)
+
+
+@ Spring MVC
+-> MVC의 기본 흐름은 View -> Controller -> Model -> Controller -> View 형태
+-> Spring MVC는 View, Controller, Model 부분을 유지 보수 및 확장성을 고려하여 추가적인 설계를 하였음
+-> Spring MVC 구조
+	- DispatcherServlet
+	- HandierMapping
+	- Controller
+	- ViewResolver
+	- Service
+	- DAO
+	- View
+
+
+## DispatcherServlet ##
+-> 유일한 서블릿 클래스로서
+Servlet Container에서 HTTP 프로토콜을 통해 들어오는 모든 요청을 가장 먼저 처리하는 Front Controller
+
+
+## HandierMapping ##
+-> 클라이언트의 요청을 처리할 Controller 매핑 값을 가지고 있음
+
+
+## Controller ##
+-> 실질적인 클라이언트의 요청을 처리함
+-> 처리후 리턴값으로 view name 값을 리턴함
+
+
+## ViewResolver ##
+-> Controller가 리턴한 View name 으로 실행될 JSP 경로를 가지고 있음
+
+
+## View ##
+-> 실제 클라이언트들에게 보여질 Page
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

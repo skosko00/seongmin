@@ -28,6 +28,7 @@ public class AnoServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		AbstractApplicationContext cntx = new GenericXmlApplicationContext("/applicationContext2.xml");
+		cntx.getBean("com",Computer.class).getSpeaker().powerOn();
 	}
 
 	/**
