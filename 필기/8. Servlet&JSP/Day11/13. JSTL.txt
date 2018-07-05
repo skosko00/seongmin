@@ -85,6 +85,7 @@ ex) <c:set var="num" value="100" scope="session" />
 	-> session 영역에 num이라는 속성명으로 100을 저장
 
 ※ scope 속성을 지정하지 않게 되면 기본적으로 page가 됨
+※ scope를 명시하지 않고 바로 변수명으로 접근하면 pageContext -> request -> session -> application 순서
 
 ex)
 <c:set var="num" value="100"/> <!-- page 영역에 저장 -->

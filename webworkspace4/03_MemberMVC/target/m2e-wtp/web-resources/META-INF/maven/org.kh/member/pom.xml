@@ -13,8 +13,31 @@
 		<org.aspectj-version>1.6.10</org.aspectj-version>
 		<org.slf4j-version>1.6.6</org.slf4j-version>
 	</properties>
+	<repositories>
+        <repository>
+            <id>codelds</id>
+            <url>https://code.lds.org/nexus/content/groups/main-repo</url>
+        </repository>
+    </repositories>
 	<dependencies>
+	<!-- DBCP(Data Base Connection Pool -->
+   <dependency>
+      <groupId>commons-dbcp</groupId>
+      <artifactId>commons-dbcp</artifactId>
+      <version>1.4</version>
+   </dependency>
+   <!--  https://mvnrepository.com/artifact/org.springframework/spring-jdbc -->
+   <dependency>
+   		<groupId>org.springframework</groupId>
+   		<artifactId>spring-jdbc</artifactId>
+   		<version>5.0.6.RELEASE</version>
+   </dependency>
 		<!-- Spring -->
+		   <dependency>
+           <groupId>com.oracle</groupId>
+           <artifactId>ojdbc6</artifactId>
+           <version>11.2.0.3</version>
+       </dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>

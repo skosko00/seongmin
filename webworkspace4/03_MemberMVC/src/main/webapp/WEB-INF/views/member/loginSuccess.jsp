@@ -7,6 +7,9 @@
 <title>로그인 성공</title>
 </head>
 <body>
-<h1>로그인을 성공하셨습니다.</h1>
+<script type="text/javascript">
+alert("로그인 성공");
+location.href="/index.jsp";
+</script>
 </body>
 </html>

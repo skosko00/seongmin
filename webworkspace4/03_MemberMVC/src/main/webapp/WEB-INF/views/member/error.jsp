@@ -4,12 +4,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>로그인 실패</title>
+<title>에러페이지</title>
 </head>
 <body>
-<script type="text/javascript">
-alert("로그인 실패");
-location.href="/index.jsp";
-</script>
+<h1>에러!</h1>
 </body>
 </html>

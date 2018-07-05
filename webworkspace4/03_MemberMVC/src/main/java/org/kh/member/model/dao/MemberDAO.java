@@ -1,9 +1,9 @@
 package org.kh.member.model.dao;
 
-import java.sql.Connection;
-
 import org.kh.member.model.vo.Member;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 public interface MemberDAO {
-	public Member selectOneMember(Connection conn, Member vo);
+	public Member selectOneMember(JdbcTemplate jdbcTeamplate, Member vo);
+	public int updateMember(JdbcTemplate jdbcTeamplate, Member vo);
 }
