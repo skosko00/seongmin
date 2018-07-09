@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="member">
+
+	<select id="selectOneMember" parameterType="member" resultType="member">
+	select user_id as userId,
+	user_pw as userPw,
+	user_name as userName,
+	user_phone as userPhone
+	from member where user_id = #{userId} and user_pw = #{userPw}
+	</select>
+	
+	<update id="updateMember" parameterType="member">
+	update member set user_pw = #{userPw}, user_phone = #{userPhone} where user_id = #{userId}
+	</update>
+	
+	<insert id="insertMember" parameterType="member">
+	insert into member values(#{userId},#{userPw},#{userName},#{userPhone})
+	</insert>
+	
+	<delete id="deleteMember" parameterType="member">
+	delete from member where user_id = #{userId} and user_pw = #{userPw}
+	</delete>
+	
+	<select id="allMember" resultType="member">
+	select user_id as userId,
+	user_pw as userPw,
+	user_name as userName,
+	user_phone as userPhone
+	from member
+	</select>
+
+</mapper>

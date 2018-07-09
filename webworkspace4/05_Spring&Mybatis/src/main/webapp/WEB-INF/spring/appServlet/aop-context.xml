@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+
+	<!-- Log/Advice Bean 객체 생성 -->
+	<!--
+	<bean id="log" class="org.kh.member.common.LogAdvice" />
+	AOP 등록 및 설정
+	<aop:config proxy-target-class="true">
+		<aop:pointcut id="allPointcut"
+			expression="execution(* 
+		org.kh.member.model.service.MemberServiceImpl.*(..))" />
+		<aop:pointcut
+			expression="execution(int 
+		org.kh.member.model.service.MemberServiceImpl.*Member(org.kh.member.model.vo.Member))"
+			id="transactionPointcut" />
+		<aop:aspect ref="log">
+			<aop:around method="arroundLog" pointcut-ref="allPointcut" />
+			<aop:before pointcut-ref="allPointcut" method="printLog" />
+			<aop:after method="printTransactionLog" pointcut-ref="transactionPointcut" />
+		</aop:aspect>
+	</aop:config>
+	-->
+
+	<!-- AOP를 어노테이션 방식으로 사용하겠음 -->
+
+	<aop:aspectj-autoproxy proxy-target-class="true"></aop:aspectj-autoproxy>
+
+</beans>

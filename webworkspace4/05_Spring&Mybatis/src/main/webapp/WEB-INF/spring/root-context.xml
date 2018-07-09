@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+
+	<!-- Root Context: defines shared resources visible to all other web components -->
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe" />
+		<property name="username" value="spring" />
+		<property name="password" value="spring" />
+		<property name="defaultAutoCommit" value="false"/>
+	</bean>
+
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="mapperLocations" value="classpath:/mapper/**/*SQL.xml"></property>
+		<property name="configLocation" value="classpath:mybatis-config.xml"></property>
+	</bean>
+
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSession"></constructor-arg>
+	</bean>
+
+	<!-- Transaction 설정 -->
+
+	<bean id="txManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+
+	<tx:advice id="txAdvice" transaction-manager="txManager">
+		<tx:attributes>
+			<tx:method name="select" read-only="true" />
+			<tx:method name="*" />
+		</tx:attributes>
+	</tx:advice>
+	<!-- 기존 AOP 관련 설정은 개발자가 직접 해주지만트랜잭션 처리는 스프링컨테이너가 tx:advice 정보를 참조하여 자동으로 
+		객체를 생성하고 실행함 <tx:method name="select" read-only="true"/> 값은 읽기 전용 메소드명을 명시하는 
+		것임 - read-only는 트랜잭션 처리를 하지 않음 (읽기 전용은 트랜잭션 처리가 필요 없는 메소드를 말함 ex.로그인 등..) -->
+
+	<aop:config>
+		<aop:pointcut
+			expression="execution(* org.kh.member.model.service.MemberServiceImpl.*(..))"
+			id="tranPointcut" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="tranPointcut" />
+	</aop:config>
+
+
+
+
+	<!-- <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate"> 
+		<property name="dataSource" ref="dataSource"></property> </bean> -->
+</beans>
