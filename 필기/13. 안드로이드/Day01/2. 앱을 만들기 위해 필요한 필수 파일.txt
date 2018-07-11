@@ -32,3 +32,79 @@ MainActivity에서 연결하여 사용함
 2. 이벤트 설정 (MainActivity.java)
 3. 진동 기능 권한 설정 (AndroidManaifest.xml)
 
+
+    <EditText
+        android:id="@+id/editText"
+        android:hint="진동 시간만큼 입력해보세요"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/btn1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="진동 시간 버튼"
+        android:onClick="onClick"
+        />
+
+    <Button
+        android:id="@+id/btn2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="진동 1초 버튼"
+        android:onClick="onClick"
+        />
+    <Button
+        android:id="@+id/btn3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="진동 5초 버튼"
+        android:onClick="onClick"
+        />
+    <Button
+        android:id="@+id/btn4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="진동 10초 버튼"
+        android:onClick="onClick"
+        />
+    <Button
+        android:id="@+id/btn5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="연속 진동 버튼"
+        android:onClick="onClick"
+        />
+
+AndroidManifest.xml
+
+    <uses-permission android:name="android.permission.VIBRATE"/> <!-- 진동 사용 권한 -->
+
+MainActivity.java
+
+    Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        switch (view.getId()){
+            case R.id.btn1 :
+                int text = Integer.parseInt(((EditText)findViewById(R.id.editText)).getText().toString());
+                vibrator.vibrate(text*1000);
+                break;
+            case R.id.btn2 :
+                vibrator.vibrate(1000);
+                break;
+            case R.id.btn3 :
+                vibrator.vibrate(5000);
+                break;
+            case R.id.btn4 :
+                vibrator.vibrate(10000);
+                break;
+            case R.id.btn5 :
+                for(int i=0; i<10; i++) {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    vibrator.vibrate(1000);
+                }
+                break;
+        }

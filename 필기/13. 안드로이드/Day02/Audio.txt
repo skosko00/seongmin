@@ -1,0 +1,379 @@
+﻿<!-- 볼륨 시작-->
+
+activity_main.xml
+
+    <Button
+        android:id="@+id/Ring_UpBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="벨소리 Up 버튼"
+        android:onClick="onClick"
+        />
+    <Button
+        android:id="@+id/Ring_DownBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="벨소리 Down 버튼"
+        android:onClick="onClick"
+        />
+
+    <Button
+        android:id="@+id/MV_UpBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="미디어 Up 버튼"
+        android:onClick="onClick"
+        />
+    <Button
+        android:id="@+id/MV_DownBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="미디어 Down 버튼"
+        android:onClick="onClick"
+        />
+
+
+MainActivity.java
+
+    private AudioManager audio;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        audio = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        // 오디오를 사용하기 위한 객체를 가져옴 (객체는 이미 생성되어 사용되고 있음)
+    }
+
+    public void onClick(View view) {
+        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        switch (view.getId()) {
+            case R.id.Ring_UpBtn :
+                audio.setStreamVolume(AudioManager.STREAM_RING,
+                        (int)(audio.getStreamVolume(AudioManager.STREAM_RING)+1),
+                        AudioManager.FLAG_PLAY_SOUND); // 벨소리 볼륨
+                break;
+
+            case R.id.Ring_DownBtn :
+                if((int)(audio.getStreamVolume(AudioManager.STREAM_RING))!=0) {
+                    audio.setStreamVolume(AudioManager.STREAM_RING,
+                            (int) (audio.getStreamVolume(AudioManager.STREAM_RING) - 1),
+                            AudioManager.FLAG_PLAY_SOUND); // 벨소리 볼륨
+                }
+                break;
+            case R.id.MV_UpBtn :
+                audio.setStreamVolume(AudioManager.STREAM_MUSIC,
+                        (int)(audio.getStreamVolume(AudioManager.STREAM_MUSIC)+1),
+                        AudioManager.FLAG_PLAY_SOUND); // 미디어 볼륨
+                break;
+            case R.id.MV_DownBtn :
+                if((int)(audio.getStreamVolume(AudioManager.STREAM_MUSIC))!=0) {
+                    audio.setStreamVolume(AudioManager.STREAM_MUSIC,
+                            (int) (audio.getStreamVolume(AudioManager.STREAM_MUSIC) - 1),
+                            AudioManager.FLAG_PLAY_SOUND); // 미디어 볼륨
+                }
+                break;
+        }
+    }
+
+<!-- 볼륨 끝-->
+
+
+<!-- 전화 시작-->
+
+AndroidManifest.xml
+
+    <uses-permission android:name="android.permission.CALL_PHONE"/> <!-- 전화 사용 권한 -->
+
+activity_main.xml
+
+    <EditText
+    android:id="@+id/phoneNumber"
+    android:hint="상대방 전화번호를 입력하세요"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/call"
+        android:text="전화걸기"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClick"/>
+
+MainActivity.java
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // 마쉬벨로 버전 이후부터 Manifest 권한 설정 이후에 사용자에게
+        // 권한 사용을 묻는 설정이 추가로 있어야 함
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(new String[] {Manifest.permission.CALL_PHONE},1000);
+            // 전화를 사용하기 위한 권한
+            // requestCode 값은 임의로 사용하는 값
+        }
+
+    }
+
+    public void onClick(View view) {
+
+        switch (view.getId()) {
+            case R.id.call :
+                String phoneNumber = ((EditText)findViewById(R.id.phoneNumber)).getText().toString(); // 사용자가 입력한 폰번호 (발신 대상)
+                String tel = "tel:"+phoneNumber;
+
+                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse(tel));
+                // Intent란 어플리케이션 구성요소 간에 작업 수행을 위한 정보를 가지고 전달하는 역할
+                // 화면 전환이 일어날때 정보를 넘겨주어야 할 때 사용
+                // ACTION_CALL 외에 ACTION_DIAL 값을 넘겨주면 전화를 걸진 않고 전화 상태로 이동
+
+                int result = ContextCompat.checkSelfPermission(this,Manifest.permission.CALL_PHONE);
+                // 권한이 있는지 체크하는 코드 (해당 코드가 없으면 아래의
+                // startActivity(intent)코드가 정상 동작할 수 없음
+
+                startActivity(intent);;
+
+                break;
+        }
+    }
+}
+
+
+<!-- 전화 끝-->
+
+
+<!-- TTS 시작-->
+
+activity_main.xml
+
+    <EditText
+        android:id="@+id/ttsText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/ttsBtn"
+        android:text="음성"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClick"/>
+
+MainActivity.java
+
+    private TextToSpeech tts;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        
+
+        tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int i) {
+                if(i != ERROR) {
+                    //언어를 선택
+                    tts.setLanguage(Locale.KOREAN);
+                }
+            }
+        });
+    }
+
+    public void onClick(View view) {
+
+        switch (view.getId()) {
+            
+            case R.id.ttsBtn:
+
+                String ttsText = ((EditText)findViewById(R.id.ttsText)).getText().toString();
+
+                tts.speak(ttsText,TextToSpeech.QUEUE_FLUSH, null);
+
+                break;
+        }
+    }
+
+<!-- TTS 끝-->
+
+<!-- STT 시작 -->
+
+AndroidManifest.xml
+
+    <uses-permission android:name="android.permission.INTERNET"/> <!-- 음성 인식 접속을 위한 INTERNET -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" /> <!-- 소리를 입력받기 위한 RECORD_AUDIO 권한 -->
+
+activity_main.xml
+
+    <EditText
+        android:id="@+id/ttsText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/sttBtn"
+        android:text="음성인식"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onClick"
+        />
+
+MainActivity.java
+
+    private TextToSpeech tts;
+
+    private Intent i;
+    private SpeechRecognizer mRecognizer;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+
+        tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int i) {
+                if(i != ERROR) {
+                    //언어를 선택
+                    tts.setLanguage(Locale.KOREAN);
+                }
+            }
+        });
+
+        // 마쉬벨로 버전 이후부터 Manifest 권한 설정 이후에 사용자에게
+        // 권한 사용을 묻는 설정이 추가로 있어야 함
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(new String[] {Manifest.permission.CALL_PHONE, Manifest.permission.SEND_SMS, Manifest.permission.INTERNET,Manifest.permission.RECORD_AUDIO},1000);
+            // 전화, 문자를 사용하기 위한 권한
+            // requestCode 값은 임의로 사용하는 값
+        }
+
+        i = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        i.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, getPackageName());
+        i.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "ko-KR");
+
+    }
+
+    public void onClick(View view) {
+
+        switch (view.getId()) {
+            case R.id.call :
+                String phoneNumber = ((EditText)findViewById(R.id.phoneNumber)).getText().toString(); // 사용자가 입력한 폰번호 (발신 대상)
+                String tel = "tel:"+phoneNumber;
+
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse(tel));
+                // Intent란 어플리케이션 구성요소 간에 작업 수행을 위한 정보를 가지고 전달하는 역할
+                // 화면 전환이 일어날때 정보를 넘겨주어야 할 때 사용
+                // ACTION_CALL 외에 ACTION_DIAL 값을 넘겨주면 전화를 걸진 않고 전화 상태로 이동
+
+                int result = ContextCompat.checkSelfPermission(this,Manifest.permission.CALL_PHONE);
+                // 권한이 있는지 체크하는 코드 (해당 코드가 없으면 아래의
+                // startActivity(intent)코드가 정상 동작할 수 없음
+
+                startActivity(intent);;
+
+                break;
+
+            case R.id.ttsBtn:
+                String ttsText = ((EditText)findViewById(R.id.ttsText)).getText().toString();
+                tts.setPitch(2.0f);
+                tts.setSpeechRate(2.0f);
+                tts.speak(ttsText,TextToSpeech.QUEUE_FLUSH, null);
+
+                break;
+            case R.id.sttBtn:
+                RecognitionListener listener = new RecognitionListener() {
+                    @Override
+                    public void onReadyForSpeech(Bundle bundle) {
+
+                    }
+
+                    @Override
+                    public void onBeginningOfSpeech() {
+
+                    }
+
+                    @Override
+                    public void onRmsChanged(float v) {
+
+                    }
+
+                    @Override
+                    public void onBufferReceived(byte[] bytes) {
+
+                    }
+
+                    @Override
+                    public void onEndOfSpeech() {
+
+                    }
+
+                    @Override
+                    public void onError(int i) {
+
+                    }
+
+                    @Override
+                    public void onResults(Bundle bundle) {
+                        String key = "";
+                        key = SpeechRecognizer.RESULTS_RECOGNITION;
+                        ArrayList<String> mResult = bundle.getStringArrayList(key);
+                        String[] rs = new String[mResult.size()];
+                        mResult.toArray(rs);
+                        ((EditText)findViewById(R.id.ttsText)).setText(""+rs[0]);
+                        tts.speak(rs[0],TextToSpeech.QUEUE_FLUSH, null);
+                    }
+
+                    @Override
+                    public void onPartialResults(Bundle bundle) {
+
+                    }
+
+                    @Override
+                    public void onEvent(int i, Bundle bundle) {
+
+                    }
+                };
+                mRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
+                mRecognizer.setRecognitionListener(listener);
+                mRecognizer.startListening(i);
+                break;
+        }
+    }
+
+<!-- STT 끝 -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
