@@ -134,7 +134,7 @@ MainActivity.java
                 // 권한이 있는지 체크하는 코드 (해당 코드가 없으면 아래의
                 // startActivity(intent)코드가 정상 동작할 수 없음
 
-                startActivity(intent);;
+                startActivity(intent);
 
                 break;
         }

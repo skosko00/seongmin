@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+div {
+	border: 1px solid black;
+	box-sizing: border-box;
+}
+
+#wrapper {
+	width: 100%;
+	height: 600px;
+}
+
+.contents {
+	height: 20%;
+}
+
+.contents div {
+	float: left;
+	width: 50%;
+	height: 100%;
+}
+</style>
+
+<script type="text/javascript">
+	function btn1() {
+		if (typeof Android !== "undefined" && Android !== null) {
+			Android.func1();
+		} else {
+			alert("Not Viewing in webView!!");
+		}
+	}
+	function btn2() {
+		var data = document.getElementById("text1").value;
+		if (typeof Android !== "undefined" && Android !== null) {
+			Android.func2(data);
+		} else {
+			alert(data);
+		}
+	}
+	function btn3() {
+		if (typeof Android !== "undefined" && Android !== null) {
+			Android.func3();
+		} else {
+			alert("Not Viewing in webView!!");
+		}
+	}
+	function btn4() {
+		if (typeof Android !== "undefined" && Android !== null) {
+			Android.func4();
+		} else {
+			alert("Not Viewing in webView!!");
+		}
+	}
+	function btn5() {
+		if (typeof Android !== "undefined" && Android !== null) {
+			Android.func5();
+		} else {
+			alert("Not Viewing in webView!!");
+		}
+	}
+	function btn6() {
+		if (typeof Android !== "undefined" && Android !== null) {
+			Android.func6();
+		} else {
+			alert("Not Viewing in webView!!");
+		}
+	}
+	function btn7() {
+		if (typeof Android !== "undefined" && Android !== null) {
+			var phoneNumber1 = document.getElementById("phoneNumber1").value;
+			Android.func7(phoneNumber1);
+		} else {
+			alert("Not Viewing in webView!!");
+		}
+	}
+	function btn8() {
+		if (typeof Android !== "undefined" && Android !== null) {
+			var data = document.getElementById("text2").value;
+			Android.func8(data);
+		} else {
+			alert("Not Viewing in webView!!");
+		}
+	}
+	function btn9() {
+		if (typeof Android !== "undefined" && Android !== null) {
+			Android.func9();
+		} else {
+			alert("Not Viewing in webView!!");
+		}
+	}
+	function btn10() {
+		if (typeof Android !== "undefined" && Android !== null) {
+			Android.func10();
+		} else {
+			alert("Not Viewing in webView!!");
+		}
+	}
+	function btn11() {
+		if (typeof Android !== "undefined" && Android !== null) {
+			Android.func11();
+		} else {
+			alert("Not Viewing in webView!!");
+		}
+	}
+</script>
+
+</head>
+<body>
+
+	<div id="wrapper">
+		<div class="contents">
+			<div>
+				<button style="width: 100%; height: 100%;" onclick="btn1();">버튼</button>
+			</div>
+			<div>
+				<input style="border: 2px solid red;" type="text" id="text1" />
+				<button onclick="btn2();">입력값 출력하기</button>
+			</div>
+		</div>
+		<div class="contents">
+			<div>
+				<button style="width: 100%; height: 100%;" onclick="btn3();">진동버튼</button>
+			</div>
+			<div>
+				<button style="width: 100%; height: 100%;" onclick="btn4();">날짜버튼</button>
+			</div>
+		</div>
+		<div class="contents">
+			<div>
+				<button style="width: 48%; height: 100%;" onclick="btn5();">볼륨UP</button>
+				<button style="width: 48%; height: 100%;" onclick="btn6();">볼륨DOWN</button>
+			</div>
+			<div>
+				<input style="border: 2px solid red;" type="text" id="phoneNumber1" /><br>
+				<button onclick="btn7();">전화걸기</button>
+			</div>
+		</div>
+		<div class="contents">
+			<div>
+				<input style="border: 2px solid red;" type="text" id="text2" /><br>
+				<button onclick="btn8();">TTS 기능 작동</button>
+			</div>
+			<div>
+				<button style="width: 100%; height: 100%;" onclick="btn9();">STT
+					작동(Toast출력)</button>
+			</div>
+		</div>
+		<div class="contents">
+			<div>
+				<button style="width: 100%; height: 100%;" onclick="btn10();">STT
+					작동2(음성출력)</button>
+			</div>
+			<div>
+				<button style="width: 100%; height: 100%;" onclick="btn11();">STT
+					작동3(파파고번역)</button>
+			</div>
+		</div>
+	</div>
+
+
+
+
+</body>
+</html>

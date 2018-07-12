@@ -1,4 +1,4 @@
-﻿package org.kh.a01_helloandroid;
+package org.kh.a01_helloandroid;
 
 import android.Manifest;
 import android.content.Context;
